@@ -1,0 +1,43 @@
+<html lang="pl">
+<meta charset="UTF-8">
+<body>
+
+<div class="page">
+
+<!-- Navbar -->
+<div class="navbar">
+  <div class="navbar_left">
+    <a href="home" class="menu-button left">STRONA GŁÓWNA</a>
+    <a href="events" class="menu-button left">WYDARZENIA</a>
+    <a href="rooms" class="menu-button left">SALE</a>
+    <a href="contact" class="menu-button left">KONTAKT</a>
+  </div>
+  <div class="navbar_right">
+    <a routerLink="login" class="menu-button right">LOGOWANIE</a>
+    <a routerLink="register" class="menu-button right">REJESTRACJA</a>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="main">
+  <div class="main-conent">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+
+<!-- Footer -->
+<div class="footer">
+  <nav class="coppyrights">Copyrights 2020 Tomasz Szeligowski</nav>
+  <div class="icons">
+    <a href="#" class="fb"><i class="fab fa-facebook"></i></a>
+    <a href="#" class="tw"><i class="fab fa-twitter-square"></i></a>
+    <a href="#" class="in"><i class="fab fa-instagram"></i></a>
+  </div>
+</div>
+
+</div>
+
+</body>
+</html>
+

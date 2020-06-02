@@ -1,0 +1,36 @@
+<form class="box" method="post">
+  <h1>Rejstracja</h1>
+  <label>
+    <input type="text" name="" placeholder="Nazwa użytkownika">
+  </label>
+  <label>
+    <input type="password" name="" placeholder="Hasło">
+  </label>
+  <label>
+    <input type="password" name="" placeholder="Powtórz hasło">
+  </label>
+  <label>
+    <input type="email" name="" placeholder="Email">
+  </label>
+
+  <label for="days">
+    <select class="date-pick" id="days" name="days">
+      <option class="custom-option" *ngFor="let day of dayArray"  value=day>{{day}}</option>
+    </select>
+  </label>
+
+  <label for="months">
+    <select class="date-pick" id="months" name="months">
+      <option class="custom-option" *ngFor="let month of monthArray"  value=day>{{month}}</option>
+    </select>
+  </label>
+
+  <label for="years">
+    <select class="date-pick" id="years" name="years">
+      <option class="custom-option" *ngFor="let year of yearArray"  value=day>{{year}}</option>
+    </select>
+  </label>
+
+
+    <input type="submit" name="" value="Zarejestruj">
+</form>

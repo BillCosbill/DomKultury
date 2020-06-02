@@ -1,0 +1,17 @@
+<div class="main-page">
+  <div class="events">
+    <div [routerLink]="['/event', item.id]" class="event" *ngFor="let item of collection2">
+      <div class="event-photo">
+        <img src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712" alt="">
+      </div>
+      <div class="event-data">
+        <span class="data">{{item.data}}</span>
+      </div>
+      <div class="event-title">
+        <span class="title">{{item.title}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
