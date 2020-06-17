@@ -1,0 +1,32 @@
+<h1>Lista użytkowników</h1>
+  <div class="table-body">
+    <table class="table-table">
+      <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Nazwa użytkownika</th>
+        <th scope="col">Adres email</th>
+        <th scope="col">Uprawnienia</th>
+        <th scope="col">Opcje</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <ng-container *ngFor="let role of user.roles">
+            {{makePrettyRoleName(role.name)}}<br>
+          </ng-container>
+        </td>
+        <td>
+          <button (click)="delete(user.id)" class="admin-panel-button">Usuń</button>
+          <button *ngIf="!checkIfContaintsRole(user.roles, 'ROLE_USER')" (click)="giveUserRole(user)" class="admin-panel-button">Użytkownik</button>
+          <button *ngIf="!checkIfContaintsRole(user.roles, 'ROLE_TEACHER')" (click)="giverTeacherRole(user)" class="admin-panel-button">Nauczyciel</button>
+          <button *ngIf="!checkIfContaintsRole(user.roles, 'ROLE_ADMIN')" (click)="giveAdminRole(user)" class="admin-panel-button">Administrator</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
