@@ -8,6 +8,8 @@ import {RoomsComponent} from "./rooms/rooms.component";
 import {ContactComponent} from "./contact/contact.component";
 import {EventsComponent} from "./events/events.component";
 import {EventDetailsComponent} from "./event-details/event-details.component";
+import {AdministratorPanelComponent} from './administrator-panel/administrator-panel.component';
+import {AdminguardService} from './_guards/adminguard.service';
 
 
 const routes: Routes = [
@@ -18,6 +20,7 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'admin_panel', component: AdministratorPanelComponent, canActivate: [AdminguardService] },
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
 

@@ -42,6 +42,7 @@
 
 .menu-button:hover {
   color:#5F5F5F;
+  cursor: pointer;
 }
 
 .right {

@@ -5,6 +5,7 @@
 }
 
 .events {
+  margin: auto;
   display: flex;
   justify-content: flex-start;
   flex-direction: row;

@@ -13,8 +13,11 @@
     <a href="contact" class="menu-button left">KONTAKT</a>
   </div>
   <div class="navbar_right">
-    <a routerLink="login" class="menu-button right">LOGOWANIE</a>
-    <a routerLink="register" class="menu-button right">REJESTRACJA</a>
+    <a (click)="logout()" class="menu-button right" *ngIf="isLoggedIn">WYLOGUJ</a>
+    <a routerLink="login" class="menu-button right" *ngIf="!isLoggedIn">LOGOWANIE</a>
+    <a routerLink="register" class="menu-button right" *ngIf="!isLoggedIn">REJESTRACJA</a>
+    <a routerLink="admin_panel" class="menu-button right" *ngIf="adminLogged">PANEL ADMINISTRATORA</a>
+    <a class="menu-button right" *ngIf="isLoggedIn">{{ username }}</a>
   </div>
 </div>
 

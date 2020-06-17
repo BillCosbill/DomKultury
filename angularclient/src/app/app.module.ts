@@ -13,6 +13,8 @@ import { ContactComponent } from './contact/contact.component';
 import { EventsComponent } from './events/events.component';
 import {NgxPaginationModule} from "ngx-pagination";
 import { EventDetailsComponent } from './event-details/event-details.component';
+import {authInterceptorProviders} from './_helpers/auth.interceptor';
+import { AdministratorPanelComponent } from './administrator-panel/administrator-panel.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { EventDetailsComponent } from './event-details/event-details.component';
     RoomsComponent,
     ContactComponent,
     EventsComponent,
-    EventDetailsComponent
+    EventDetailsComponent,
+    AdministratorPanelComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,7 @@ import { EventDetailsComponent } from './event-details/event-details.component';
     HttpClientModule,
     NgxPaginationModule
   ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
