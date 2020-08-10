@@ -1,11 +1,14 @@
 package com.example.demo.controllers;
 
+import com.example.demo.exceptions.UserNotFoundException;
 import com.example.demo.models.ERole;
 import com.example.demo.models.Role;
 import com.example.demo.models.User;
+import com.example.demo.payload.response.MessageResponse;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -29,19 +32,23 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @DeleteMapping("/users")
-    void deleteUser(@RequestParam long id){
-        Optional<User> user = userRepository.findById(id);
-
-        if(user.isPresent()){
-            userRepository.delete(user.get());
-            System.out.println("Pomyślnie usunięto użytkownika");
-        }
-        else {
-            System.out.println("Nie znaleziono użytkownika poprzez id");
-        }
+    @GetMapping("/roles")
+    public List<Role> getRoles() {
+        return roleRepository.findAll();
     }
 
+    //TODO Całkiem dobrze obsłużony własny wyjątek - chyba xD
+    @DeleteMapping("/users")
+    public ResponseEntity<?> deleteUser(@RequestParam long id){
+        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+
+        userRepository.delete(user);
+        return ResponseEntity.ok(new MessageResponse("User deleted successfully!"));
+    }
+
+    //TODO Jeśli przekażę w ciele użytkownika bez hasła,
+    // to w bazie zostanie usunięte hasło użytkownika o wskazanym id
+    // Trzeba przekazywać użytkownika ze wszystkimi polami, nie może być pustych pól !!!
 
     @PutMapping("/users")
     public User updateUser(@RequestBody User user){
@@ -50,7 +57,7 @@ public class UserController {
             foundUser.setPassword(user.getPassword());
             foundUser.setEmail(user.getEmail());
             return userRepository.save(user);
-        }).orElseGet(() -> userRepository.save(user));
+        }).orElseThrow(() -> new RuntimeException("Error: User is not found."));
     }
 
     //TODO przenieść trzy metody zmiany roli do jednej

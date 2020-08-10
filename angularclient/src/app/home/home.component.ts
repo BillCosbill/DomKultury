@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  //TODO dodać do obiektu wydarzenie pole z krótkim opisem
+  //TODO pobierając z bazy ustawić limit na 20 wydarzeń (musi być podzielne na 4 żeby na stronie się zmieściło ładnie
   collection2 = [
     {id:1, title:'Kurs programowania dla początkujących', data:'07.01.2020'},
     {id:2, title:'Tańce z maluchami', data:'12.05.2020'},
@@ -28,8 +30,6 @@ export class HomeComponent implements OnInit {
     {id:18, title:'Kurs angielskiego - lekcja 1', data:'02.02.2020'},
     {id:19, title:'Zumba', data:'04.10.2020'},
     {id:20, title:'Zajęcia komputerowe dla seniorów', data:'17.04.2020'},
-    {id:21, title:'Kurs angielskiego - lekcja 2', data:'09.02.2020'},
-    {id:22, title:'Kurs programowania dla zaawansowanych', data:'25.03.2020'}
   ];
   config = {
     id: 'custom',

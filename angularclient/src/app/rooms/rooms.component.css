@@ -1,8 +1,23 @@
+.card-text, .card-title {
+  color: #000;
+  font-weight: bold;
+}
+
 .rooms{
   display: flex;
   justify-content: space-between;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.card {
+  border: 5px solid;
+}
+
+.card:hover {
+  border: 5px solid #6c757d;
+  background-color: #6c757d;
+  cursor: pointer;
 }
 
 .room {

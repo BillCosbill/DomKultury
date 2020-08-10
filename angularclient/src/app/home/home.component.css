@@ -1,58 +1,15 @@
-.main-page {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.card-text, .card-title {
+  color: #000;
 }
 
-.events {
-  margin: auto;
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: row;
-  flex-wrap: nowrap;
+.card {
+  border: 5px solid;
 }
 
-.event {
-  width: 250px;
-  height: 400px;
-  margin: 5px;
-  border-radius: 10px;
-  border: 5px solid #383838;
-  background-color: #383838;
-  margin-left: 40px;
-}
-
-.event:hover {
-  border: 5px solid #555555;
-  background-color: #383838;
+.card:hover {
+  border: 5px solid #6c757d;
+  background-color: #6c757d;
   cursor: pointer;
-}
-
-.event-photo {
-  width: 250px;
-  height: 190px;
-}
-
-.event-photo img {
-  max-width: 100%;
-  max-height: 100%;
-  display: block;
-  border-radius: 10px;
-}
-
-.event-data {
-  float: left;
-  padding-left: 10px;
-  font-size: 14px;
-}
-
-.event-title {
-  clear: both;
-  float: left;
-  padding-left: 10px;
-  font-size: 25px;
-  margin-top: 10px;
-  text-align: left;
 }
 
 .custom-pagination {
@@ -93,6 +50,7 @@ input[type = "submit"] {
   color: white;
   border-radius: 24px;
   cursor: pointer;
+  position: center;
 }
 
 input[type = "submit"]:hover{

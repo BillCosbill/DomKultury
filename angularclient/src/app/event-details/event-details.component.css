@@ -1,7 +1,8 @@
 .event-details-photo {
   width: 30%;
-  height: 300px;
+  height: 100%;
   float: left;
+  background-color: red;
 }
 
 .event-details-photo img {
@@ -22,12 +23,10 @@
 }
 
 .event-details-data {
-  margin-top: 10px;
   float: left;
 }
 
 .event-details-description {
-  margin-top: 10px;
   float: left;
   text-align: left;
 }

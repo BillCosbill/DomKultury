@@ -1,14 +1,64 @@
-<div class="main-page">
-  <div class="events">
-    <div [routerLink]="['/event', item.id]" class="event" *ngFor="let item of collection2 | paginate: config">
-      <div class="event-photo">
-        <img src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712" alt="">
-      </div>
-      <div class="event-data">
-        <span class="data">{{item.data}}</span>
-      </div>
-      <div class="event-title">
-        <span class="title">{{item.title}}</span>
+<!--<div class="container pt-5">-->
+<!--  <div class="card-deck">-->
+<!--    <div [routerLink]="['/event', item.id]" class="event" *ngFor="let item of collection2 | paginate: config">-->
+<!--      <div class="card">-->
+<!--        <img src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712" class="card-img-top" alt="...">-->
+<!--        <div class="card-body">-->
+<!--          <h5 class="card-title">{{item.title}}</h5>-->
+<!--          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
+<!--          <p class="card-text"><small class="text-muted">{{item.data}}</small></p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="card">-->
+<!--        <img src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712" class="card-img-top" alt="...">-->
+<!--        <div class="card-body">-->
+<!--          <h5 class="card-title">{{item.title}}</h5>-->
+<!--          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>-->
+<!--          <p class="card-text"><small class="text-muted">{{item.data}}</small></p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="card">-->
+<!--        <img src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712" class="card-img-top" alt="...">-->
+<!--        <div class="card-body">-->
+<!--          <h5 class="card-title">{{item.title}}</h5>-->
+<!--          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>-->
+<!--          <p class="card-text"><small class="text-muted">{{item.data}}</small></p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <pagination-template #p="paginationApi" [id]="config.id" (pageChange)="config.currentPage = $event">-->
+<!--    <div class="custom-pagination">-->
+
+<!--      <div class="pagination-previous" [class.disabled]="p.isFirstPage()">-->
+<!--        <span *ngIf="!p.isFirstPage()" (click)="p.previous()">-->
+<!--          <-->
+<!--        </span>-->
+<!--      </div>-->
+
+<!--      <div class="pagination-next" [class.disabled]="p.isLastPage()">-->
+<!--        <span *ngIf="!p.isLastPage()" (click)="p.next()">-->
+<!--          >-->
+<!--        </span>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </pagination-template>-->
+
+<!--  <input routerLink="/events" type="submit" name="" value="ZOBACZ WIĘCEJ">-->
+
+<!--</div>-->
+
+
+
+<div class="container pt-5">
+  <div class="events card-deck">
+    <div [routerLink]="['/event', item.id]" class="card" *ngFor="let item of collection2 | paginate: config">
+      <img src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{item.title}}</h5>
+        <p class="card-text">This is a wider card </p>
+        <p class="card-text"><small>{{item.data}}</small></p>
       </div>
     </div>
   </div>
@@ -18,20 +68,60 @@
 
       <div class="pagination-previous" [class.disabled]="p.isFirstPage()">
         <span *ngIf="!p.isFirstPage()" (click)="p.previous()">
-          <
+        <
         </span>
       </div>
 
       <div class="pagination-next" [class.disabled]="p.isLastPage()">
         <span *ngIf="!p.isLastPage()" (click)="p.next()">
-          >
+        >
         </span>
       </div>
     </div>
   </pagination-template>
 
   <input routerLink="/events" type="submit" name="" value="ZOBACZ WIĘCEJ">
-
 </div>
+
+
+
+
+
+
+<!--<div class="main-page">-->
+<!--  <div class="events">-->
+<!--    <div [routerLink]="['/event', item.id]" class="event" *ngFor="let item of collection2 | paginate: config">-->
+<!--      <div class="event-photo">-->
+<!--        <img src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712" alt="">-->
+<!--      </div>-->
+<!--      <div class="event-data">-->
+<!--        <span class="data">{{item.data}}</span>-->
+<!--      </div>-->
+<!--      <div class="event-title">-->
+<!--        <span class="title">{{item.title}}</span>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <pagination-template #p="paginationApi" [id]="config.id" (pageChange)="config.currentPage = $event">-->
+<!--    <div class="custom-pagination">-->
+
+<!--      <div class="pagination-previous" [class.disabled]="p.isFirstPage()">-->
+<!--        <span *ngIf="!p.isFirstPage()" (click)="p.previous()">-->
+<!--          <-->
+<!--        </span>-->
+<!--      </div>-->
+
+<!--      <div class="pagination-next" [class.disabled]="p.isLastPage()">-->
+<!--        <span *ngIf="!p.isLastPage()" (click)="p.next()">-->
+<!--          >-->
+<!--        </span>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </pagination-template>-->
+
+<!--  <input routerLink="/events" type="submit" name="" value="ZOBACZ WIĘCEJ">-->
+
+<!--</div>-->
 
 

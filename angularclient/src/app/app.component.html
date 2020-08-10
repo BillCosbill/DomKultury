@@ -1,45 +1,63 @@
-<html lang="pl">
+<html lang="pl" class="h-100">
 <meta charset="UTF-8">
-<body>
+<body class="d-flex flex-column h-100">
 
-<div class="page">
 
-<!-- Navbar -->
-<div class="navbar">
-  <div class="navbar_left">
-    <a href="home" class="menu-button left">STRONA GŁÓWNA</a>
-    <a href="events" class="menu-button left">WYDARZENIA</a>
-    <a href="rooms" class="menu-button left">SALE</a>
-    <a href="contact" class="menu-button left">KONTAKT</a>
-  </div>
-  <div class="navbar_right">
-    <a (click)="logout()" class="menu-button right" *ngIf="isLoggedIn">WYLOGUJ</a>
-    <a routerLink="login" class="menu-button right" *ngIf="!isLoggedIn">LOGOWANIE</a>
-    <a routerLink="register" class="menu-button right" *ngIf="!isLoggedIn">REJESTRACJA</a>
-    <a routerLink="admin_panel" class="menu-button right" *ngIf="adminLogged">PANEL ADMINISTRATORA</a>
-    <a class="menu-button right" *ngIf="isLoggedIn">{{ username }}</a>
-  </div>
-</div>
+<header>
+  <nav class="navbar navbar-expand navbar-dark fixed-top bg-dark">
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="home">STRONA GŁÓWNA</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="events">WYDARZENIA</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="rooms">SALE</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contact">KONTAKT</a>
+        </li>
+      </ul>
 
-<!-- Content -->
-<div class="main">
-  <div class="main-conent">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="isLoggedIn">{{ username }}</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="login" class="nav-link" *ngIf="!isLoggedIn">LOGOWANIE</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="register" class="nav-link" *ngIf="!isLoggedIn">REJESTRACJA</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="admin_panel" class="nav-link" *ngIf="adminLogged">PANEL ADMINISTRATORA</a>
+        </li>
+        <li class="nav-item">
+          <a (click)="logout()" class="nav-link" *ngIf="isLoggedIn">WYLOGUJ</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main role="main" class="flex-shrink-0 content">
+  <div class="container">
     <router-outlet></router-outlet>
   </div>
-</div>
+</main>
 
+<footer class="footer mt-auto py-3">
+  <div class="text-muted float-left copyrights">Copyrights (C) 2020 Tomasz Szeligowski</div>
 
-<!-- Footer -->
-<div class="footer">
-  <nav class="coppyrights">Copyrights 2020 Tomasz Szeligowski</nav>
-  <div class="icons">
+  <div class="float-right icons ">
     <a href="#" class="fb"><i class="fab fa-facebook"></i></a>
     <a href="#" class="tw"><i class="fab fa-twitter-square"></i></a>
     <a href="#" class="in"><i class="fab fa-instagram"></i></a>
   </div>
-</div>
-
-</div>
+</footer>
 
 </body>
 </html>
