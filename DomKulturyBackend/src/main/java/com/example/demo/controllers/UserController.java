@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable long id){
+    public ResponseEntity<MessageResponse> deleteUser(@PathVariable long id){
         userService.deleteUser(id);
         return ResponseEntity.ok(new MessageResponse("User deleted successfully!"));
     }
@@ -59,7 +59,7 @@ public class UserController {
     // Trzeba przekazywać użytkownika ze wszystkimi polami, nie może być pustych pól !!!
 
     @PutMapping("/users")
-    public ResponseEntity<?> updateUser(@RequestBody User user){
+    public ResponseEntity<MessageResponse> updateUser(@RequestBody User user){
         userService.updateUser(user);
         return ResponseEntity.ok(new MessageResponse("User updated successfully!"));
     }
