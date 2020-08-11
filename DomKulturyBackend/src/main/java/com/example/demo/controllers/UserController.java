@@ -7,6 +7,7 @@ import com.example.demo.models.User;
 import com.example.demo.payload.response.MessageResponse;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,13 @@ import java.util.Set;
 @RestController
 public class UserController {
 
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
     @Autowired
     UserRepository userRepository;
 
@@ -29,7 +37,7 @@ public class UserController {
 
     @GetMapping("/users")
     public List<User> getUsers() {
-        return userRepository.findAll();
+        return userService.findAll();
     }
 
     @GetMapping("/roles")
@@ -37,12 +45,9 @@ public class UserController {
         return roleRepository.findAll();
     }
 
-    //TODO Całkiem dobrze obsłużony własny wyjątek - chyba xD
-    @DeleteMapping("/users")
-    public ResponseEntity<?> deleteUser(@RequestParam long id){
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
-
-        userRepository.delete(user);
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable long id){
+        userService.deleteUser(id);
         return ResponseEntity.ok(new MessageResponse("User deleted successfully!"));
     }
 
@@ -52,12 +57,7 @@ public class UserController {
 
     @PutMapping("/users")
     public User updateUser(@RequestBody User user){
-        return userRepository.findById(user.getId()).map(foundUser -> {
-            foundUser.setUsername(user.getUsername());
-            foundUser.setPassword(user.getPassword());
-            foundUser.setEmail(user.getEmail());
-            return userRepository.save(user);
-        }).orElseThrow(() -> new RuntimeException("Error: User is not found."));
+        return userService.updateUser(user);
     }
 
     //TODO przenieść trzy metody zmiany roli do jednej
