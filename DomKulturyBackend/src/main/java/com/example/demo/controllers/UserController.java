@@ -1,12 +1,13 @@
 package com.example.demo.controllers;
 
-import com.example.demo.exceptions.UserNotFoundException;
 import com.example.demo.models.ERole;
 import com.example.demo.models.Role;
 import com.example.demo.models.User;
 import com.example.demo.payload.response.MessageResponse;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
+
+import com.example.demo.services.interfaces.RoleService;
 import com.example.demo.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +24,12 @@ import java.util.Set;
 public class UserController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @Autowired
@@ -42,7 +45,7 @@ public class UserController {
 
     @GetMapping("/roles")
     public List<Role> getRoles() {
-        return roleRepository.findAll();
+        return roleService.findAll();
     }
 
     @DeleteMapping("/users/{id}")
@@ -56,8 +59,9 @@ public class UserController {
     // Trzeba przekazywać użytkownika ze wszystkimi polami, nie może być pustych pól !!!
 
     @PutMapping("/users")
-    public User updateUser(@RequestBody User user){
-        return userService.updateUser(user);
+    public ResponseEntity<?> updateUser(@RequestBody User user){
+        userService.updateUser(user);
+        return ResponseEntity.ok(new MessageResponse("User updated successfully!"));
     }
 
     //TODO przenieść trzy metody zmiany roli do jednej

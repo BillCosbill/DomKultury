@@ -1,7 +1,6 @@
 package com.example.demo.services.interfaces;
 
 import com.example.demo.models.User;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 

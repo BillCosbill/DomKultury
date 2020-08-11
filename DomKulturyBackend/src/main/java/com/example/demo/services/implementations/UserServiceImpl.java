@@ -2,12 +2,10 @@ package com.example.demo.services.implementations;
 
 import com.example.demo.exceptions.UserNotFoundException;
 import com.example.demo.models.User;
-import com.example.demo.payload.response.MessageResponse;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,11 +13,14 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     UserRepository userRepository;
+    RoleRepository roleRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+    }
 
     @Override
     public List<User> findAll() {
@@ -45,6 +46,6 @@ public class UserServiceImpl implements UserService {
             foundUser.setPassword(user.getPassword());
             foundUser.setEmail(user.getEmail());
             return userRepository.save(user);
-        }).orElseThrow(() -> new RuntimeException("Error: User is not found."));
+        }).orElseThrow(() -> new UserNotFoundException(user.getId()));
     }
 }
