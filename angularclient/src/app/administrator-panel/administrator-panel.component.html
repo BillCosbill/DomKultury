@@ -22,9 +22,9 @@
         </td>
         <td>
           <button (click)="delete(user.id)" class="admin-panel-button">Usuń</button>
-          <button *ngIf="!checkIfContaintsRole(user.roles, 'ROLE_USER')" (click)="giveUserRole(user)" class="admin-panel-button">Użytkownik</button>
-          <button *ngIf="!checkIfContaintsRole(user.roles, 'ROLE_TEACHER')" (click)="giverTeacherRole(user)" class="admin-panel-button">Nauczyciel</button>
-          <button *ngIf="!checkIfContaintsRole(user.roles, 'ROLE_ADMIN')" (click)="giveAdminRole(user)" class="admin-panel-button">Administrator</button>
+          <button *ngIf="!checkIfContaintsRole(user.roles, 'ROLE_USER')" (click)="changeRole(user.id, 'ROLE_USER')" class="admin-panel-button">Użytkownik</button>
+          <button *ngIf="!checkIfContaintsRole(user.roles, 'ROLE_TEACHER')" (click)="changeRole(user.id, 'ROLE_TEACHER')" class="admin-panel-button">Nauczyciel</button>
+          <button *ngIf="!checkIfContaintsRole(user.roles, 'ROLE_ADMIN')" (click)="changeRole(user.id, 'ROLE_ADMIN')" class="admin-panel-button">Administrator</button>
         </td>
       </tr>
       </tbody>

@@ -9,15 +9,11 @@ import {User} from '../_model/user';
 export class UserService {
 
   private usersUrl: string;
-  private userGiveAdminUrl: string;
-  private userGiveTeacherUrl: string;
-  private userGiveUserUrl: string;
+  private changeRoleUrl: string;
 
   constructor(private http: HttpClient) {
     this.usersUrl = 'http://localhost:8081/users';
-    this.userGiveAdminUrl = 'http://localhost:8081/userGiveAdmin';
-    this.userGiveTeacherUrl = 'http://localhost:8081/userGiveTeacher';
-    this.userGiveUserUrl = 'http://localhost:8081/userGiveUser';
+    this.changeRoleUrl = 'http://localhost:8081/changeRole';
   }
 
   public findAll(): Observable<User[]> {
@@ -28,21 +24,11 @@ export class UserService {
     return this.http.delete<User>(this.usersUrl + '/' + id);
   }
 
-  public updateUser(user: User) {
-    return this.http.put<User>(this.usersUrl, user);
+  public updateUser(user: User, id: number) {
+    return this.http.put<User>(this.usersUrl + '/' + id, user);
   }
 
-  // TODO przenieść trzy metody zmiany roli do jednej
-  public giveAdmin(user: User) {
-    return this.http.patch<User>(this.userGiveAdminUrl, user);
+  public changeRole(role: string, id: number) {
+    return this.http.patch<User>(this.changeRoleUrl + '/' + id + '?newRole=' + role, null);
   }
-
-  public giveTeacher(user: User) {
-    return this.http.patch<User>(this.userGiveTeacherUrl, user);
-  }
-
-  public giveUser(user: User) {
-    return this.http.patch<User>(this.userGiveUserUrl, user);
-  }
-
 }

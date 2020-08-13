@@ -1,6 +1,8 @@
 package com.example.demo.services.implementations;
 
+import com.example.demo.dto.UserDTO;
 import com.example.demo.exceptions.UserNotFoundException;
+import com.example.demo.mappers.UserMapper;
 import com.example.demo.models.User;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
@@ -15,11 +17,13 @@ public class UserServiceImpl implements UserService {
 
     UserRepository userRepository;
     RoleRepository roleRepository;
+    UserMapper userMapper;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -32,7 +36,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    //TODO return UserDTO w przyszłości żeby wiedzieć co się usunęło
     @Override
     public void deleteUser(Long id) {
         User user = findById(id);
@@ -40,12 +43,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(User user) {
-        return userRepository.findById(user.getId()).map(foundUser -> {
-            foundUser.setUsername(user.getUsername());
-            foundUser.setPassword(user.getPassword());
-            foundUser.setEmail(user.getEmail());
-            return userRepository.save(user);
-        }).orElseThrow(() -> new UserNotFoundException(user.getId()));
+    public User updateUser(UserDTO userDTO, Long id) {
+        User user = userMapper.toUser(userDTO);
+
+        return save(user);
+    }
+
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
     }
 }

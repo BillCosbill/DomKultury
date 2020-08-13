@@ -1,5 +1,7 @@
 package com.example.demo.services.implementations;
 
+import com.example.demo.exceptions.RoleNotFoundException;
+import com.example.demo.models.ERole;
 import com.example.demo.models.Role;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.services.interfaces.RoleService;
@@ -21,5 +23,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public List<Role> findAll() {
         return roleRepository.findAll();
+    }
+
+    @Override
+    public Role findByName(ERole eRole) {
+        return roleRepository.findByName(eRole).orElseThrow(() -> new RoleNotFoundException(eRole));
     }
 }

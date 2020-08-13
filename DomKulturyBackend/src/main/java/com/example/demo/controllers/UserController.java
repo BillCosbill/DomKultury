@@ -1,142 +1,73 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dto.UserDTO;
+import com.example.demo.mappers.UserMapper;
 import com.example.demo.models.ERole;
 import com.example.demo.models.Role;
 import com.example.demo.models.User;
 import com.example.demo.payload.response.MessageResponse;
-import com.example.demo.repository.RoleRepository;
-import com.example.demo.repository.UserRepository;
-
 import com.example.demo.services.interfaces.RoleService;
 import com.example.demo.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @CrossOrigin(origins = "*")
 
 @RestController
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
     private final RoleService roleService;
+    private final UserMapper userMapper;
 
     @Autowired
-    public UserController(UserService userService, RoleService roleService) {
+    public UserController(UserService userService, RoleService roleService, UserMapper userMapper) {
         this.userService = userService;
         this.roleService = roleService;
+        this.userMapper = userMapper;
     }
 
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
-
-    @GetMapping("/users")
-    public List<User> getUsers() {
-        return userService.findAll();
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> getUsers() {
+        return ResponseEntity.ok(userMapper.toUsersDTO(userService.findAll()));
     }
 
     @GetMapping("/roles")
-    public List<Role> getRoles() {
-        return roleService.findAll();
+    public ResponseEntity<List<Role>> getRoles() {
+        return ResponseEntity.ok(roleService.findAll());
     }
 
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<MessageResponse> deleteUser(@PathVariable long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<MessageResponse> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+
         return ResponseEntity.ok(new MessageResponse("User deleted successfully!"));
     }
 
-    //TODO Jeśli przekażę w ciele użytkownika bez hasła,
-    // to w bazie zostanie usunięte hasło użytkownika o wskazanym id
-    // Trzeba przekazywać użytkownika ze wszystkimi polami, nie może być pustych pól !!!
-
-    @PutMapping("/users")
-    public ResponseEntity<MessageResponse> updateUser(@RequestBody User user){
-        userService.updateUser(user);
-        return ResponseEntity.ok(new MessageResponse("User updated successfully!"));
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, @PathVariable Long id) {
+        userService.updateUser(userDTO, id);
+        return ResponseEntity.status(HttpStatus.OK).body(userDTO);
     }
 
-    //TODO przenieść trzy metody zmiany roli do jednej
+    @PatchMapping("/changeRole/{id}")
+    public ResponseEntity<MessageResponse> changeRole(@RequestParam ERole newRole, @PathVariable Long id) {
+        Role role = roleService.findByName(newRole);
+        User user = userService.findById(id);
 
-    @PatchMapping("/userGiveAdmin")
-    public User giveAdminRole(@RequestBody User user){
-        Optional<User> userToGetAdmin = userRepository.findById(user.getId());
+        Set<Role> newRoles = new HashSet<>();
+        newRoles.add(role);
 
-        if(userToGetAdmin.isPresent()) {
-            Optional<Role> newRole = roleRepository.findByName(ERole.ROLE_ADMIN);
+        user.setRoles(newRoles);
+        userService.save(user);
 
-            if(newRole.isPresent()){
-                Set<Role> newRoles = new HashSet<>();
-                newRoles.add(newRole.get());
-                userToGetAdmin.get().setRoles(newRoles);
-
-                System.out.println("Nadano rolę administratora użytkownikowi " + user.getUsername());
-                return userRepository.save(userToGetAdmin.get());
-            } else {
-                System.out.println("Nie znaleziono roli ROLE_ADMIN");
-                return userRepository.save(user);
-            }
-        } else {
-            System.out.println("Nie znaleziono użytkownika o id " + user.getId());
-            return userRepository.save(user);
-        }
+        return ResponseEntity.ok(new MessageResponse("User role has been changed to: " + newRole));
     }
-
-    @PatchMapping("/userGiveTeacher")
-    public User giveTeacherRole(@RequestBody User user){
-        Optional<User> userToGetTeacher = userRepository.findById(user.getId());
-
-        if(userToGetTeacher.isPresent()) {
-            Optional<Role> newRole = roleRepository.findByName(ERole.ROLE_TEACHER);
-
-            if(newRole.isPresent()){
-                Set<Role> newRoles = new HashSet<>();
-                newRoles.add(newRole.get());
-                userToGetTeacher.get().setRoles(newRoles);
-
-                System.out.println("Nadano rolę użytkownika użytkownikowi " + user.getUsername());
-                return userRepository.save(userToGetTeacher.get());
-            } else {
-                System.out.println("Nie znaleziono roli ROLE_USER");
-                return userRepository.save(user);
-            }
-        } else {
-            System.out.println("Nie znaleziono użytkownika o id " + user.getId());
-            return userRepository.save(user);
-        }
-    }
-
-    @PatchMapping("/userGiveUser")
-    public User giveUserRole(@RequestBody User user){
-        Optional<User> userToGetUser = userRepository.findById(user.getId());
-
-        if(userToGetUser.isPresent()) {
-            Optional<Role> newRole = roleRepository.findByName(ERole.ROLE_USER);
-
-            if(newRole.isPresent()){
-                Set<Role> newRoles = new HashSet<>();
-                newRoles.add(newRole.get());
-                userToGetUser.get().setRoles(newRoles);
-
-                System.out.println("Nadano rolę nauczyciela użytkownikowi " + user.getUsername());
-                return userRepository.save(userToGetUser.get());
-            } else {
-                System.out.println("Nie znaleziono roli ROLE_TEACHER");
-                return userRepository.save(user);
-            }
-        } else {
-            System.out.println("Nie znaleziono użytkownika o id " + user.getId());
-            return userRepository.save(user);
-        }
-    }
-
-
 }

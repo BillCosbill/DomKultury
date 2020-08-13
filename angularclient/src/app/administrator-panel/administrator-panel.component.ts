@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from '../_services/user.service';
 import {User} from '../_model/user';
 import {Router} from '@angular/router';
@@ -13,7 +13,8 @@ export class AdministratorPanelComponent implements OnInit {
 
   users: User[] = [];
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router) {
+  }
 
   ngOnInit() {
     this.refreshData();
@@ -23,7 +24,7 @@ export class AdministratorPanelComponent implements OnInit {
     return name.substr(5).toLowerCase();
   }
 
-  checkIfContaintsRole(roles: Role[], role: string){
+  checkIfContaintsRole(roles: Role[], role: string) {
     return roles[0].name === role;
   }
 
@@ -37,15 +38,7 @@ export class AdministratorPanelComponent implements OnInit {
     });
   }
 
-  giveAdminRole(user: User) {
-    this.userService.giveAdmin(user).subscribe(() => this.refreshData());
-  }
-
-  giverTeacherRole(user: User) {
-    this.userService.giveTeacher(user).subscribe(() => this.refreshData());
-  }
-
-  giveUserRole(user: User) {
-    this.userService.giveUser(user).subscribe(() => this.refreshData());
+  changeRole(id: number, role: string) {
+    this.userService.changeRole(role, id).subscribe(() => this.refreshData());
   }
 }
