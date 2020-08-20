@@ -1,9 +1,6 @@
 package com.example.demo.exceptions.advisor;
 
-import com.example.demo.exceptions.EmailInUseException;
-import com.example.demo.exceptions.RoleNotFoundException;
-import com.example.demo.exceptions.UserNotFoundException;
-import com.example.demo.exceptions.UsernameTakenException;
+import com.example.demo.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -53,5 +50,23 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         body.put("message", ex.getMessage());
 
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(EventNotFoundException.class)
+    public ResponseEntity<Object> handleEventNotFoundException(EventNotFoundException ex, WebRequest request) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(EventStudentsLimitHasBeenReached.class)
+    public ResponseEntity<Object> handleEventStudentsLimitHasBeenReached(EventStudentsLimitHasBeenReached ex, WebRequest request) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }
 }

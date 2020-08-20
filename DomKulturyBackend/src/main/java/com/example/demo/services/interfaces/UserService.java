@@ -15,4 +15,8 @@ public interface UserService {
     User updateUser(UserDTO userDTO, Long id);
 
     User save(User user);
+
+    void addToEvent(Long eventId, Long userId);
+
+    void leaveFromEvent(Long eventId, Long userId);
 }

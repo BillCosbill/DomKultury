@@ -39,6 +39,12 @@ public class UserController {
         return ResponseEntity.ok(userMapper.toUsersDTO(userService.findAll()));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
+        return ResponseEntity.ok(userMapper.toUserDTO(userService.findById(id)));
+    }
+
+    //TODO usunąć - metoda testowa
     @GetMapping("/roles")
     public ResponseEntity<List<Role>> getRoles() {
         return ResponseEntity.ok(roleService.findAll());
@@ -51,12 +57,14 @@ public class UserController {
         return ResponseEntity.ok(new MessageResponse("User deleted successfully!"));
     }
 
+    //TODO zmienia jedynie id, imie i email
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, @PathVariable Long id) {
         userService.updateUser(userDTO, id);
         return ResponseEntity.status(HttpStatus.OK).body(userDTO);
     }
 
+    //TODO DODAĆ DO SERWISU!!!!!!!!!!!!
     @PatchMapping("/changeRole/{id}")
     public ResponseEntity<MessageResponse> changeRole(@RequestParam ERole newRole, @PathVariable Long id) {
         Role role = roleService.findByName(newRole);
@@ -69,5 +77,17 @@ public class UserController {
         userService.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User role has been changed to: " + newRole));
+    }
+
+    @PatchMapping("/addToEvent/{userId}")
+    public ResponseEntity<MessageResponse> addToEvent(@RequestParam Long eventId, @PathVariable Long userId) {
+        userService.addToEvent(eventId,userId);
+        return ResponseEntity.ok(new MessageResponse("User added to event with id: " + eventId));
+    }
+
+    @PatchMapping("/leaveFromEvent/{userId}")
+    public ResponseEntity<MessageResponse> leaveFromEvent(@RequestParam Long eventId, @PathVariable Long userId) {
+        userService.leaveFromEvent(eventId,userId);
+        return ResponseEntity.ok(new MessageResponse("User deleted from event with id: " + eventId));
     }
 }
