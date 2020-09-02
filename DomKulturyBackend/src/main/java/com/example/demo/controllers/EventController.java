@@ -37,7 +37,7 @@ public class EventController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<MessageResponse> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<MessageResponse> deleteEvent(@PathVariable Long id) {
         eventService.deleteEvent(id);
 
         return ResponseEntity.ok(new MessageResponse("Event deleted successfully!"));
@@ -47,5 +47,19 @@ public class EventController {
     public ResponseEntity<EventDTO> updateEvent(@RequestBody EventDTO eventDTO, @PathVariable Long id) {
         eventService.updateEvent(eventDTO, id);
         return ResponseEntity.status(HttpStatus.OK).body(eventDTO);
+    }
+
+    //TODO usunąć wielkie litery z linków, zamiast addUser dać add-user, bo czasami klient nie rozróżnia wielkości liter
+    @PatchMapping("/{eventId}/addUser/{userId}")
+    public ResponseEntity<MessageResponse> addUserToEvent(@RequestBody EventDTO eventDTO, @PathVariable Long userId, @PathVariable Long eventId) {
+        eventService.addUserToEvent(eventDTO, eventId, userId);
+        return ResponseEntity.ok(new MessageResponse("User added to event with id: " + eventId));
+    }
+
+
+    @PatchMapping("/{eventId}/deleteUser/{userId}")
+    public ResponseEntity<MessageResponse> deleteUserFromEvent(@RequestBody EventDTO eventDTO, @PathVariable Long userId, @PathVariable Long eventId) {
+        eventService.deleteUserFromEvent(eventDTO, eventId, userId);
+        return ResponseEntity.ok(new MessageResponse("User deleted from event with id: " + eventId));
     }
 }

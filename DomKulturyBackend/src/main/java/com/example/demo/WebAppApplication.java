@@ -93,6 +93,16 @@ public class WebAppApplication {
                 LocalDateTime.of(2020, Month.SEPTEMBER, 4, 12, 0, 0));
         eventRepository.save(event2);
 
+        Event event3 = new Event("Grafika","Kurs grafiki dla dzieci w wieku od 12 do 15 lat", teacherUser, studentsList2, 3,
+                LocalDateTime.of(2020, Month.DECEMBER, 5, 12, 30, 0),
+                LocalDateTime.of(2020, Month.SEPTEMBER, 4, 15, 0, 0));
+        eventRepository.save(event3);
+
+        Event event4 = new Event("Karate","Zajęcia z karate dla studentów I roku studiów dziennych na Politechnice Białstockiej", teacherUser, studentsList2, 3,
+                LocalDateTime.of(2020, Month.NOVEMBER, 11, 10, 30, 0),
+                LocalDateTime.of(2020, Month.SEPTEMBER, 4, 12, 0, 0));
+        eventRepository.save(event4);
+
     }
 
 }

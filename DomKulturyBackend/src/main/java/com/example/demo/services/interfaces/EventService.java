@@ -15,4 +15,8 @@ public interface EventService {
     Event updateEvent(EventDTO eventDTO, Long id);
 
     Event save(Event event);
+
+    void addUserToEvent(EventDTO eventDTO, Long eventId, Long userId);
+
+    void deleteUserFromEvent(EventDTO eventDTO, Long eventId, Long userId);
 }

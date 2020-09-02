@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {User} from '../_model/user';
+import {Event} from '../_model/event';
+import {catchError} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +20,10 @@ export class UserService {
 
   public findAll(): Observable<User[]> {
     return this.http.get<User[]>(this.usersUrl);
+  }
+
+  public getUser(id: number) {
+    return this.http.get<User>(this.usersUrl + '/' + id);
   }
 
   public deleteUser(id: number) {

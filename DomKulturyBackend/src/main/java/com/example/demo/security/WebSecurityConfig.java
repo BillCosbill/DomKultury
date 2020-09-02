@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/test/**").permitAll()
-                .antMatchers("/all", "/generateToken", "/events").permitAll() //TODO usunąć - metody testowe
+                .antMatchers("/all", "/generateToken", "/events", "/events/*").permitAll() //TODO usunąć - metody testowe
                 .antMatchers("/users").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "users/*").hasRole("USER") //TODO nie wiem czy potrzebne, dla użytkowników którzy chcą pobrać informacje o swoim koncie
                 .anyRequest().authenticated();

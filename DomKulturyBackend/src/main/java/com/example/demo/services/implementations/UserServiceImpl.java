@@ -1,11 +1,8 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.dto.UserDTO;
-import com.example.demo.exceptions.EventNotFoundException;
-import com.example.demo.exceptions.EventStudentsLimitHasBeenReached;
 import com.example.demo.exceptions.UserNotFoundException;
 import com.example.demo.mappers.UserMapper;
-import com.example.demo.models.Event;
 import com.example.demo.models.User;
 import com.example.demo.repository.EventRepository;
 import com.example.demo.repository.RoleRepository;
@@ -64,33 +61,5 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(User user) {
         return userRepository.save(user);
-    }
-
-    @Override
-    public void addToEvent(Long eventId, Long userId) {
-        Event event = eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(eventId));
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
-
-        List<User> usersAttended = event.getStudents();
-
-        if (usersAttended.size() >= event.getStudentsLimit()){
-            throw new EventStudentsLimitHasBeenReached(eventId);
-        } else {
-            usersAttended.add(user);
-        }
-
-
-        eventRepository.save(event);
-    }
-
-    @Override
-    public void leaveFromEvent(Long eventId, Long userId) {
-        Event event = eventRepository.findById(eventId).orElseThrow(() -> new EventNotFoundException(eventId));
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
-
-        List<User> usersAttended = event.getStudents();
-        usersAttended.remove(user);
-
-        eventRepository.save(event);
     }
 }

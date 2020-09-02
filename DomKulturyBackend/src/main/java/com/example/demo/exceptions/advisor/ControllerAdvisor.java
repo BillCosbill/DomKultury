@@ -61,8 +61,17 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(EventStudentsLimitHasBeenReached.class)
-    public ResponseEntity<Object> handleEventStudentsLimitHasBeenReached(EventStudentsLimitHasBeenReached ex, WebRequest request) {
+    @ExceptionHandler(EventStudentsLimitHasBeenReachedException.class)
+    public ResponseEntity<Object> handleEventStudentsLimitHasBeenReached(EventStudentsLimitHasBeenReachedException ex, WebRequest request) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(UserAlreadyAddedToEventException.class)
+    public ResponseEntity<Object> handleUserAlreadyAddedToEventException(UserAlreadyAddedToEventException ex, WebRequest request) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", LocalDateTime.now());
         body.put("message", ex.getMessage());

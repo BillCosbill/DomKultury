@@ -78,16 +78,4 @@ public class UserController {
 
         return ResponseEntity.ok(new MessageResponse("User role has been changed to: " + newRole));
     }
-
-    @PatchMapping("/addToEvent/{userId}")
-    public ResponseEntity<MessageResponse> addToEvent(@RequestParam Long eventId, @PathVariable Long userId) {
-        userService.addToEvent(eventId,userId);
-        return ResponseEntity.ok(new MessageResponse("User added to event with id: " + eventId));
-    }
-
-    @PatchMapping("/leaveFromEvent/{userId}")
-    public ResponseEntity<MessageResponse> leaveFromEvent(@RequestParam Long eventId, @PathVariable Long userId) {
-        userService.leaveFromEvent(eventId,userId);
-        return ResponseEntity.ok(new MessageResponse("User deleted from event with id: " + eventId));
-    }
 }

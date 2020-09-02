@@ -6,28 +6,29 @@
   <div class="event-details-info">
     <div class="event-details-title">
       <p>
-        {{collection2[eventId].title}}
+        {{event.title}}
       </p>
     </div>
 
     <div class="event-details-data">
       <p>
         <small>
-        {{collection2[eventId].data}}
+        {{event.startDate}}
         </small>
       </p>
     </div>
 
     <div class="event-details-description">
       <p>
-        {{collection2[eventId].description}}
+        {{event.description}}
       </p>
     </div>
 
-    <input type="submit" name="" value="ZAPISZ SIĘ">
+    <input type="submit" name="" (click)="addUser(event, userId, eventId)" *ngIf="!isSignedUpForEvent(event,userId)" value="ZAPISZ SIĘ">
+    <input type="submit" name="" (click)="deleteUser(event, userId, eventId)" *ngIf="isSignedUpForEvent(event,userId)" value="WYPISZ SIĘ">
   </div>
 
 
 </div>
 
-
+<button (click)="isSignedUpForEvent(event, userId)">TEST</button>
