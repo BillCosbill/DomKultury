@@ -1,11 +1,9 @@
 package com.example.demo;
 
-import com.example.demo.models.ERole;
-import com.example.demo.models.Event;
-import com.example.demo.models.Role;
-import com.example.demo.models.User;
+import com.example.demo.models.*;
 import com.example.demo.repository.EventRepository;
 import com.example.demo.repository.RoleRepository;
+import com.example.demo.repository.RoomRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,11 +23,13 @@ public class WebAppApplication {
     RoleRepository roleRepository;
     UserRepository userRepository;
     EventRepository eventRepository;
+    RoomRepository roomRepository;
 
-    public WebAppApplication(RoleRepository roleRepository, UserRepository userRepository, EventRepository eventRepository) {
+    public WebAppApplication(RoleRepository roleRepository, UserRepository userRepository, EventRepository eventRepository, RoomRepository roomRepository) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
+        this.roomRepository = roomRepository;
     }
 
     public static void main(String[] args) {
@@ -39,6 +39,14 @@ public class WebAppApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void fillDB(){
+        Room music = new Room("01", "Muzyka", "Sala przeaznaczona do celów muzycznych. Wyposażona w sprzęt do nagrywania oraz instrumenty", 20);
+        Room dance = new Room("02", "Taniec", "Sala taneczna o dużej powierzchni i lustrami na ścianach", 10);
+        Room it = new Room("03", "Komputery", "Sala komputerowa", 12);
+
+        roomRepository.save(music);
+        roomRepository.save(dance);
+        roomRepository.save(it);
+
         Role user = new Role(ERole.ROLE_USER);
         Role teacher = new Role(ERole.ROLE_TEACHER);
         Role admin = new Role(ERole.ROLE_ADMIN);
@@ -80,7 +88,8 @@ public class WebAppApplication {
 
         Event event = new Event("Muzyka","Lekcje śpiewu", teacherUser, studentsList, 5,
                 LocalDateTime.of(2020, Month.SEPTEMBER, 11, 15, 0, 0),
-                LocalDateTime.of(2020, Month.SEPTEMBER, 11, 17, 0, 0));
+                LocalDateTime.of(2020, Month.SEPTEMBER, 11, 17, 0, 0),
+                music);
         eventRepository.save(event);
 
 
@@ -90,17 +99,20 @@ public class WebAppApplication {
 
         Event event2 = new Event("Taniec","Lekcje tańca", teacherUser, studentsList2, 3,
                 LocalDateTime.of(2020, Month.SEPTEMBER, 4, 10, 30, 0),
-                LocalDateTime.of(2020, Month.SEPTEMBER, 4, 12, 0, 0));
+                LocalDateTime.of(2020, Month.SEPTEMBER, 4, 12, 0, 0),
+                dance);
         eventRepository.save(event2);
 
         Event event3 = new Event("Grafika","Kurs grafiki dla dzieci w wieku od 12 do 15 lat", teacherUser, studentsList2, 3,
                 LocalDateTime.of(2020, Month.DECEMBER, 5, 12, 30, 0),
-                LocalDateTime.of(2020, Month.SEPTEMBER, 4, 15, 0, 0));
+                LocalDateTime.of(2020, Month.SEPTEMBER, 4, 15, 0, 0),
+                it);
         eventRepository.save(event3);
 
         Event event4 = new Event("Karate","Zajęcia z karate dla studentów I roku studiów dziennych na Politechnice Białstockiej", teacherUser, studentsList2, 3,
                 LocalDateTime.of(2020, Month.NOVEMBER, 11, 10, 30, 0),
-                LocalDateTime.of(2020, Month.SEPTEMBER, 4, 12, 0, 0));
+                LocalDateTime.of(2020, Month.SEPTEMBER, 4, 12, 0, 0),
+                dance);
         eventRepository.save(event4);
 
     }

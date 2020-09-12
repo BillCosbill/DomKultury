@@ -2,10 +2,12 @@ package com.example.demo.mappers;
 
 import com.example.demo.dto.EventDTO;
 import com.example.demo.exceptions.EventNotFoundException;
+import com.example.demo.exceptions.RoomNotFoundException;
 import com.example.demo.exceptions.UserNotFoundException;
 import com.example.demo.models.Event;
 import com.example.demo.models.User;
 import com.example.demo.repository.EventRepository;
+import com.example.demo.repository.RoomRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +20,13 @@ import java.util.stream.Collectors;
 public class EventMapper {
     EventRepository eventRepository;
     UserRepository userRepository;
+    RoomRepository roomRepository;
 
     @Autowired
-    public EventMapper(EventRepository eventRepository, UserRepository userRepository) {
+    public EventMapper(EventRepository eventRepository, UserRepository userRepository, RoomRepository roomRepository) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
+        this.roomRepository = roomRepository;
     }
 
     public List<EventDTO> toEventsDTO(List<Event> events) {
@@ -44,6 +48,7 @@ public class EventMapper {
         eventDTO.setStudentsLimit(event.getStudentsLimit());
         eventDTO.setStartDate(event.getStartDate());
         eventDTO.setFinishDate(event.getFinishDate());
+        eventDTO.setRoomId(event.getRoom().getId());
 
         return eventDTO;
     }
@@ -76,6 +81,9 @@ public class EventMapper {
         }
         if (eventDTO.getFinishDate() != null) {
             event.setFinishDate(eventDTO.getFinishDate());
+        }
+        if(eventDTO.getRoomId() != null){
+            event.setRoom(roomRepository.findById(eventDTO.getRoomId()).orElseThrow(() -> new RoomNotFoundException(eventDTO.getRoomId())));
         }
 
         return event;

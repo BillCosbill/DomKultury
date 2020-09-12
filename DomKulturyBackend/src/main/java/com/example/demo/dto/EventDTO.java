@@ -1,5 +1,6 @@
 package com.example.demo.dto;
 
+import com.example.demo.models.Room;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,4 +20,5 @@ public class EventDTO {
     private int studentsLimit;
     private LocalDateTime startDate;
     private LocalDateTime finishDate;
+    private Long roomId;
 }

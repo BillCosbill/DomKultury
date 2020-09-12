@@ -1,5 +1,6 @@
 package com.example.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -46,7 +47,15 @@ public class Event {
 
     private LocalDateTime finishDate;
 
-    public Event(String title, String description, User teacher, List<User> students, int studentsLimit, LocalDateTime startDate, LocalDateTime finishDate) {
+    @NotBlank
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinTable(	name = "event_room",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "room_id"))
+    private Room room;
+
+    public Event(String title, String description, User teacher, List<User> students, int studentsLimit, LocalDateTime startDate, LocalDateTime finishDate, Room room) {
         this.title = title;
         this.description = description;
         this.teacher = teacher;
@@ -54,6 +63,7 @@ public class Event {
         this.studentsLimit = studentsLimit;
         this.startDate = startDate;
         this.finishDate = finishDate;
+        this.room = room;
     }
 
 
