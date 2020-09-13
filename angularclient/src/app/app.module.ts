@@ -25,6 +25,7 @@ import {
   WorkWeekService
 } from '@syncfusion/ej2-angular-schedule';
 import { ImageComponent } from './image/image.component';
+import { AddRoomComponent } from './add-room/add-room.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ImageComponent } from './image/image.component';
     EventsComponent,
     EventDetailsComponent,
     AdministratorPanelComponent,
-    ImageComponent
+    ImageComponent,
+    AddRoomComponent
   ],
   imports: [
     BrowserModule,

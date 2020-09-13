@@ -15,4 +15,6 @@ public interface RoomService {
     Room updateRoom(RoomDTO roomDTO, Long id);
 
     Room save(Room room);
+
+    Room addRoom(Room room);
 }

@@ -1,6 +1,7 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.dto.RoomDTO;
+import com.example.demo.exceptions.RoomExistsException;
 import com.example.demo.exceptions.RoomIsUsedInEventException;
 import com.example.demo.exceptions.RoomNotFoundException;
 import com.example.demo.mappers.RoomMapper;
@@ -9,7 +10,6 @@ import com.example.demo.models.Room;
 import com.example.demo.repository.EventRepository;
 import com.example.demo.repository.RoomRepository;
 import com.example.demo.services.interfaces.RoomService;
-import org.apache.catalina.filters.CsrfPreventionFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,6 +61,15 @@ public class RoomServiceImpl implements RoomService {
         }
 
         Room room = roomMapper.toRoom(roomDTO, id);
+
+        return save(room);
+    }
+
+    @Override
+    public Room addRoom(Room room) {
+        if(roomRepository.existsByNumber(room.getNumber())){
+            throw new RoomExistsException(room.getNumber());
+        }
 
         return save(room);
     }
