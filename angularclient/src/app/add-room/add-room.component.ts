@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
 import {Room} from '../_model/room';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RoomService} from '../_services/room.service';
@@ -8,12 +8,16 @@ import {RoomService} from '../_services/room.service';
   templateUrl: './add-room.component.html',
   styleUrls: ['./add-room.component.css']
 })
-export class AddRoomComponent  {
+export class AddRoomComponent {
 
   room: Room;
 
   constructor(private rote: ActivatedRoute, private router: Router, private roomService: RoomService) {
     this.room = new Room();
+  }
+
+  seatsInRange() {
+    return this.room.seats > 0;
   }
 
   onSubmit() {
