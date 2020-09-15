@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dto.EventDTO;
 import com.example.demo.models.Image;
 import com.example.demo.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,28 +11,30 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
-@RestController
 @CrossOrigin(origins = "*")
+
+@RestController
 @RequestMapping("/image")
 public class ImageUploadController {
     @Autowired
     ImageRepository imageRepository;
 
     @PostMapping("/upload")
-    public ResponseEntity.BodyBuilder uplaodImage(@RequestParam("imageFile") MultipartFile file) throws IOException {
+    public ResponseEntity<Long> uplaodImage(@RequestParam("imageFile") MultipartFile file) throws IOException {
         Image img = new Image(file.getOriginalFilename(), file.getContentType(), compressBytes(file.getBytes()));
         imageRepository.save(img);
-        return ResponseEntity.status(HttpStatus.OK);
+        return ResponseEntity.ok(img.getId());
     }
 
-    @GetMapping(path = {"/get/{imageName}"})
-    public Image getImage(@PathVariable("imageName") String imageName) throws IOException {
-        final Optional<Image> retrievedImage = imageRepository.findByName(imageName);
+    @GetMapping(path = {"/get/{imageId}"})
+    public Image getImage(@PathVariable("imageId") Long id) throws IOException {
+        final Optional<Image> retrievedImage = imageRepository.findById(id);
         Image img = new Image(retrievedImage.get()
                                             .getName(), retrievedImage.get()
                                                                       .getType(),

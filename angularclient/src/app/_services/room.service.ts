@@ -21,8 +21,8 @@ export class RoomService {
     );
   }
 
-  public addRoom(room: Room) {
-    return this.http.post<Room>(this.roomUrl, room);
+  public addRoom(room: Room, imageId: number) {
+    return this.http.post<Room>(this.roomUrl + '?imageId=' + imageId, room);
   }
 
   public getRoom(id: number) {

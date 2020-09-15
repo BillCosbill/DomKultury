@@ -30,6 +30,10 @@ public class Room {
     @NotBlank
     private int seats;
 
+    @OneToOne
+    @JoinColumn(name = "image_id")
+    private Image image;
+
     @OneToMany(mappedBy = "room")
     private List<Event> events;
 

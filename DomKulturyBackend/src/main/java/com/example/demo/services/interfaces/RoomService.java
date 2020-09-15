@@ -2,6 +2,7 @@ package com.example.demo.services.interfaces;
 
 import com.example.demo.dto.RoomDTO;
 import com.example.demo.models.Room;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -16,5 +17,5 @@ public interface RoomService {
 
     Room save(Room room);
 
-    Room addRoom(Room room);
+    Room addRoom(Room room, Long id);
 }

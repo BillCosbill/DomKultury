@@ -39,8 +39,8 @@ public class RoomController {
     }
 
     @PostMapping
-    public Room addBook(@RequestBody Room room) {
-        return roomService.addRoom(room);
+    public Room addRoom(@RequestBody Room room, @RequestParam Long imageId) {
+        return roomService.addRoom(room, imageId);
     }
 
     @DeleteMapping("/{id}")

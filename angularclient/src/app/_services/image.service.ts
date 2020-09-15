@@ -17,8 +17,8 @@ export class ImageService {
     return this.http.post(this.imageUrl + '/upload', uploadImageData, {observe: 'response'});
   }
 
-  public getImage(imageName) {
-    return this.http.get(this.imageUrl + '/get/' + imageName);
+  public getImage(imageId) {
+    return this.http.get(this.imageUrl + '/get/' + imageId);
   }
 
 }

@@ -1,11 +1,17 @@
 <div class="row row-cols-1 row-cols-md-2 pt-5">
-  <div class="col mb-4" *ngFor="let item of collection3">
+  <div class="col mb-4" *ngFor="let item of rooms">
     <div class="card">
-      <img src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h3 class="card-title text-center">{{item.title}}</h3>
+      <div class="my">
+        <img *ngIf="!gotImage(item)" src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712" class="card-img-top" alt="...">
+        <img *ngIf="gotImage(item)" [src]="item.retrievedImage" class="card-img-top" alt="...">
       </div>
+
+      <div class="card-body">
+        <h3 class="card-title text-center">{{item.destiny}}</h3>
+      </div>
+      <button (click)="test(item)">Test</button>
     </div>
   </div>
 </div>
+
 

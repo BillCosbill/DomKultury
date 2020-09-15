@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Room} from '../_model/room';
+import {RoomService} from '../_services/room.service';
+import {ImageService} from '../_services/image.service';
 
 @Component({
   selector: 'app-rooms',
@@ -7,22 +10,49 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RoomsComponent implements OnInit {
 
-  collection3 = [
-    {id:1, title: 'Pracownia komputerowa'},
-    {id:2, title: 'Sala kinowa'},
-    {id:3, title: 'Studio nagrań'},
-    {id:4, title: 'Bar'},
-    {id:5, title: 'Sala gimnastyczna'},
-    {id:6, title: 'Sala plastyczna'},
-    {id:7, title: 'Sala orkiestry'}
-  ];
+  rooms: Room[] = [];
 
-  constructor() {
+  retrievedImage: any;
+  base64Data: any;
+  retrieveResonse: any;
+  imageId: any;
+
+  constructor(private roomService: RoomService, private imageService: ImageService) {
   }
-
 
   ngOnInit() {
+    this.roomService.findAll().subscribe(data => {
+      this.rooms = data;
+      data.forEach(x => {
+        if(x.imageId != null){
+          this.imageService.getImage(x.imageId)
+            .subscribe(
+              res => {
+                this.retrieveResonse = res;
+                this.base64Data = this.retrieveResonse.picByte;
+                x.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+              }
+            );
+        }});
+    });
   }
 
+  gotImage(room: Room){
+    return room.imageId != null;
+  }
 
+  // getImage(retrievedImage: any) {
+  //   this.imageService.getImage(this.imageId)
+  //     .subscribe(
+  //       res => {
+  //         this.retrieveResonse = res;
+  //         this.base64Data = this.retrieveResonse.picByte;
+  //         retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+  //       }
+  //     );
+  // }
+
+  test(item: any) {
+    console.log(item);
+  }
 }

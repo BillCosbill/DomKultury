@@ -1,13 +1,12 @@
 package com.example.demo.mappers;
 
-import com.example.demo.dto.EventDTO;
 import com.example.demo.dto.RoomDTO;
 import com.example.demo.exceptions.EventNotFoundException;
-import com.example.demo.exceptions.UserNotFoundException;
+import com.example.demo.exceptions.ImageNotFoundException;
 import com.example.demo.models.Event;
 import com.example.demo.models.Room;
-import com.example.demo.models.User;
 import com.example.demo.repository.EventRepository;
+import com.example.demo.repository.ImageRepository;
 import com.example.demo.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,15 +20,19 @@ public class RoomMapper {
 
     RoomRepository roomRepository;
     EventRepository eventRepository;
+    ImageRepository imageRepository;
 
     @Autowired
-    public RoomMapper(RoomRepository roomRepository, EventRepository eventRepository) {
+    public RoomMapper(RoomRepository roomRepository, EventRepository eventRepository, ImageRepository imageRepository) {
         this.roomRepository = roomRepository;
         this.eventRepository = eventRepository;
+        this.imageRepository = imageRepository;
     }
 
     public List<RoomDTO> toRoomsDTO(List<Room> rooms) {
-        return ((List<RoomDTO>) rooms.stream().map(this::toRoomDTO).collect(Collectors.toList()));
+        return ((List<RoomDTO>) rooms.stream()
+                                     .map(this::toRoomDTO)
+                                     .collect(Collectors.toList()));
     }
 
     public RoomDTO toRoomDTO(Room room) {
@@ -39,17 +42,22 @@ public class RoomMapper {
         roomDTO.setNumber(room.getNumber());
         roomDTO.setDestiny(room.getDestiny());
         roomDTO.setDescription(room.getDescription());
+        if (room.getImage() != null) {
+            roomDTO.setImageId(room.getImage().getId());
+        }
         roomDTO.setSeats(room.getSeats());
 
         List<Long> eventsIds = new ArrayList<>();
-        room.getEvents().forEach(x -> eventsIds.add(x.getId()));
+        room.getEvents()
+            .forEach(x -> eventsIds.add(x.getId()));
         roomDTO.setEventsId(eventsIds);
 
         return roomDTO;
     }
 
     public Room toRoom(RoomDTO roomDTO, Long id) {
-        Room room = roomRepository.findById(id).orElseThrow(() -> new EventNotFoundException(id));
+        Room room = roomRepository.findById(id)
+                                  .orElseThrow(() -> new EventNotFoundException(id));
 
         if (roomDTO.getId() != null) {
             room.setId(roomDTO.getId());
@@ -63,13 +71,19 @@ public class RoomMapper {
         if (roomDTO.getDescription() != null) {
             room.setDescription(roomDTO.getDescription());
         }
+        if (roomDTO.getImageId() != null) {
+            room.setImage(imageRepository.findById(roomDTO.getImageId())
+                                         .orElseThrow(() -> new ImageNotFoundException(roomDTO.getImageId())));
+        }
         if (roomDTO.getSeats() > 0) {
             room.setSeats(roomDTO.getSeats());
         }
 
         if (roomDTO.getEventsId() != null) {
             List<Event> events = new ArrayList<>();
-            roomDTO.getEventsId().forEach(x -> events.add(eventRepository.findById(x).orElseThrow(() -> new EventNotFoundException(x))));
+            roomDTO.getEventsId()
+                   .forEach(x -> events.add(eventRepository.findById(x)
+                                                           .orElseThrow(() -> new EventNotFoundException(x))));
             room.setEvents(events);
         }
 

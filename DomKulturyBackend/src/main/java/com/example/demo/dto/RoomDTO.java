@@ -15,5 +15,6 @@ public class RoomDTO {
     private String destiny;
     private String description;
     private int seats;
+    private Long imageId;
     private List<Long> eventsId;
 }

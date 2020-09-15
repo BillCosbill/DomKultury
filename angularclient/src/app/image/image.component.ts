@@ -17,11 +17,11 @@ export class ImageComponent {
   base64Data: any;
   retrieveResonse: any;
   message: string;
-  imageName: any;
+  imageId: any;
 
   //Gets called when the user selects an image
   public onFileChanged(event) {
-    //Select File
+    //Select ImageFile
     this.selectedFile = event.target.files[0];
   }
 
@@ -34,11 +34,7 @@ export class ImageComponent {
     //Make a call to the Spring Boot Application to save the image
     this.imageService.saveImage(uploadImageData)
       .subscribe((response) => {
-          if (response.status === 200) {
-            this.message = 'Image uploaded successfully';
-          } else {
-            this.message = 'Image not uploaded successfully';
-          }
+          console.log(response.body);
         }
       );
   }
@@ -46,7 +42,7 @@ export class ImageComponent {
   //Gets called when the user clicks on retieve image button to get the image from back end
   getImage() {
     //Make a call to Sprinf Boot to get the Image Bytes.
-    this.imageService.getImage(this.imageName)
+    this.imageService.getImage(this.imageId)
       .subscribe(
         res => {
           this.retrieveResonse = res;
@@ -56,4 +52,7 @@ export class ImageComponent {
       );
   }
 
+  test() {
+    console.log(this.retrievedImage);
+  }
 }

@@ -2,7 +2,7 @@
   <div class="card-body">
     <form (ngSubmit)="onSubmit()" #userForm="ngForm">
       <div class="form-group">
-        <label for="number">Numer</label>
+        <label for="number">Numer:</label>
         <input type="text" [(ngModel)]="room.number"
                class="form-control"
                id="number"
@@ -10,10 +10,10 @@
                placeholder="Podaj numer pokoju . . ."
                required #number="ngModel">
       </div>
-      <div [hidden]="!number.pristine" class="alert alert-danger">Numer jest wymagany</div>
+      <!--      <div [hidden]="!number.pristine" class="alert alert-danger">Numer jest wymagany</div>-->
 
       <div class="form-group">
-        <label for="destiny">Przeznaczenie</label>
+        <label for="destiny">Przeznaczenie:</label>
         <input type="text" [(ngModel)]="room.destiny"
                class="form-control"
                id="destiny"
@@ -21,12 +21,12 @@
                placeholder="Podaj przeznaczenie . . ."
                required #destiny="ngModel">
 
-        <div [hidden]="!destiny.pristine" class="alert alert-danger">Przeznaczenie jest wymagane</div>
+        <!--        <div [hidden]="!destiny.pristine" class="alert alert-danger">Przeznaczenie jest wymagane</div>-->
 
       </div>
 
       <div class="form-group">
-        <label for="description">Opis</label>
+        <label for="description">Opis:</label>
         <input type="text" [(ngModel)]="room.description"
                class="form-control"
                id="description"
@@ -36,7 +36,7 @@
                required #description="ngModel">
 
         <div *ngIf="description.invalid">
-          <div [hidden]="!description.pristine" class="alert alert-danger">Opis jest wymagany</div>
+          <!--          <div [hidden]="!description.pristine" class="alert alert-danger">Opis jest wymagany</div>-->
           <div class="alert alert-danger" *ngIf="description.errors.minlength">
             Opis pokoju musi mieć przynajmniej 10 znaków
           </div>
@@ -45,15 +45,25 @@
       </div>
 
       <div class="form-group">
-        <label for="seats">Miejsca</label>
+        <label for="seats">Ilość miejsc:</label>
         <input #seats="ngModel" [(ngModel)]="room.seats"
                class="form-control"
                id="seats"
                name="seats"
-               placeholder="Podaj liczbę miejsc . . ."
+               placeholder="Podaj ilość miejsc . . ."
+               min="1"
                required type="number">
-          <div [hidden]="!seats.pristine" class="alert alert-danger">Liczba miejsc jest wymagana</div>
-          <div [hidden]="seatsInRange()" class="alert alert-danger">Liczba miejsc musi być większa od 0</div>
+        <!--          <div [hidden]="!seats.pristine" class="alert alert-danger">Liczba miejsc jest wymagana</div>-->
+        <div [hidden]="seatsInRange() || seats.pristine" class="alert alert-danger">Liczba miejsc musi być większa od
+          0
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Ilość miejsc:</label>
+        <div class="col-md-6">
+          <input type="file" (change)="onFileChanged($event)">
+        </div>
       </div>
 
       <button type="submit" [disabled]="!userForm.form.valid || !seatsInRange()"
@@ -63,3 +73,6 @@
     </form>
   </div>
 </div>
+
+
+<button class="" (click)="test()">Test</button>

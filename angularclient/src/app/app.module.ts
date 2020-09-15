@@ -24,8 +24,8 @@ import {
   WeekService,
   WorkWeekService
 } from '@syncfusion/ej2-angular-schedule';
-import { ImageComponent } from './image/image.component';
-import { AddRoomComponent } from './add-room/add-room.component';
+import {ImageComponent} from './image/image.component';
+import {AddRoomComponent} from './add-room/add-room.component';
 
 @NgModule({
   declarations: [

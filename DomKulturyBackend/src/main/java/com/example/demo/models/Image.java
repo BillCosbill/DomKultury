@@ -27,6 +27,9 @@ public class Image {
     @Column(name = "picByte", length = 99999999)
     private byte[] picByte;
 
+    @OneToOne(mappedBy = "image")
+    private Room room;
+
     public Image(String name, String type, byte[] picByte) {
         this.name = name;
         this.type = type;
