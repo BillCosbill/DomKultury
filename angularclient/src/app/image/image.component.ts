@@ -47,6 +47,7 @@ export class ImageComponent {
     this.imageService.getImage(this.imageId)
       .subscribe(
         res => {
+          console.log(res);
           this.retrieveResonse = res;
           this.base64Data = this.retrieveResonse.picByte;
           this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;

@@ -1,6 +1,7 @@
 package com.example.demo.file;
 
 import com.example.demo.models.Image;
+import com.example.demo.models.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,10 +49,11 @@ public class FileController {
     }
 
     @GetMapping("/downloadFile/{fileId}")
-    public Image downloadFile(@PathVariable String fileId) {
+    public Test downloadFile(@PathVariable String fileId) {
         DBFile dbFile = dbFileStorageService.getFile(fileId);
 
-        Image img = new Image(dbFile.getFileName(), dbFile.getFileType(), decompressBytes(dbFile.getData()));
+        //TODO zwracać DBFile zamiast Image, jakiś dziwny błąd wywala backend jak próbuję to zamienić :(
+        Test img = new Test(dbFile.getFileName(), dbFile.getFileType(), decompressBytes(dbFile.getData()));
 
         return img;
     }
