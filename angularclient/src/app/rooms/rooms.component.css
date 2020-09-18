@@ -15,7 +15,8 @@
 
 .my {
   width: 100%;
-  height: 35vh;
+  /*TODO dopasować rozmiar zdjęć tak, żeby na każdym urządzeniu dobrze wyglądało*/
+  height: 20em;
 }
 
 .my img {

@@ -6,16 +6,8 @@ import {HttpClient} from '@angular/common/http';
 })
 export class ImageService {
 
-  private imageUrl: string;
-
-
   constructor(private http: HttpClient) {
-    this.imageUrl = 'http://localhost:8081/image';
   }
-
-  // public saveImage(uploadImageData) {
-  //   return this.http.post(this.imageUrl + '/upload', uploadImageData, {observe: 'response'});
-  // }
 
   public saveImage(uploadImageData) {
     return this.http.post('http://localhost:8081/uploadFile', uploadImageData, {observe: 'response'});

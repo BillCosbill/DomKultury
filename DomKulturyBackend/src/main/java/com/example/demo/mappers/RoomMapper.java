@@ -3,10 +3,10 @@ package com.example.demo.mappers;
 import com.example.demo.dto.RoomDTO;
 import com.example.demo.exceptions.EventNotFoundException;
 import com.example.demo.exceptions.ImageNotFoundException;
+import com.example.demo.file.DBFileRepository;
 import com.example.demo.models.Event;
 import com.example.demo.models.Room;
 import com.example.demo.repository.EventRepository;
-import com.example.demo.repository.ImageRepository;
 import com.example.demo.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,10 +20,10 @@ public class RoomMapper {
 
     RoomRepository roomRepository;
     EventRepository eventRepository;
-    ImageRepository imageRepository;
+    DBFileRepository imageRepository;
 
     @Autowired
-    public RoomMapper(RoomRepository roomRepository, EventRepository eventRepository, ImageRepository imageRepository) {
+    public RoomMapper(RoomRepository roomRepository, EventRepository eventRepository, DBFileRepository imageRepository) {
         this.roomRepository = roomRepository;
         this.eventRepository = eventRepository;
         this.imageRepository = imageRepository;
@@ -43,7 +43,7 @@ public class RoomMapper {
         roomDTO.setDestiny(room.getDestiny());
         roomDTO.setDescription(room.getDescription());
         if (room.getImage() != null) {
-            roomDTO.setImageId(room.getImage().getId());
+            roomDTO.setImageId(room.getImage());
         }
         roomDTO.setSeats(room.getSeats());
 
@@ -72,8 +72,7 @@ public class RoomMapper {
             room.setDescription(roomDTO.getDescription());
         }
         if (roomDTO.getImageId() != null) {
-            room.setImage(imageRepository.findById(roomDTO.getImageId())
-                                         .orElseThrow(() -> new ImageNotFoundException(roomDTO.getImageId())));
+            room.setImage(roomDTO.getImageId());
         }
         if (roomDTO.getSeats() > 0) {
             room.setSeats(roomDTO.getSeats());

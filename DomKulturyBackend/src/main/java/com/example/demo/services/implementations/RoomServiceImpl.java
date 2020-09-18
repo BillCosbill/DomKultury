@@ -4,17 +4,18 @@ import com.example.demo.dto.RoomDTO;
 import com.example.demo.exceptions.RoomExistsException;
 import com.example.demo.exceptions.RoomIsUsedInEventException;
 import com.example.demo.exceptions.RoomNotFoundException;
+import com.example.demo.file.DBFile;
+import com.example.demo.file.DBFileRepository;
 import com.example.demo.mappers.RoomMapper;
 import com.example.demo.models.Event;
-import com.example.demo.models.Image;
 import com.example.demo.models.Room;
 import com.example.demo.repository.EventRepository;
-import com.example.demo.repository.ImageRepository;
 import com.example.demo.repository.RoomRepository;
 import com.example.demo.services.interfaces.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,10 +25,10 @@ public class RoomServiceImpl implements RoomService {
     RoomRepository roomRepository;
     EventRepository eventRepository;
     RoomMapper roomMapper;
-    ImageRepository imageRepository;
+    DBFileRepository imageRepository;
 
     @Autowired
-    public RoomServiceImpl(RoomRepository roomRepository, RoomMapper roomMapper, EventRepository eventRepository, ImageRepository imageRepository) {
+    public RoomServiceImpl(RoomRepository roomRepository, RoomMapper roomMapper, EventRepository eventRepository, DBFileRepository imageRepository) {
         this.roomRepository = roomRepository;
         this.roomMapper = roomMapper;
         this.eventRepository = eventRepository;
@@ -71,15 +72,15 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Room addRoom(Room room, Long id) {
+    public Room addRoom(Room room, String id) {
         if(roomRepository.existsByNumber(room.getNumber())){
             throw new RoomExistsException(room.getNumber());
         }
 
-        Optional<Image> image = imageRepository.findById(id);
+        Optional<DBFile> image = imageRepository.findById(id);
 
         if(image.isPresent()){
-            room.setImage(image.get());
+            room.setImage(id);
         }
 
         return save(room);

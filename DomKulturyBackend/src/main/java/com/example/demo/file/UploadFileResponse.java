@@ -19,4 +19,5 @@ public class UploadFileResponse {
         this.fileType = fileType;
         this.size = size;
     }
+
 }

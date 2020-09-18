@@ -14,7 +14,6 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 
-
 @RestController
 @RequestMapping("/rooms")
 public class RoomController {
@@ -39,7 +38,7 @@ public class RoomController {
     }
 
     @PostMapping
-    public Room addRoom(@RequestBody Room room, @RequestParam Long imageId) {
+    public Room addRoom(@RequestBody Room room, @RequestParam String imageId) {
         return roomService.addRoom(room, imageId);
     }
 

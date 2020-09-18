@@ -1,3 +1,5 @@
+//TODO USUNĄĆ CAŁY KOMPONENT IMAGE - JEST ON TESTOWY!!!!!!!!!!!!!!
+
 import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ImageService} from '../_services/image.service';
@@ -36,7 +38,9 @@ export class ImageComponent {
     //Make a call to the Spring Boot Application to save the image
     this.imageService.saveImage(uploadImageData)
       .subscribe((response) => {
-          console.log(response.body);
+        let a = JSON.stringify(response.body);
+        let b = JSON.parse(a);
+        console.log(b.id);
         }
       );
   }

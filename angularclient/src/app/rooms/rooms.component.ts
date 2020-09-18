@@ -12,10 +12,8 @@ export class RoomsComponent implements OnInit {
 
   rooms: Room[] = [];
 
-  retrievedImage: any;
   base64Data: any;
   retrieveResonse: any;
-  imageId: any;
 
   constructor(private roomService: RoomService, private imageService: ImageService) {
   }
@@ -39,20 +37,5 @@ export class RoomsComponent implements OnInit {
 
   gotImage(room: Room){
     return room.imageId != null;
-  }
-
-  // getImage(retrievedImage: any) {
-  //   this.imageService.getImage(this.imageId)
-  //     .subscribe(
-  //       res => {
-  //         this.retrieveResonse = res;
-  //         this.base64Data = this.retrieveResonse.picByte;
-  //         retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-  //       }
-  //     );
-  // }
-
-  test(item: any) {
-    console.log(item);
   }
 }

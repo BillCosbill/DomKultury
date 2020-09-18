@@ -17,5 +17,5 @@ public interface RoomService {
 
     Room save(Room room);
 
-    Room addRoom(Room room, Long id);
+    Room addRoom(Room room, String id);
 }

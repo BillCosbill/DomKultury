@@ -30,11 +30,13 @@ export class AddRoomComponent {
 
   onSubmit() {
     const uploadImageData = new FormData();
-    uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
+    uploadImageData.append('file', this.selectedFile, this.selectedFile.name);
 
     this.imageService.saveImage(uploadImageData)
       .subscribe((response) => {
-          this.uploadedImageId = response.body;
+          let a = JSON.stringify(response.body);
+          let b = JSON.parse(a);
+          this.uploadedImageId = b.id;
           this.roomService.addRoom(this.room, this.uploadedImageId).subscribe(() => this.goToBooksList());
         }
       );
@@ -45,6 +47,6 @@ export class AddRoomComponent {
   }
 
   test() {
-
+    console.log(this.uploadedImageId);
   }
 }

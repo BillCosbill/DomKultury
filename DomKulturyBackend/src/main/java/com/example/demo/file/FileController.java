@@ -1,6 +1,5 @@
 package com.example.demo.file;
 
-import com.example.demo.models.Image;
 import com.example.demo.models.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +21,6 @@ import java.util.zip.Inflater;
 @RestController
 public class FileController {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileController.class);
-
     @Autowired
     private DBFileStorageService dbFileStorageService;
 
@@ -38,14 +35,6 @@ public class FileController {
 
         return new UploadFileResponse(dbFile.getId(), dbFile.getFileName(), fileDownloadUri,
                 file.getContentType(), file.getSize());
-    }
-
-    @PostMapping("/uploadMultipleFiles")
-    public List<UploadFileResponse> uploadMultipleFiles(@RequestParam MultipartFile[] files) {
-        return Arrays.asList(files)
-                     .stream()
-                     .map(file -> uploadFile(file))
-                     .collect(Collectors.toList());
     }
 
     @GetMapping("/downloadFile/{fileId}")
