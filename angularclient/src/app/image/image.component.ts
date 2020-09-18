@@ -29,7 +29,9 @@ export class ImageComponent {
   onUpload() {
     //FormData API provides methods and properties to allow us easily prepare form data to be sent with POST HTTP requests.
     const uploadImageData = new FormData();
-    uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
+    uploadImageData.append('file', this.selectedFile, this.selectedFile.name);
+
+
 
     //Make a call to the Spring Boot Application to save the image
     this.imageService.saveImage(uploadImageData)
