@@ -36,7 +36,6 @@ public class WebAppApplication {
         SpringApplication.run(WebAppApplication.class, args);
     }
 
-
     @EventListener(ApplicationReadyEvent.class)
     public void fillDB(){
         Room music = new Room("01", "Muzyka", "Sala przeaznaczona do celów muzycznych. Wyposażona w sprzęt do nagrywania oraz instrumenty", 20);
