@@ -54,9 +54,13 @@ public class User {
     @ManyToMany(mappedBy = "students")
     private List<Event> classAttended;
 
-    public User(String username, String email, String password) {
+    @NotBlank
+    private boolean isEnable;
+
+    public User(String username, String email, String password, boolean isEnable) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.isEnable = isEnable;
     }
 }

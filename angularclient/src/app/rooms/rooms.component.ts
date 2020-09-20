@@ -22,7 +22,7 @@ export class RoomsComponent implements OnInit {
     this.roomService.findAll().subscribe(data => {
       this.rooms = data;
       data.forEach(x => {
-        if(x.imageId != null){
+        if (x.imageId != null){
           this.imageService.getImage(x.imageId)
             .subscribe(
               res => {
@@ -36,6 +36,6 @@ export class RoomsComponent implements OnInit {
   }
 
   gotImage(room: Room){
-    return room.imageId != null;
+    return room.retrievedImage != null;
   }
 }

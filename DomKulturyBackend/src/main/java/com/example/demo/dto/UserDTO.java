@@ -20,4 +20,5 @@ public class UserDTO {
     private Set<Role> roles = new HashSet<>();
     private List<Long> classConducted;
     private List<Long> classAttended;
+    private boolean isEnable;
 }

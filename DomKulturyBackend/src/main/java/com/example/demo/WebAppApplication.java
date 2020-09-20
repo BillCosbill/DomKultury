@@ -54,27 +54,27 @@ public class WebAppApplication {
         roleRepository.save(teacher);
         roleRepository.save(admin);
 
-        User adminUser = new User("admin","admin@onet.pl","$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2"); //pass = 123456
+        User adminUser = new User("admin","admin@onet.pl","$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         Set<Role> adminRole = new HashSet<>();
         adminRole.add(admin);
         adminUser.setRoles(adminRole);
         userRepository.save(adminUser);
 
-        User userUser = new User("user","user@onet.pl","$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2"); //pass = 123456
+        User userUser = new User("user","user@onet.pl","$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         Set<Role> userRole = new HashSet<>();
         userRole.add(user);
         userUser.setRoles(userRole);
         userRepository.save(userUser);
 
-        User userUser2 = new User("user2","user2@onet.pl","$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2"); //pass = 123456
+        User userUser2 = new User("user2","user2@onet.pl","$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         userUser2.setRoles(userRole);
         userRepository.save(userUser2);
 
-        User userUser3 = new User("user3","user3@onet.pl","$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2"); //pass = 123456
+        User userUser3 = new User("user3","user3@onet.pl","$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         userUser3.setRoles(userRole);
         userRepository.save(userUser3);
 
-        User teacherUser = new User("teacher","teacher@onet.pl","$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2"); //pass = 123456
+        User teacherUser = new User("teacher","teacher@onet.pl","$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         Set<Role> teacherRole = new HashSet<>();
         teacherRole.add(teacher);
         teacherUser.setRoles(teacherRole);

@@ -11,12 +11,15 @@ import {AdministratorPanelComponent} from './administrator-panel/administrator-p
 import {AdminguardService} from './_guards/adminguard.service';
 import {ImageComponent} from './image/image.component';
 import {AddRoomComponent} from './add-room/add-room.component';
+import {RoomDetailsComponent} from './room-details/room-details.component';
+import {AdministratorPanelActivationsComponent} from './administrator-panel-activations/administrator-panel-activations.component';
 
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'events', component: EventsComponent},
   {path: 'event/:id', component: EventDetailsComponent, pathMatch: 'full'},
+  {path: 'room/:id', component: RoomDetailsComponent, pathMatch: 'full'},
   {path: 'rooms', component: RoomsComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'login', component: LoginComponent},
@@ -24,6 +27,7 @@ const routes: Routes = [
   {path: 'addRoom', component: AddRoomComponent},
   {path: 'image', component: ImageComponent},
   {path: 'admin_panel', component: AdministratorPanelComponent, canActivate: [AdminguardService]},
+  {path: 'admin_panel_activations', component: AdministratorPanelActivationsComponent, canActivate: [AdminguardService]},
   {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 

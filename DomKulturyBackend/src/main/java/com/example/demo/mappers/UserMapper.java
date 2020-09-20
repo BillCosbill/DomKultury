@@ -46,6 +46,8 @@ public class UserMapper {
         user.getClassAttended().forEach(x -> attendedId.add(x.getId()));
         userDTO.setClassAttended(attendedId);
 
+        userDTO.setEnable(user.isEnable());
+
         return userDTO;
     }
 

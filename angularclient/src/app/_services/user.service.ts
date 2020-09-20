@@ -11,10 +11,12 @@ import {catchError} from 'rxjs/operators';
 export class UserService {
 
   private usersUrl: string;
+  private activeAccountUrl: string;
   private changeRoleUrl: string;
 
   constructor(private http: HttpClient) {
     this.usersUrl = 'http://localhost:8081/users';
+    this.activeAccountUrl = 'http://localhost:8081/activeAccount';
     this.changeRoleUrl = 'http://localhost:8081/changeRole';
   }
 
@@ -34,7 +36,11 @@ export class UserService {
     return this.http.put<User>(this.usersUrl + '/' + id, user);
   }
 
+  public activeAccount(id: number) {
+    return this.http.patch<User>(this.usersUrl + '/activeAccount/' + id, null);
+  }
+
   public changeRole(role: string, id: number) {
-    return this.http.patch<User>(this.changeRoleUrl + '/' + id + '?newRole=' + role, null);
+    return this.http.patch<User>(this.usersUrl + '/changeRole/' + id + '?newRole=' + role, null);
   }
 }

@@ -37,16 +37,12 @@ export class AddRoomComponent {
           let a = JSON.stringify(response.body);
           let b = JSON.parse(a);
           this.uploadedImageId = b.id;
-          this.roomService.addRoom(this.room, this.uploadedImageId).subscribe(() => this.goToBooksList());
+          this.roomService.addRoom(this.room, this.uploadedImageId).subscribe(() => this.goToRoomsList());
         }
       );
   }
 
-  goToBooksList() {
-    this.router.navigate(['/home']);
-  }
-
-  test() {
-    console.log(this.uploadedImageId);
+  goToRoomsList() {
+    this.router.navigate(['/rooms']);
   }
 }

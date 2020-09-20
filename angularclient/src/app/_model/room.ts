@@ -3,7 +3,7 @@ export class Room {
   number: string;
   destiny: string;
   description: string;
-  imageId: number;
+  imageId: string;
   retrievedImage: any;
   seats: number;
   eventsIds: number[];

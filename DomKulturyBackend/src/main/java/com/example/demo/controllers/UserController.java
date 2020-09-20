@@ -64,6 +64,19 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userDTO);
     }
 
+    //TODO można też dodać dezaktywację konta
+    //TODO DODAĆ DO SERWISU!!!!!!!!!!!!
+    @PatchMapping("/activeAccount/{id}")
+    public ResponseEntity<MessageResponse> activeAccount(@PathVariable Long id) {
+        User user = userService.findById(id);
+
+        user.setEnable(true);
+
+        userService.save(user);
+
+        return ResponseEntity.ok(new MessageResponse("User account: " + user.getUsername() + " has been activated"));
+    }
+
     //TODO DODAĆ DO SERWISU!!!!!!!!!!!!
     @PatchMapping("/changeRole/{id}")
     public ResponseEntity<MessageResponse> changeRole(@RequestParam ERole newRole, @PathVariable Long id) {

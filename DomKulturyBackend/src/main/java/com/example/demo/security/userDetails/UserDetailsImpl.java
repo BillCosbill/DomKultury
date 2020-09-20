@@ -1,6 +1,5 @@
 package com.example.demo.security.userDetails;
 
-import com.example.demo.models.Role;
 import com.example.demo.models.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,16 +21,18 @@ public class UserDetailsImpl implements UserDetails {
     @JsonIgnore
     private String password;
 
-
     private Collection<? extends GrantedAuthority> authorities;
 
+    private boolean isEnable;
+
     public UserDetailsImpl(Long id, String username, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
+                           Collection<? extends GrantedAuthority> authorities, boolean isEnable) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+        this.isEnable = isEnable;
     }
 
     public static UserDetailsImpl build(User user) {
@@ -44,7 +45,8 @@ public class UserDetailsImpl implements UserDetails {
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
-                authorities);
+                authorities,
+                user.isEnable());
     }
 
     @Override
@@ -88,7 +90,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isEnable;
     }
 
     @Override
