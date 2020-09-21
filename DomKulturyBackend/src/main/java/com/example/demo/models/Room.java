@@ -35,6 +35,9 @@ public class Room {
     @OneToMany(mappedBy = "room")
     private List<Event> events;
 
+    @OneToMany(mappedBy = "room")
+    private List<Lesson> lessons;
+
     public Room(String number, String destiny, String description, int seats) {
         this.number = number;
         this.destiny = destiny;
