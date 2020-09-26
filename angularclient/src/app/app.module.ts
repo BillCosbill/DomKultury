@@ -28,6 +28,8 @@ import {ImageComponent} from './image/image.component';
 import {AddRoomComponent} from './add-room/add-room.component';
 import { RoomDetailsComponent } from './room-details/room-details.component';
 import { AdministratorPanelActivationsComponent } from './administrator-panel-activations/administrator-panel-activations.component';
+import { SubjectsComponent } from './subjects/subjects.component';
+import { SubjectDetailsComponent } from './subject-details/subject-details.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { AdministratorPanelActivationsComponent } from './administrator-panel-ac
     ImageComponent,
     AddRoomComponent,
     RoomDetailsComponent,
-    AdministratorPanelActivationsComponent
+    AdministratorPanelActivationsComponent,
+    SubjectsComponent,
+    SubjectDetailsComponent,
   ],
   imports: [
     BrowserModule,

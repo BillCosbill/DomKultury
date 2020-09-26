@@ -1,0 +1,111 @@
+<div class="container pt-5">
+
+  <div>
+    <div>
+      Id:
+      <p>
+        {{subject.id}}
+      </p>
+    </div>
+
+    <div>
+      Nazwa:
+      <p>
+        {{subject.name}}
+      </p>
+    </div>
+
+    <div>
+      Opis:
+      <p>
+        {{subject.description}}
+      </p>
+    </div>
+
+    <div>
+      <p class="pt-5">Nauczyciel prowadzący:</p>
+      <div class="table-body">
+        <table class="table-table">
+          <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nazwa</th>
+            <th scope="col">E-mail</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>{{ teacher.id }}</td>
+            <td>{{ teacher.username }}</td>
+            <td>{{ teacher.email }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div>
+      <div>
+        <p class="pt-5">Lekcje wchodzące w zakres przedmiotu:</p>
+        <div class="table-body">
+          <table class="table-table">
+            <thead>
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Temat</th>
+              <th scope="col">Opis</th>
+              <th scope="col">Data rozpoczęcia</th>
+              <th scope="col">Data zakończenia</th>
+              <th scope="col">Sala</th>
+              <th scope="col">Obecność</th>
+              <th scope="col">Id przedmiotu</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let lesson of lessons">
+              <td>{{ lesson.id }}</td>
+              <td>{{ lesson.topic }}</td>
+              <td>{{ lesson.description }}</td>
+              <td>{{ lesson.startDate }}</td>
+              <td>{{ lesson.finishDate }}</td>
+              <td>{{ lesson.roomId }}</td>
+              <td>{{ lesson.attendancesId }}</td>
+              <td>{{ lesson.subjectId }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p class="pt-5">Uczniowe zapisani na przedmiot:</p>
+      <div class="table-body">
+        <table class="table-table">
+          <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Imię</th>
+            <th scope="col">Nazwisko</th>
+            <th scope="col">PESEL</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Data urodzenia</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let student of students">
+            <td>{{ student.id }}</td>
+            <td>{{ student.firstName }}</td>
+            <td>{{ student.lastName }}</td>
+            <td>{{ student.pesel }}</td>
+            <td>{{ student.email }}</td>
+            <td>{{ student.birthday }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</div>
