@@ -1,7 +1,7 @@
 package com.example.demo.mappers;
 
 import com.example.demo.dto.StudentDTO;
-import com.example.demo.exceptions.TestException;
+import com.example.demo.exceptions.StudentNotFoundException;
 import com.example.demo.models.Student;
 import com.example.demo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class StudentMapper {
     public Student toStudent(StudentDTO studentDTO, Long id) {
         //TODO wyjątek zmienić
         Student student = studentRepository.findById(id)
-                                           .orElseThrow(() -> new TestException());
+                                           .orElseThrow(() -> new StudentNotFoundException(id));
 
         if (studentDTO.getFirstName() != null) {
             student.setFirstName(studentDTO.getFirstName());

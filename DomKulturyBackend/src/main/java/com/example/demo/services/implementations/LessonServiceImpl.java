@@ -2,10 +2,11 @@ package com.example.demo.services.implementations;
 
 import com.example.demo.dto.AttendanceDTO;
 import com.example.demo.dto.LessonDTO;
-import com.example.demo.exceptions.TestException;
+import com.example.demo.exceptions.LessonExistsException;
+import com.example.demo.exceptions.LessonNotFoundException;
+import com.example.demo.exceptions.SubjectNotFoundException;
 import com.example.demo.mappers.AttendanceMapper;
 import com.example.demo.mappers.LessonMapper;
-import com.example.demo.mappers.SubjectMapper;
 import com.example.demo.models.Attendance;
 import com.example.demo.models.Lesson;
 import com.example.demo.models.Student;
@@ -45,7 +46,7 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public Lesson findById(Long id) {
-        return lessonRepository.findById(id).orElseThrow(() -> new TestException());
+        return lessonRepository.findById(id).orElseThrow(() -> new LessonNotFoundException(id));
     }
 
     @Override
@@ -57,7 +58,7 @@ public class LessonServiceImpl implements LessonService {
     @Override
     public Lesson updateLesson(LessonDTO lessonDTO, Long id) {
         if (!lessonDTO.getId().equals(id)) {
-            throw new TestException();
+            throw new LessonExistsException(id);
         }
 
         Lesson lesson = lessonMapper.toLesson(lessonDTO, id);
@@ -78,7 +79,7 @@ public class LessonServiceImpl implements LessonService {
 
         save(lesson);
 
-        Subject subject = subjectRepository.findById(lessonDTO.getSubjectId()).orElseThrow(() -> new TestException());
+        Subject subject = subjectRepository.findById(lessonDTO.getSubjectId()).orElseThrow(() -> new SubjectNotFoundException(lessonDTO.getSubjectId()));
 
         List<Student> students = subject.getStudents();
 
@@ -95,7 +96,7 @@ public class LessonServiceImpl implements LessonService {
             attendanceRepository.save(attendanceMapper.toAttendanceAdd(x));
         });
 
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new TestException());
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new LessonNotFoundException(lessonId));
 
         lesson.setAttendanceChecked(true);
         save(lesson);

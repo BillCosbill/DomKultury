@@ -1,7 +1,8 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.dto.AttendanceDTO;
-import com.example.demo.exceptions.TestException;
+import com.example.demo.exceptions.AttendanceExistsException;
+import com.example.demo.exceptions.AttendanceNotFoundException;
 import com.example.demo.mappers.AttendanceMapper;
 import com.example.demo.models.Attendance;
 import com.example.demo.repository.AttendanceRepository;
@@ -30,7 +31,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     @Override
     public Attendance findById(Long id) {
-        return attendanceRepository.findById(id).orElseThrow(() -> new TestException());
+        return attendanceRepository.findById(id).orElseThrow(() -> new AttendanceNotFoundException(id));
     }
 
     @Override
@@ -42,7 +43,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     @Override
     public Attendance updateAttendance(AttendanceDTO attendanceDTO, Long id) {
         if (!attendanceDTO.getId().equals(id)) {
-            throw new TestException();
+            throw new AttendanceExistsException(id);
         }
 
         Attendance attendance = attendanceMapper.toAttendance(attendanceDTO, id);

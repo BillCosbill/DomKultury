@@ -1,7 +1,9 @@
 package com.example.demo.mappers;
 
 import com.example.demo.dto.AttendanceDTO;
-import com.example.demo.exceptions.TestException;
+import com.example.demo.exceptions.AttendanceNotFoundException;
+import com.example.demo.exceptions.LessonNotFoundException;
+import com.example.demo.exceptions.StudentNotFoundException;
 import com.example.demo.models.Attendance;
 import com.example.demo.repository.AttendanceRepository;
 import com.example.demo.repository.LessonRepository;
@@ -41,18 +43,18 @@ public class AttendanceMapper {
     }
 
     public Attendance toAttendance(AttendanceDTO attendanceDTO, Long id) {
-        Attendance attendance = attendanceRepository.findById(id).orElseThrow(() -> new TestException());
+        Attendance attendance = attendanceRepository.findById(id).orElseThrow(() -> new AttendanceNotFoundException(id));
 
         if (attendanceDTO.getId() != null) {
             attendance.setId(attendanceDTO.getId());
         }
         if (attendanceDTO.getLessonId() != null) {
             attendance.setLesson(lessonRepository.findById(attendanceDTO.getLessonId())
-                                                 .orElseThrow(() -> new TestException()));
+                                                 .orElseThrow(() -> new LessonNotFoundException(attendanceDTO.getLessonId())));
         }
         if (attendanceDTO.getStudentId() != null) {
             attendance.setStudent(studentRepository.findById(attendanceDTO.getStudentId())
-                                                   .orElseThrow(() -> new TestException()));
+                                                   .orElseThrow(() -> new StudentNotFoundException(attendanceDTO.getStudentId())));
         }
 
         //TODO możliwe że obecność będzie wariowała przez tą linijkę, bo nie sprawdzam czy w attendanceDTO została zmieniona lub poadana wartość present
@@ -69,11 +71,11 @@ public class AttendanceMapper {
         }
         if (attendanceDTO.getLessonId() != null) {
             attendance.setLesson(lessonRepository.findById(attendanceDTO.getLessonId())
-                                                 .orElseThrow(() -> new TestException()));
+                                                 .orElseThrow(() -> new LessonNotFoundException(attendanceDTO.getLessonId())));
         }
         if (attendanceDTO.getStudentId() != null) {
             attendance.setStudent(studentRepository.findById(attendanceDTO.getStudentId())
-                                                   .orElseThrow(() -> new TestException()));
+                                                   .orElseThrow(() -> new StudentNotFoundException(attendanceDTO.getStudentId())));
         }
 
         //TODO możliwe że obecność będzie wariowała przez tą linijkę, bo nie sprawdzam czy w attendanceDTO została zmieniona lub poadana wartość present

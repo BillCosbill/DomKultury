@@ -1,7 +1,7 @@
 package com.example.demo.mappers;
 
 import com.example.demo.dto.SubjectDTO;
-import com.example.demo.exceptions.TestException;
+import com.example.demo.exceptions.*;
 import com.example.demo.models.Lesson;
 import com.example.demo.models.Student;
 import com.example.demo.models.Subject;
@@ -64,7 +64,7 @@ public class SubjectMapper {
 
     public Subject toSubject(SubjectDTO subjectDTO, Long id) {
         //TODO wyjątek zmienić
-        Subject subject = subjectRepository.findById(id).orElseThrow(() -> new TestException());
+        Subject subject = subjectRepository.findById(id).orElseThrow(() -> new SubjectNotFoundException(id));
 
         if (subjectDTO.getName() != null) {
             subject.setName(subjectDTO.getName());
@@ -74,18 +74,18 @@ public class SubjectMapper {
         }
         if (subjectDTO.getTeacherId() != null) {
             subject.setTeacher(userRepository.findById(subjectDTO.getTeacherId())
-                                             .orElseThrow(() -> new TestException()));
+                                             .orElseThrow(() -> new UserNotFoundException(subject.getTeacher().getId())));
         }
         if (subjectDTO.getStudentsId() != null) {
             List<Student> students = new ArrayList<>();
             subjectDTO.getStudentsId()
-                      .forEach(x -> students.add(studentRepository.findById(x).orElseThrow(() -> new TestException())));
+                      .forEach(x -> students.add(studentRepository.findById(x).orElseThrow(() -> new StudentNotFoundException(x))));
             subject.setStudents(students);
         }
         if (subjectDTO.getLessonsId() != null) {
             List<Lesson> lessons = new ArrayList<>();
             subjectDTO.getLessonsId()
-                      .forEach(x -> lessons.add(lessonRepository.findById(x).orElseThrow(() -> new TestException())));
+                      .forEach(x -> lessons.add(lessonRepository.findById(x).orElseThrow(() -> new LessonNotFoundException(x))));
             subject.setLessons(lessons);
         }
 

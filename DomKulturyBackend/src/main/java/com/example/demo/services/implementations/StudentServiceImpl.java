@@ -1,9 +1,8 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.dto.StudentDTO;
-import com.example.demo.exceptions.RoomExistsException;
-import com.example.demo.exceptions.TestException;
-import com.example.demo.file.DBFile;
+import com.example.demo.exceptions.StudentExistsException;
+import com.example.demo.exceptions.StudentNotFoundException;
 import com.example.demo.mappers.StudentMapper;
 import com.example.demo.models.Student;
 import com.example.demo.repository.StudentRepository;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -34,7 +32,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student findById(Long id) {
         //TODO exception zmienić
-        return studentRepository.findById(id).orElseThrow(() -> new TestException());
+        return studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
     }
 
     @Override
@@ -47,7 +45,7 @@ public class StudentServiceImpl implements StudentService {
     public Student updateStudent(StudentDTO studentDTO, Long id) {
         if(!studentDTO.getId().equals(id)) {
             //TODO exception
-            throw new TestException();
+            throw new StudentExistsException(id);
         }
 
         Student student = studentMapper.toStudent(studentDTO, id);

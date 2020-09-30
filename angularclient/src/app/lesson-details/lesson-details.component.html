@@ -5,7 +5,6 @@
       <table class="table-table">
         <thead>
         <tr>
-          <th scope="col">Id</th>
           <th scope="col">Imię</th>
           <th scope="col">Nazwisko</th>
           <th scope="col">PESEL</th>
@@ -16,7 +15,6 @@
         </thead>
         <tbody>
         <tr *ngFor="let studentAttendance of studentsAttendance">
-          <td>{{ studentAttendance.id }}</td>
           <td>{{ studentAttendance.firstName }}</td>
           <td>{{ studentAttendance.lastName }}</td>
           <td>{{ studentAttendance.pesel }}</td>
@@ -30,7 +28,7 @@
   </div>
 </div>
 
+<div class="pb-5">
+  <a type="button" (click)="save()">Zapisz</a>
+</div>
 
-<button (click)="save()">Zapisz</button>
-
-<button (click)="test()">Test</button>

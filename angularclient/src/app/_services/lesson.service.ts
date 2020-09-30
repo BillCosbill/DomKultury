@@ -35,8 +35,6 @@ export class LessonService {
   }
 
   public checkAttendance(attendances: Attendance[], id: number) {
-    console.log(attendances);
-    console.log(id);
     return this.http.patch<Attendance[]>(this.lessonUrl + '/' + id + '/checkAttendance', attendances).pipe(
       catchError(this.handleError)
     );

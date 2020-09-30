@@ -1,7 +1,7 @@
 package com.example.demo.mappers;
 
 import com.example.demo.dto.LessonDTO;
-import com.example.demo.exceptions.TestException;
+import com.example.demo.exceptions.*;
 import com.example.demo.models.Attendance;
 import com.example.demo.models.Lesson;
 import com.example.demo.models.Student;
@@ -60,7 +60,7 @@ public class LessonMapper {
     }
 
     public Lesson toLesson(LessonDTO lessonDTO, Long id) {
-        Lesson lesson = lessonRepository.findById(id).orElseThrow(() -> new TestException());
+        Lesson lesson = lessonRepository.findById(id).orElseThrow(() -> new LessonNotFoundException(id));
 
         if (lessonDTO.getId() != null) {
             lesson.setId(lessonDTO.getId());
@@ -78,19 +78,19 @@ public class LessonMapper {
             lesson.setFinishDate(lessonDTO.getFinishDate());
         }
         if (lessonDTO.getRoomId() != null) {
-            lesson.setRoom(roomRepository.findById(lessonDTO.getRoomId()).orElseThrow(() -> new TestException()));
+            lesson.setRoom(roomRepository.findById(lessonDTO.getRoomId()).orElseThrow(() -> new RoomNotFoundException(lessonDTO.getRoomId())));
         }
         if (lessonDTO.getAttendancesId() != null) {
             List<Attendance> attendances = new ArrayList<>();
             lessonDTO.getAttendancesId().forEach(x -> attendances
-                    .add(attendanceRepository.findById(x).orElseThrow(() -> new TestException())));
+                    .add(attendanceRepository.findById(x).orElseThrow(() -> new AttendanceNotFoundException(x))));
             lesson.setAttendances(attendances);
         }
 
         lesson.setAttendanceChecked(lessonDTO.isAttendanceChecked());
 
         if (lessonDTO.getSubjectId() != null) {
-            lesson.setSubject(subjectRepository.findById(lessonDTO.getSubjectId()).orElseThrow(() -> new TestException()));
+            lesson.setSubject(subjectRepository.findById(lessonDTO.getSubjectId()).orElseThrow(() -> new SubjectNotFoundException(lessonDTO.getSubjectId())));
         }
 
         return lesson;
@@ -115,19 +115,19 @@ public class LessonMapper {
             lesson.setFinishDate(lessonDTO.getFinishDate());
         }
         if (lessonDTO.getRoomId() != null) {
-            lesson.setRoom(roomRepository.findById(lessonDTO.getRoomId()).orElseThrow(() -> new TestException()));
+            lesson.setRoom(roomRepository.findById(lessonDTO.getRoomId()).orElseThrow(() -> new RoomNotFoundException(lessonDTO.getRoomId())));
         }
         if (lessonDTO.getAttendancesId() != null) {
             List<Attendance> attendances = new ArrayList<>();
             lessonDTO.getAttendancesId().forEach(x -> attendances
-                    .add(attendanceRepository.findById(x).orElseThrow(() -> new TestException())));
+                    .add(attendanceRepository.findById(x).orElseThrow(() -> new AttendanceNotFoundException(x))));
             lesson.setAttendances(attendances);
         }
 
         lesson.setAttendanceChecked(lessonDTO.isAttendanceChecked());
 
         if (lessonDTO.getSubjectId() != null) {
-            lesson.setSubject(subjectRepository.findById(lessonDTO.getSubjectId()).orElseThrow(() -> new TestException()));
+            lesson.setSubject(subjectRepository.findById(lessonDTO.getSubjectId()).orElseThrow(() -> new SubjectNotFoundException(lessonDTO.getSubjectId())));
         }
 
         return lesson;

@@ -1,7 +1,8 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.dto.SubjectDTO;
-import com.example.demo.exceptions.TestException;
+import com.example.demo.exceptions.SubjectExistsException;
+import com.example.demo.exceptions.SubjectNotFoundException;
 import com.example.demo.mappers.SubjectMapper;
 import com.example.demo.models.Subject;
 import com.example.demo.repository.SubjectRepository;
@@ -30,7 +31,7 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public Subject findById(Long id) {
-        return subjectRepository.findById(id).orElseThrow(() -> new TestException());
+        return subjectRepository.findById(id).orElseThrow(() -> new SubjectNotFoundException(id));
     }
 
     @Override
@@ -42,7 +43,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public Subject updateSubject(SubjectDTO subjectDTO, Long id) {
         if (!subjectDTO.getId().equals(id)) {
-            throw new TestException();
+            throw new SubjectExistsException(id);
         }
 
         Subject subject = subjectMapper.toSubject(subjectDTO, id);

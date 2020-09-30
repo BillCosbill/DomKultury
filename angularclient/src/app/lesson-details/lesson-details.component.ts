@@ -72,35 +72,13 @@ export class LessonDetailsComponent implements OnInit {
     });
   }
 
-  test() {
-    console.log(this.lesson);
-    console.log(this.subject);
-    console.log(this.students);
-    console.log(this.attendances);
-    console.log(this.studentsAttendance);
-  }
-
   save() {
-    // this.attendances.forEach(attendance => {
-    //   this.studentsAttendance.forEach(studentAttendance => {
-    //     if (attendance.studentId === studentAttendance.id) {
-    //       attendance.present = studentAttendance.present;
-    //     }
-    //   });
-    //
-    //   this.attendanceService.updateAttendance(attendance.id, attendance).subscribe(() => {
-    //   });
-    // });
-
     this.attendances.forEach(attendance => {
       this.studentsAttendance.forEach(studentAttendance => {
         if (attendance.studentId === studentAttendance.id) {
           attendance.present = studentAttendance.present;
         }
       });
-
-      // this.attendanceService.updateAttendance(attendance.id, attendance).subscribe(() => {
-      // });
     });
 
     this.lessonService.checkAttendance(this.attendances, this.lessonId).subscribe(() => {
