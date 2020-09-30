@@ -30,6 +30,7 @@ import { RoomDetailsComponent } from './room-details/room-details.component';
 import { AdministratorPanelActivationsComponent } from './administrator-panel-activations/administrator-panel-activations.component';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { SubjectDetailsComponent } from './subject-details/subject-details.component';
+import { LessonDetailsComponent } from './lesson-details/lesson-details.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { SubjectDetailsComponent } from './subject-details/subject-details.compo
     AdministratorPanelActivationsComponent,
     SubjectsComponent,
     SubjectDetailsComponent,
+    LessonDetailsComponent,
   ],
   imports: [
     BrowserModule,

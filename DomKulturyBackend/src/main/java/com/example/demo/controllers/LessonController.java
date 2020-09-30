@@ -1,5 +1,7 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dto.AttendanceDTO;
+import com.example.demo.dto.EventDTO;
 import com.example.demo.dto.LessonDTO;
 import com.example.demo.mappers.LessonMapper;
 import com.example.demo.models.Lesson;
@@ -53,5 +55,11 @@ public class LessonController {
     public ResponseEntity<LessonDTO> updateEvent(@RequestBody LessonDTO lessonDTO, @PathVariable Long id) {
         lessonService.updateLesson(lessonDTO, id);
         return ResponseEntity.status(HttpStatus.OK).body(lessonDTO);
+    }
+
+    @PatchMapping("/{lessonId}/checkAttendance")
+    public ResponseEntity<MessageResponse> checkAttendance(@RequestBody List<AttendanceDTO> attendanceDTOS, @PathVariable Long lessonId) {
+        lessonService.checkAttendance(attendanceDTOS, lessonId);
+        return ResponseEntity.ok(new MessageResponse("Attendance checked"));
     }
 }

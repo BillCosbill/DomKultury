@@ -133,14 +133,14 @@ public class WebAppApplication {
         lessonRepository.save(lesson1);
         lessonRepository.save(lesson2);
 
-        Attendance attendance1 = new Attendance(lesson1, student2, true);
-        Attendance attendance2 = new Attendance(lesson1, student2, false);
+        Attendance attendance1 = new Attendance(lesson1, student2);
+        Attendance attendance2 = new Attendance(lesson1, student3);
 
         attendanceRepository.save(attendance1);
         attendanceRepository.save(attendance2);
 
-        Attendance attendance3 = new Attendance(lesson2, student2, true);
-        Attendance attendance4 = new Attendance(lesson2, student2, true);
+        Attendance attendance3 = new Attendance(lesson2, student2);
+        Attendance attendance4 = new Attendance(lesson2, student3);
 
         attendanceRepository.save(attendance3);
         attendanceRepository.save(attendance4);

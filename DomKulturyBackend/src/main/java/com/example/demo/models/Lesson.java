@@ -44,6 +44,9 @@ public class Lesson {
     private List<Attendance> attendances;
 
     @NotBlank
+    private boolean attendanceChecked;
+
+    @NotBlank
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(	name = "lesson_subject",
@@ -58,5 +61,6 @@ public class Lesson {
         this.finishDate = finishDate;
         this.room = room;
         this.subject = subject;
+        this.attendanceChecked = false;
     }
 }

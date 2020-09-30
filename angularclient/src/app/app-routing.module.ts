@@ -15,12 +15,14 @@ import {RoomDetailsComponent} from './room-details/room-details.component';
 import {AdministratorPanelActivationsComponent} from './administrator-panel-activations/administrator-panel-activations.component';
 import {SubjectsComponent} from './subjects/subjects.component';
 import {SubjectDetailsComponent} from './subject-details/subject-details.component';
+import {LessonDetailsComponent} from './lesson-details/lesson-details.component';
 
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'subjects', component: SubjectsComponent},
   {path: 'subject/:id', component: SubjectDetailsComponent, pathMatch: 'full'},
+  {path: 'lesson/:id', component: LessonDetailsComponent, pathMatch: 'full'},
   {path: 'events', component: EventsComponent},
   {path: 'event/:id', component: EventDetailsComponent, pathMatch: 'full'},
   {path: 'room/:id', component: RoomDetailsComponent, pathMatch: 'full'},

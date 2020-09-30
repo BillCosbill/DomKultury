@@ -34,12 +34,10 @@ public class Attendance {
             inverseJoinColumns = @JoinColumn(name = "student_id"))
     private Student student;
 
-    @NotBlank
     private boolean present;
 
-    public Attendance(Lesson lesson, Student student, boolean present) {
+    public Attendance(Lesson lesson, Student student) {
         this.lesson = lesson;
         this.student = student;
-        this.present = present;
     }
 }

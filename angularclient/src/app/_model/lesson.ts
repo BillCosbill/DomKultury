@@ -6,5 +6,6 @@ export class Lesson {
   finishDate: string;
   roomId: number;
   attendancesId: number[];
+  attendanceChecked: boolean;
   subjectId: number;
 }

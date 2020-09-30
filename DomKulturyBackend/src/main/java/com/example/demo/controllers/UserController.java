@@ -50,6 +50,7 @@ public class UserController {
         return ResponseEntity.ok(roleService.findAll());
     }
 
+    //TODO nie działa usuwanie, trzeba usunąć jednocześnie powiązane tabele
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);

@@ -1,5 +1,6 @@
 package com.example.demo.services.interfaces;
 
+import com.example.demo.dto.AttendanceDTO;
 import com.example.demo.dto.LessonDTO;
 import com.example.demo.models.Lesson;
 
@@ -17,4 +18,6 @@ public interface LessonService {
     Lesson save(Lesson lesson);
 
     LessonDTO addLesson(LessonDTO lessonDTO);
+
+    void checkAttendance(List<AttendanceDTO> attendanceDTOS, Long lessonId);
 }

@@ -1,43 +1,41 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
 import {Lesson} from '../_model/lesson';
+import {catchError} from 'rxjs/operators';
 import {Attendance} from '../_model/attendance';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LessonService {
+export class AttendanceService {
 
-  private lessonUrl: string;
+  private attendanceUrl: string;
 
   constructor(private http: HttpClient) {
-    this.lessonUrl = 'http://localhost:8081/lessons';
+    this.attendanceUrl = 'http://localhost:8081/attendances';
   }
 
-  public findAll(): Observable<Lesson[]> {
-    return this.http.get<Lesson[]>(this.lessonUrl).pipe(
+  public findAll(): Observable<Attendance[]> {
+    return this.http.get<Attendance[]>(this.attendanceUrl).pipe(
       catchError(this.handleError)
     );
   }
 
-  public getLesson(id: number) {
-    return this.http.get<Lesson>(this.lessonUrl + '/' + id).pipe(
+  public getAttendance(id: number) {
+    return this.http.get<Attendance>(this.attendanceUrl + '/' + id).pipe(
       catchError(this.handleError)
     );
   }
 
-  public deleteLesson(id: number) {
-    return this.http.delete<Lesson>(this.lessonUrl + '/' + id).pipe(
+  public deleteAttendance(id: number) {
+    return this.http.delete<Attendance>(this.attendanceUrl + '/' + id).pipe(
       catchError(this.handleError)
     );
   }
 
-  public checkAttendance(attendances: Attendance[], id: number) {
-    console.log(attendances);
-    console.log(id);
-    return this.http.patch<Attendance[]>(this.lessonUrl + '/' + id + '/checkAttendance', attendances).pipe(
+  public updateAttendance(id: number, attendance: Attendance) {
+    return this.http.put<Attendance>(this.attendanceUrl + '/' + id, attendance).pipe(
       catchError(this.handleError)
     );
   }

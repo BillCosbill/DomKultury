@@ -62,7 +62,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let lesson of lessons">
+            <tr [routerLink]="['/lesson', (lesson.id)]" *ngFor="let lesson of lessons">
               <td>{{ lesson.id }}</td>
               <td>{{ lesson.topic }}</td>
               <td>{{ lesson.description }}</td>
