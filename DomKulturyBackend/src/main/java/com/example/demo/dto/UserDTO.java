@@ -16,9 +16,12 @@ public class UserDTO {
 
     private Long id;
     private String username;
+    private String firstName;
+    private String lastName;
+    private String pesel;
     private String email;
     private Set<Role> roles = new HashSet<>();
-    private List<Long> classConducted;
-    private List<Long> classAttended;
+    private List<Long> classConductedId;
+    private List<Long> classAttendedId;
     private boolean isEnable;
 }

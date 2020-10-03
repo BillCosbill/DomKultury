@@ -1,38 +1,38 @@
-<div class="container pt-5">
-  <div class="room-details-photo">
-    <img *ngIf="!gotImage()" src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712"alt="...">
-    <img *ngIf="gotImage()" [src]="room.retrievedImage" alt="...">
+<div class="container">
+  <div class="container pt-5">
+    <div class="room-details-photo">
+      <img *ngIf="!gotImage()"
+           src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712"
+           alt="...">
+      <img *ngIf="gotImage()" [src]="room.retrievedImage" alt="...">
+    </div>
+
+    <div class="room-details-info">
+      <div class="room-details-title">
+        <p>
+          Numer: {{room.number}}
+        </p>
+      </div>
+
+      <div class="room-details-description">
+        <p>
+          Przeznaczenie: {{room.destiny}}
+        </p>
+      </div>
+
+      <div class="room-details-description">
+        <p>
+          Opis: {{room.description}}
+        </p>
+      </div>
+
+      <div class="room-details-data">
+        <p>
+          Liczba miejsc: {{room.seats}}
+        </p>
+      </div>
+
+    </div>
   </div>
-
-  <div class="room-details-info">
-    <div class="room-details-title">
-      <p>
-        Numer: {{room.number}}
-      </p>
-    </div>
-
-    <div class="room-details-description">
-      <p>
-        Przeznaczenie: {{room.destiny}}
-      </p>
-    </div>
-
-    <div class="room-details-description">
-      <p>
-        Opis: {{room.description}}
-      </p>
-    </div>
-
-    <div class="room-details-data">
-      <p>
-        Liczba miejsc: {{room.seats}}
-      </p>
-    </div>
-
-  </div>
-
-
 </div>
-
-
 

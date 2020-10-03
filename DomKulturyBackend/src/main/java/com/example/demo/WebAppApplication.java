@@ -83,27 +83,27 @@ public class WebAppApplication {
         studentsList2.add(student1);
         studentsList2.add(student4);
 
-        User adminUser = new User("admin", "admin@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
+        User adminUser = new User("admin","Tomasz","Szeligowski","97092606913", "admin@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         Set<Role> adminRole = new HashSet<>();
         adminRole.add(admin);
         adminUser.setRoles(adminRole);
         userRepository.save(adminUser);
 
-        User userUser = new User("user", "user@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
+        User userUser = new User("user","Jan","Kowalski","11111111111", "user@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         Set<Role> userRole = new HashSet<>();
         userRole.add(user);
         userUser.setRoles(userRole);
         userRepository.save(userUser);
 
-        User userUser2 = new User("user2", "user2@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
+        User userUser2 = new User("user2","Ola","Nowak","22222222222", "user2@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         userUser2.setRoles(userRole);
         userRepository.save(userUser2);
 
-        User userUser3 = new User("user3", "user3@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
+        User userUser3 = new User("user3","Jerzy","Dudek","33333333333", "user3@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         userUser3.setRoles(userRole);
         userRepository.save(userUser3);
 
-        User teacherUser = new User("teacher", "teacher@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
+        User teacherUser = new User("teacher","Andrzej","Samczy","44444444444", "teacher@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         Set<Role> teacherRole = new HashSet<>();
         teacherRole.add(teacher);
         teacherUser.setRoles(teacherRole);

@@ -57,7 +57,5 @@ export class SubjectDetailsComponent implements OnInit {
         });
       });
     });
-
-
   }
 }

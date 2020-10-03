@@ -35,16 +35,19 @@ public class UserMapper {
 
         userDTO.setId(user.getId());
         userDTO.setUsername(user.getUsername());
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
+        userDTO.setPesel(user.getPesel());
         userDTO.setEmail(user.getEmail());
         userDTO.setRoles(user.getRoles());
 
         List<Long> conductedId = new ArrayList<>();
         user.getClassConducted().forEach(x -> conductedId.add(x.getId()));
-        userDTO.setClassConducted(conductedId);
+        userDTO.setClassConductedId(conductedId);
 
         List<Long> attendedId = new ArrayList<>();
         user.getClassAttended().forEach(x -> attendedId.add(x.getId()));
-        userDTO.setClassAttended(attendedId);
+        userDTO.setClassAttendedId(attendedId);
 
         userDTO.setEnable(user.isEnable());
 
@@ -59,6 +62,15 @@ public class UserMapper {
         }
         if (userDTO.getUsername() != null) {
             user.setUsername(userDTO.getUsername());
+        }
+        if (userDTO.getFirstName() != null) {
+            user.setFirstName(userDTO.getFirstName());
+        }
+        if (userDTO.getLastName() != null) {
+            user.setLastName(userDTO.getLastName());
+        }
+        if (userDTO.getPesel() != null) {
+            user.setPesel(userDTO.getPesel());
         }
         if (userDTO.getEmail() != null) {
             user.setEmail(userDTO.getEmail());

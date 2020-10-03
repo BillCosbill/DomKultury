@@ -1,10 +1,11 @@
-<div class="row pt-5 pb-5">
-  <div class="col-3">
-    <a class="nav-link" href="admin_panel">Użytkownicy</a>
-    <a class="nav-link" href="admin_panel_activations">Prośby o aktywację</a>
-  </div>
-  <div class="col-9">
-    <h1>Lista użytkowników</h1>
+<div class="container">
+  <div class="row pt-5 pb-5">
+    <div class="col-3">
+      <a class="nav-link" href="admin_panel">Użytkownicy</a>
+      <a class="nav-link" href="admin_panel_activations">Prośby o aktywację</a>
+    </div>
+    <div class="col-9">
+      <h1>Lista użytkowników</h1>
       <div class="table-body">
         <table class="table-table">
           <thead>
@@ -28,14 +29,20 @@
             </td>
             <td>
               <button (click)="delete(user.id)" class="admin-panel-button">Usuń</button>
-              <button *ngIf="!checkIfContaintsRole(user.roles, 'ROLE_USER')" (click)="changeRole(user.id, 'ROLE_USER')" class="admin-panel-button">Użytkownik</button>
-              <button *ngIf="!checkIfContaintsRole(user.roles, 'ROLE_TEACHER')" (click)="changeRole(user.id, 'ROLE_TEACHER')" class="admin-panel-button">Nauczyciel</button>
-              <button *ngIf="!checkIfContaintsRole(user.roles, 'ROLE_ADMIN')" (click)="changeRole(user.id, 'ROLE_ADMIN')" class="admin-panel-button">Administrator</button>
+              <button *ngIf="!checkIfContaintsRole(user.roles, 'ROLE_USER')" (click)="changeRole(user.id, 'ROLE_USER')"
+                      class="admin-panel-button">Użytkownik
+              </button>
+              <button *ngIf="!checkIfContaintsRole(user.roles, 'ROLE_TEACHER')"
+                      (click)="changeRole(user.id, 'ROLE_TEACHER')" class="admin-panel-button">Nauczyciel
+              </button>
+              <button *ngIf="!checkIfContaintsRole(user.roles, 'ROLE_ADMIN')"
+                      (click)="changeRole(user.id, 'ROLE_ADMIN')" class="admin-panel-button">Administrator
+              </button>
             </td>
           </tr>
           </tbody>
         </table>
       </div>
+    </div>
   </div>
 </div>
-

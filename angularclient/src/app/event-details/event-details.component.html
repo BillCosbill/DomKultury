@@ -1,34 +1,40 @@
-<div class="container pt-5">
-  <div class="event-details-photo">
-    <img src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712" alt="">
+<div class="container">
+  <div class="container pt-5">
+    <div class="event-details-photo">
+      <img
+        src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712"
+        alt="">
+    </div>
+
+    <div class="event-details-info">
+      <div class="event-details-title">
+        <p>
+          {{event.title}}
+        </p>
+      </div>
+
+      <div class="event-details-data">
+        <p>
+          <small>
+            {{event.startDate}}
+          </small>
+        </p>
+      </div>
+
+      <div class="event-details-description">
+        <p>
+          {{event.description}}
+        </p>
+      </div>
+
+      <input type="submit" name="" (click)="addUser(event, userId, eventId)" *ngIf="!isSignedUpForEvent(event,userId)"
+             value="ZAPISZ SIĘ">
+      <input type="submit" name="" (click)="deleteUser(event, userId, eventId)" *ngIf="isSignedUpForEvent(event,userId)"
+             value="WYPISZ SIĘ">
+    </div>
+
+
   </div>
 
-  <div class="event-details-info">
-    <div class="event-details-title">
-      <p>
-        {{event.title}}
-      </p>
-    </div>
-
-    <div class="event-details-data">
-      <p>
-        <small>
-        {{event.startDate}}
-        </small>
-      </p>
-    </div>
-
-    <div class="event-details-description">
-      <p>
-        {{event.description}}
-      </p>
-    </div>
-
-    <input type="submit" name="" (click)="addUser(event, userId, eventId)" *ngIf="!isSignedUpForEvent(event,userId)" value="ZAPISZ SIĘ">
-    <input type="submit" name="" (click)="deleteUser(event, userId, eventId)" *ngIf="isSignedUpForEvent(event,userId)" value="WYPISZ SIĘ">
-  </div>
-
-
+  <button (click)="isSignedUpForEvent(event, userId)">TEST</button>
 </div>
-
-<button (click)="isSignedUpForEvent(event, userId)">TEST</button>

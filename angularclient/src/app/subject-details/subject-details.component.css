@@ -43,3 +43,12 @@ h1 {
 .admin-panel-button:hover {
   background: #2ecc71;
 }
+
+
+.small-nav {
+  width: 100%;
+}
+
+.nav-item {
+  margin-right: 2rem;
+}

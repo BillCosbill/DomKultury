@@ -28,16 +28,23 @@ public class User {
     private Long id;
 
     @NotBlank
-    @Size(max = 20)
     private String username;
 
     @NotBlank
-    @Size(max = 50)
+    private String firstName;
+
+    @NotBlank
+    private String lastName;
+
+    //TODO dać peselowi docelową liczbę znaków (11)
+    @NotBlank
+    private String pesel;
+
+    @NotBlank
     @Email
     private String email;
 
     @NotBlank
-    @Size(max = 120)
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -57,8 +64,11 @@ public class User {
     @NotBlank
     private boolean isEnable;
 
-    public User(String username, String email, String password, boolean isEnable) {
+    public User(String username, String firstName, String lastName, String pesel, String email, String password, boolean isEnable) {
         this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.pesel = pesel;
         this.email = email;
         this.password = password;
         this.isEnable = isEnable;

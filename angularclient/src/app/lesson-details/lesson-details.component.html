@@ -1,34 +1,21 @@
-<div class="container pt-5">
+<div class="container small-nav pb-5">
+  <a class="nav-item" href="/lesson/{{lessonId}}">Informacje</a>
+  <a class="nav-item" href="/lesson_attendance/{{lessonId}}">Lista obecności</a>
+</div>
+
+<div class="container">
   <div>
-    <p class="pt-5">Lista obecności:</p>
-    <div class="table-body">
-      <table class="table-table">
-        <thead>
-        <tr>
-          <th scope="col">Imię</th>
-          <th scope="col">Nazwisko</th>
-          <th scope="col">PESEL</th>
-          <th scope="col">E-mail</th>
-          <th scope="col">Data urodzenia</th>
-          <th scope="col">Obecność</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let studentAttendance of studentsAttendance">
-          <td>{{ studentAttendance.firstName }}</td>
-          <td>{{ studentAttendance.lastName }}</td>
-          <td>{{ studentAttendance.pesel }}</td>
-          <td>{{ studentAttendance.email }}</td>
-          <td>{{ studentAttendance.birthday }}</td>
-          <td><label><input [checked]="studentAttendance.present" (change)="changePresentValue(studentAttendance)" type="checkbox"></label></td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+
+    <p>Temat: {{lesson.topic}}</p>
+
+    <p>Opis: {{lesson.description}}</p>
+
+    <p>Data rozpoczęcia: {{lesson.startDate}}</p>
+
+    <p>Data zakończenia: {{lesson.finishDate}}</p>
+
+    <p>Id sali: {{lesson.roomId}}</p>
+
   </div>
-</div>
 
-<div class="pb-5">
-  <a type="button" (click)="save()">Zapisz</a>
 </div>
-

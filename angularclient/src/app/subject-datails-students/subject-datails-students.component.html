@@ -1,0 +1,30 @@
+<div class="container small-nav pb-5">
+  <a class="nav-item" href="/subject/{{subjectId}}">Informacje</a>
+  <a class="nav-item" href="/subject_students/{{subjectId}}">Lista uczniów</a>
+</div>
+
+<div class="container">
+  <p>Uczniowe zapisani na przedmiot:</p>
+  <div class="table-body">
+    <table class="table-table">
+      <thead>
+      <tr>
+        <th scope="col">Imię</th>
+        <th scope="col">Nazwisko</th>
+        <th scope="col">PESEL</th>
+        <th scope="col">E-mail</th>
+        <th scope="col">Data urodzenia</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let student of students">
+        <td>{{ student.firstName }}</td>
+        <td>{{ student.lastName }}</td>
+        <td>{{ student.pesel }}</td>
+        <td>{{ student.email }}</td>
+        <td>{{ student.birthday }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

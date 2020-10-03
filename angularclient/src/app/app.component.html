@@ -8,19 +8,19 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="home">STRONA GŁÓWNA</a>
+          <a class="nav-link" routerLink="home">STRONA GŁÓWNA</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="events">WYDARZENIA</a>
+          <a class="nav-link" routerLink="events">WYDARZENIA</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="subjects">PRZEDMIOTY</a>
+          <a class="nav-link" routerLink="subjects">PRZEDMIOTY</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="rooms">SALE</a>
+          <a class="nav-link" routerLink="rooms">SALE</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="contact">KONTAKT</a>
+          <a class="nav-link" routerLink="contact">KONTAKT</a>
         </li>
       </ul>
 
@@ -46,11 +46,55 @@
   </nav>
 </header>
 
-<main role="main" class="flex-shrink-0 content">
-  <div class="container">
+
+<main role="main" class="flex-shrink-0 content pt-5">
+
+<!--  <div class="container-fluid">-->
+<!--    <div class="row">-->
+<!--      <nav class="col-md-2 d-none d-md-block bg-light sidebar">-->
+<!--        <div class="sidebar-sticky pt-5">-->
+
+
+<!--          <router-outlet name="sidebar"></router-outlet>-->
+
+<!--&lt;!&ndash;          <ul class="nav flex-column">&ndash;&gt;-->
+<!--&lt;!&ndash;            <li class="nav-item">&ndash;&gt;-->
+<!--&lt;!&ndash;              <a class="nav-link active" href="#">Dashboard</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            </li>&ndash;&gt;-->
+<!--&lt;!&ndash;            <li class="nav-item">&ndash;&gt;-->
+<!--&lt;!&ndash;              <a class="nav-link" href="#">Orders</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            </li>&ndash;&gt;-->
+<!--&lt;!&ndash;            <li class="nav-item">&ndash;&gt;-->
+<!--&lt;!&ndash;              <a class="nav-link" href="#">Products</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            </li>&ndash;&gt;-->
+<!--&lt;!&ndash;            <li class="nav-item">&ndash;&gt;-->
+<!--&lt;!&ndash;              <a class="nav-link" href="#">Customers</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            </li>&ndash;&gt;-->
+<!--&lt;!&ndash;            <li class="nav-item">&ndash;&gt;-->
+<!--&lt;!&ndash;              <a class="nav-link" href="#">Reports</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            </li>&ndash;&gt;-->
+<!--&lt;!&ndash;            <li class="nav-item">&ndash;&gt;-->
+<!--&lt;!&ndash;              <a class="nav-link" href="#">Integrations</a>&ndash;&gt;-->
+<!--&lt;!&ndash;            </li>&ndash;&gt;-->
+<!--&lt;!&ndash;          </ul>&ndash;&gt;-->
+
+<!--        </div>-->
+<!--      </nav>-->
+<!--    </div>-->
+<!--  </div>-->
+
+  <div class="container-fluid pt-5">
     <router-outlet></router-outlet>
   </div>
+
 </main>
+
+<!--<main role="main" class="flex-shrink-0 content">-->
+
+<!--  <div class="container">-->
+<!--    <router-outlet></router-outlet>-->
+<!--  </div>-->
+<!--</main>-->
 
 <footer class="footer mt-auto py-3">
   <div class="text-muted float-left copyrights">Copyrights (C) 2020 Tomasz Szeligowski</div>

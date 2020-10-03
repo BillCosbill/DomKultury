@@ -1,21 +1,25 @@
-<div class="row">
-  <a type="button" href="addRoom">Dodaj pokój</a>
-</div>
+<div class="container">
+  <div class="row">
+    <a type="button" href="addRoom">Dodaj pokój</a>
+  </div>
 
-<div class="row row-cols-1 row-cols-md-2 pt-5">
-  <div [routerLink]="['/room', (item.id)]" class="col mb-4" *ngFor="let item of rooms">
-    <div class="card">
-      <div class="my">
-        <img *ngIf="!gotImage(item)" src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712" class="card-img-top" alt="...">
-        <img *ngIf="gotImage(item)" [src]="item.retrievedImage" class="card-img-top" alt="...">
-      </div>
+  <div class="row row-cols-1 row-cols-md-2 pt-5">
+    <div [routerLink]="['/room', (item.id)]" class="col mb-4" *ngFor="let item of rooms">
+      <div class="card">
+        <div class="my">
+          <img *ngIf="!gotImage(item)"
+               src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712"
+               class="card-img-top" alt="...">
+          <img *ngIf="gotImage(item)" [src]="item.retrievedImage" class="card-img-top" alt="...">
+        </div>
 
-      <div class="card-body">
-        <h3 class="card-title text-center">{{item.destiny}}</h3>
+        <div class="card-body">
+          <h3 class="card-title text-center">{{item.destiny}}</h3>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
+<div class="container">
 
 

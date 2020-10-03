@@ -26,11 +26,13 @@ import {
 } from '@syncfusion/ej2-angular-schedule';
 import {ImageComponent} from './image/image.component';
 import {AddRoomComponent} from './add-room/add-room.component';
-import { RoomDetailsComponent } from './room-details/room-details.component';
-import { AdministratorPanelActivationsComponent } from './administrator-panel-activations/administrator-panel-activations.component';
-import { SubjectsComponent } from './subjects/subjects.component';
-import { SubjectDetailsComponent } from './subject-details/subject-details.component';
-import { LessonDetailsComponent } from './lesson-details/lesson-details.component';
+import {RoomDetailsComponent} from './room-details/room-details.component';
+import {AdministratorPanelActivationsComponent} from './administrator-panel-activations/administrator-panel-activations.component';
+import {SubjectsComponent} from './subjects/subjects.component';
+import {SubjectDetailsComponent} from './subject-details/subject-details.component';
+import {LessonDetailsComponent} from './lesson-details/lesson-details.component';
+import { SubjectDatailsStudentsComponent } from './subject-datails-students/subject-datails-students.component';
+import { LessonDetailsAttendanceComponent } from './lesson-details-attendance/lesson-details-attendance.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import { LessonDetailsComponent } from './lesson-details/lesson-details.componen
     SubjectsComponent,
     SubjectDetailsComponent,
     LessonDetailsComponent,
+    SubjectDatailsStudentsComponent,
+    LessonDetailsAttendanceComponent
   ],
   imports: [
     BrowserModule,
