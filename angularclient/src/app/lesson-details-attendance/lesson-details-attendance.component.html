@@ -1,10 +1,12 @@
-<div class="container small-nav pb-5">
-  <a class="nav-item" href="/lesson/{{lessonId}}">Informacje</a>
-  <a class="nav-item" href="/lesson_attendance/{{lessonId}}">Lista obecności</a>
+<div class="container small-nav">
+  <a class="nav-item" href="/subject/{{subjectId}}">Przedmiot</a>
+  <a class="nav-item" href="/subject/{{subjectId}}/lesson/{{lessonId}}">Informacje</a>
+  <a class="nav-item active-link" href="/subject/{{subjectId}}/lesson/{{lessonId}}/attendance">Lista obecności</a>
 </div>
 
+<div class="line container"></div>
 
-<div class="container">
+<div class="container pb-5 pt-3">
   <p>Lista obecności:</p>
   <div class="table-body">
     <table class="table-table">

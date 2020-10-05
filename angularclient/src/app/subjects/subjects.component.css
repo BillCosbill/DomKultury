@@ -15,7 +15,7 @@ h1 {
   padding: 8px;
 }
 
-.table-table tr:hover {
+.table-table td:hover {
   background-color: #3D3D3D;
   cursor: pointer;
 }
@@ -42,6 +42,10 @@ h1 {
 
 .admin-panel-button:hover {
   background: #2ecc71;
+}
+
+.modal {
+  color: black;
 }
 
 

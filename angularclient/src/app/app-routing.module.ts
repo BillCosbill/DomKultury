@@ -18,18 +18,21 @@ import {SubjectDetailsComponent} from './subject-details/subject-details.compone
 import {LessonDetailsComponent} from './lesson-details/lesson-details.component';
 import {SubjectDatailsStudentsComponent} from './subject-datails-students/subject-datails-students.component';
 import {LessonDetailsAttendanceComponent} from './lesson-details-attendance/lesson-details-attendance.component';
+import {DiaryComponent} from './diary/diary.component';
+import {TeacherguardService} from './_guards/teacherguard.service';
 
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'subjects', component: SubjectsComponent},
   {path: 'subject/:id', component: SubjectDetailsComponent, pathMatch: 'full'},
-  {path: 'subject_students/:id', component: SubjectDatailsStudentsComponent, pathMatch: 'full'},
-  {path: 'lesson/:id', component: LessonDetailsComponent, pathMatch: 'full'},
-  {path: 'lesson_attendance/:id', component: LessonDetailsAttendanceComponent, pathMatch: 'full'},
+  {path: 'subject/:id/students', component: SubjectDatailsStudentsComponent, pathMatch: 'full'},
+  {path: 'subject/:id2/lesson/:id', component: LessonDetailsComponent, pathMatch: 'full', canActivate: [TeacherguardService]},
+  {path: 'subject/:id2/lesson/:id/attendance', component: LessonDetailsAttendanceComponent, pathMatch: 'full', canActivate: [TeacherguardService]},
+  {path: 'diary', component: DiaryComponent, canActivate: [TeacherguardService]},
   {path: 'events',  component: EventsComponent},
   {path: 'event/:id', component: EventDetailsComponent, pathMatch: 'full'},
-  {path: 'room/:i d', component: RoomDetailsComponent, pathMatch: 'full'},
+  {path: 'room/:id', component: RoomDetailsComponent, pathMatch: 'full'},
   {path: 'rooms', component: RoomsComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'login', component: LoginComponent},

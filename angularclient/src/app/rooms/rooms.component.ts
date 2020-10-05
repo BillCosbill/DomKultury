@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Room} from '../_model/room';
 import {RoomService} from '../_services/room.service';
 import {ImageService} from '../_services/image.service';
+import {AuthService} from '../_services/auth.service';
 
 @Component({
   selector: 'app-rooms',
@@ -15,7 +16,7 @@ export class RoomsComponent implements OnInit {
   base64Data: any;
   retrieveResonse: any;
 
-  constructor(private roomService: RoomService, private imageService: ImageService) {
+  constructor(private roomService: RoomService, private imageService: ImageService, private authService: AuthService) {
   }
 
   ngOnInit() {

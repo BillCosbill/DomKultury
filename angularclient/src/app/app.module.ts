@@ -33,6 +33,8 @@ import {SubjectDetailsComponent} from './subject-details/subject-details.compone
 import {LessonDetailsComponent} from './lesson-details/lesson-details.component';
 import { SubjectDatailsStudentsComponent } from './subject-datails-students/subject-datails-students.component';
 import { LessonDetailsAttendanceComponent } from './lesson-details-attendance/lesson-details-attendance.component';
+import { DiaryComponent } from './diary/diary.component';
+
 
 @NgModule({
   declarations: [
@@ -53,7 +55,8 @@ import { LessonDetailsAttendanceComponent } from './lesson-details-attendance/le
     SubjectDetailsComponent,
     LessonDetailsComponent,
     SubjectDatailsStudentsComponent,
-    LessonDetailsAttendanceComponent
+    LessonDetailsAttendanceComponent,
+    DiaryComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,7 +65,7 @@ import { LessonDetailsAttendanceComponent } from './lesson-details-attendance/le
     HttpClientModule,
     NgxPaginationModule,
     RecurrenceEditorAllModule,
-    ScheduleAllModule
+    ScheduleAllModule,
   ],
   providers: [authInterceptorProviders, DayService, WeekService, WorkWeekService, MonthService, MonthAgendaService],
   bootstrap: [AppComponent]

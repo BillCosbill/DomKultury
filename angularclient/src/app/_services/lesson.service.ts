@@ -34,6 +34,14 @@ export class LessonService {
     );
   }
 
+  public addLesson(lesson: Lesson) {
+    return this.http.post<Lesson>(this.lessonUrl, lesson);
+  }
+
+  public updateLesson(lesson: Lesson, id: number) {
+    return this.http.put<Lesson>(this.lessonUrl + '/' + id, lesson);
+  }
+
   public checkAttendance(attendances: Attendance[], id: number) {
     return this.http.patch<Attendance[]>(this.lessonUrl + '/' + id + '/checkAttendance', attendances).pipe(
       catchError(this.handleError)
@@ -46,4 +54,5 @@ export class LessonService {
     console.log(error.error.message);
     return throwError(error);
   }
+
 }

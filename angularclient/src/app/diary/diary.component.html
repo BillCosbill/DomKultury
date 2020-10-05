@@ -1,0 +1,27 @@
+<div class="container">
+  <h3 class="text-center">Twoje przedmioty</h3>
+  <div class="table-body">
+    <table class="table-table">
+      <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Nazwa</th>
+        <th scope="col">Opis</th>
+        <th scope="col">Id nauczyciela</th>
+        <th scope="col">Opcje</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr [routerLink]="['/subject', (subject.id)]" *ngFor="let subject of subjects">
+        <td>{{ subject.id }}</td>
+        <td>{{ subject.name }}</td>
+        <td>{{ subject.description }}</td>
+        <td>{{ subject.teacherId}}</td>
+        <td>
+          <button (click)="delete(subject.id)" class="admin-panel-button">Usuń</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -33,6 +33,12 @@ export class SubjectService {
     );
   }
 
+  public updateSubject(subject: Subject, id: number) {
+    return this.http.put<Subject>(this.subjectUrl + '/' + id, subject).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   //TODO zrobić jakieś popapy z errorami i z udanymi akcjami np addUserToEvent
   //TODO dodać obsługę błędów w innych serwisach !!!!!!!!!!!!!!!!
   handleError(error: HttpErrorResponse) {

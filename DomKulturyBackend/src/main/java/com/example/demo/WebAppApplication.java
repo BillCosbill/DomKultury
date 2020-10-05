@@ -21,18 +21,16 @@ public class WebAppApplication {
 
     RoleRepository roleRepository;
     UserRepository userRepository;
-    EventRepository eventRepository;
     RoomRepository roomRepository;
     StudentRepository studentRepository;
     SubjectRepository subjectRepository;
     LessonRepository lessonRepository;
     AttendanceRepository attendanceRepository;
 
-    public WebAppApplication(RoleRepository roleRepository, UserRepository userRepository, EventRepository eventRepository, RoomRepository roomRepository,
+    public WebAppApplication(RoleRepository roleRepository, UserRepository userRepository, RoomRepository roomRepository,
                              StudentRepository studentRepository, SubjectRepository subjectRepository, LessonRepository lessonRepository, AttendanceRepository attendanceRepository) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
-        this.eventRepository = eventRepository;
         this.roomRepository = roomRepository;
         this.studentRepository = studentRepository;
         this.subjectRepository = subjectRepository;
@@ -144,40 +142,6 @@ public class WebAppApplication {
 
         attendanceRepository.save(attendance3);
         attendanceRepository.save(attendance4);
-
-
-
-
-
-        Event event = new Event("Muzyka", "Lekcje śpiewu", teacherUser, studentsList, 5,
-                LocalDateTime.of(2020, Month.SEPTEMBER, 11, 15, 0, 0),
-                LocalDateTime.of(2020, Month.SEPTEMBER, 11, 17, 0, 0),
-                music);
-        eventRepository.save(event);
-
-
-        List<User> studentsList3 = new ArrayList<>();
-        studentsList3.add(userUser);
-        studentsList3.add(userUser3);
-
-        Event event2 = new Event("Taniec", "Lekcje tańca", teacherUser, studentsList3, 3,
-                LocalDateTime.of(2020, Month.SEPTEMBER, 4, 10, 30, 0),
-                LocalDateTime.of(2020, Month.SEPTEMBER, 4, 12, 0, 0),
-                dance);
-        eventRepository.save(event2);
-
-        Event event3 = new Event("Grafika", "Kurs grafiki dla dzieci w wieku od 12 do 15 lat", teacherUser, studentsList3, 3,
-                LocalDateTime.of(2020, Month.DECEMBER, 5, 12, 30, 0),
-                LocalDateTime.of(2020, Month.SEPTEMBER, 4, 15, 0, 0),
-                it);
-        eventRepository.save(event3);
-
-        Event event4 = new Event("Karate", "Zajęcia z karate dla studentów I roku studiów dziennych na Politechnice Białstockiej", teacherUser, studentsList3, 3,
-                LocalDateTime.of(2020, Month.NOVEMBER, 11, 10, 30, 0),
-                LocalDateTime.of(2020, Month.SEPTEMBER, 4, 12, 0, 0),
-                dance);
-        eventRepository.save(event4);
-
     }
 
 }

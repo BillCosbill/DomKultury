@@ -1,28 +1,45 @@
 <div class="container">
-  <h1 class="pb-5">Przedmioty</h1>
+  <h3 class="text-center">Przedmioty</h3>
   <div class="table-body">
     <table class="table-table">
       <thead>
       <tr>
-        <th scope="col">Id</th>
         <th scope="col">Nazwa</th>
-        <th scope="col">Opis</th>
-        <th scope="col">Id nauczyciela</th>
-        <th scope="col">Opcje</th>
+        <th scope="col">Nauczyciel</th>
+        <th *ngIf="this.authService.isAdminLoggedIn()" scope="col">Opcje</th>
       </tr>
       </thead>
       <tbody>
-      <tr [routerLink]="['/subject', (subject.id)]" *ngFor="let subject of subjects">
-        <td>{{ subject.id }}</td>
-        <td>{{ subject.name }}</td>
-        <td>{{ subject.description }}</td>
-        <td>{{ subject.teacherId}}</td>
-        <td>
-          <button (click)="delete(subject.id)" class="admin-panel-button">Usuń</button>
-        </td>
+      <tr *ngFor="let subject of subjects">
+        <td [routerLink]="['/subject', (subject.id)]">{{ subject.name }}</td>
+        <td>{{getTeacher(subject.teacherId)}}</td>
+        <td *ngIf="this.authService.isAdminLoggedIn()"><i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteSubject" (click)="selectSubjectIdToDelete(subject.id)"></i></td>
       </tr>
       </tbody>
     </table>
   </div>
 </div>
 
+<!-- Modal deleteSubject -->
+<div class="modal fade bd-example-modal-lg" id="deleteSubject" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Uwaga</h5>
+      </div>
+
+      <div class="modal-body">
+        Czy na pewno chcesz usunąć ten przedmiot? Razem z nim zostaną usunięte przystkie powiązane lekcje!
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+        <button type="submit" class="btn btn-primary" data-dismiss="modal"
+                (click)="deleteSubject(this.subjectIdToDelete)">Usuń przedmiot
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

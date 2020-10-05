@@ -18,6 +18,7 @@ import {AttendanceService} from '../_services/attendance.service';
 export class LessonDetailsAttendanceComponent implements OnInit {
 
   lessonId: number;
+  subjectId: number;
 
   lesson: Lesson = new Lesson();
 
@@ -34,6 +35,7 @@ export class LessonDetailsAttendanceComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.lessonId = +params.id;
+      this.subjectId = +params.id2;
     });
 
     this.refreshData();

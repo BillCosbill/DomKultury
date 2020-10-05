@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row">
+  <div *ngIf="this.authService.isAdminLoggedIn()" class="row">
     <a type="button" href="addRoom">Dodaj pokój</a>
   </div>
 

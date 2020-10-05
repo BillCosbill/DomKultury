@@ -1,31 +1,35 @@
-<!--  <nav class="col-md-2 d-none d-md-block bg-light sidebar container">-->
-<!--    <div class="sidebar-sticky">-->
-
-<!--      <ul class="nav flex-column">-->
-<!--        <li class="nav-item">-->
-<!--          <a class="nav-link" href="/subject/{{subjectId}}">Przedmioty</a>-->
-<!--        </li>-->
-<!--        <li class="nav-item">-->
-<!--          <a class="nav-link" href="/subject_students/{{subjectId}}">Lista uczniów</a>-->
-<!--        </li>-->
-<!--      </ul>-->
-
-<!--    </div>-->
-<!--  </nav>-->
-
-<div class="container small-nav pb-5">
-  <a class="nav-item" href="/subject/{{subjectId}}">Informacje</a>
-  <a class="nav-item" href="/subject_students/{{subjectId}}">Lista uczniów</a>
+<div class="container small-nav">
+  <a class="nav-item active-link" href="/subject/{{subjectId}}">Informacje</a>
+  <a class="nav-item" href="/subject/{{subjectId}}/students" *ngIf="this.authService.isTeacherLoggedIn()">Lista uczniów</a>
 </div>
 
-<div class="container pb-5">
+<div class="line container"></div>
+
+<div class="container pb-5 pt-3">
 
   <div>
-    <p>Nazwa: {{subject.name}}</p>
+    <div class="overlap">
+      <span class="font-weight-bold">Nazwa:</span>
+      <p>{{subject.name}}</p>
+    </div>
 
-    <p>Opis: {{subject.description}}</p>
+    <div class="overlap">
+      <span class="font-weight-bold">Opis:</span>
+      <p>{{subject.description}}</p>
+    </div>
 
-    <p class="">Nauczyciel prowadzący: {{teacher.firstName}} {{teacher.lastName}} (PESEL: {{teacher.pesel}})</p>
+    <div *ngIf="this.authService.isTeacherLoggedIn()" class="pt-3">
+      <a type="button" data-toggle="modal" data-target="#editSubject" (click)="startEditing()">Edytuj</a>
+    </div>
+
+    <div class="overlap">
+      <span class="font-weight-bold">Nauczyciel prowadzący:</span>
+      <p>{{teacher.firstName}} {{teacher.lastName}} (PESEL: {{teacher.pesel}}) </p>
+      <i *ngIf="this.authService.isAdminLoggedIn()" data-toggle="modal" data-target="#editTeacher" (click)="startEditing()" class="fas fa-user-edit"></i>
+    </div>
+
+
+
 
     <div>
       <p class="pt-5">Lekcje wchodzące w zakres przedmiotu:</p>
@@ -34,24 +38,197 @@
           <thead>
           <tr>
             <th scope="col">Temat</th>
-            <th scope="col">Opis</th>
             <th scope="col">Data rozpoczęcia</th>
             <th scope="col">Data zakończenia</th>
-            <th scope="col">Id sali</th>
+            <th scope="col">Sala</th>
+            <th *ngIf="this.authService.isTeacherLoggedIn()" scope="col">Opcje</th>
           </tr>
           </thead>
-          <tbody>
-          <tr [routerLink]="['/lesson', (lesson.id)]" *ngFor="let lesson of lessons">
-            <td>{{ lesson.topic }}</td>
-            <td>{{ lesson.description }}</td>
-            <td>{{ lesson.startDate }}</td>
-            <td>{{ lesson.finishDate }}</td>
-            <td>{{ lesson.roomId }}</td>
+
+          <tbody *ngIf="this.authService.isTeacherLoggedIn()">
+          <tr *ngFor="let lesson of lessons">
+            <td [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]" >{{ lesson.topic }}</td>
+            <td>{{ formatDateTime(lesson.startDate) }}</td>
+            <td>{{ formatDateTime(lesson.finishDate) }}</td>
+            <td>{{ getRoomData(lesson.roomId) }}</td>
+            <td><i class="fas fa-trash-alt" (click)="deleteLesson(lesson.id)"></i></td>
           </tr>
           </tbody>
+
+          <tbody *ngIf="!this.authService.isTeacherLoggedIn()">
+          <tr *ngFor="let lesson of lessons">
+            <td>{{ lesson.topic }}</td>
+            <td>{{ formatDateTime(lesson.startDate) }}</td>
+            <td>{{ formatDateTime(lesson.finishDate) }}</td>
+            <td>{{ getRoomData(lesson.roomId) }}</td>
+          </tr>
+          </tbody>
+
         </table>
       </div>
     </div>
-  </div>
 
+    <div *ngIf="this.authService.isTeacherLoggedIn()" class="pt-5">
+      <a type="button" data-toggle="modal" data-target="#addLesson" (click)="startAddingLesson()">Dodaj lekcję</a>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Modal Subject -->
+<div class="modal fade bd-example-modal-lg" id="editSubject" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edycja przedmiotu</h5>
+      </div>
+
+      <div class="modal-body">
+        <form (ngSubmit)="onSubmit()" #subjectForm="ngForm">
+          <div class="form-group">
+            <label for="name">Nazwa:</label>
+            <input type="text" [(ngModel)]="subjectEdited.name"
+                   class="form-control"
+                   id="name"
+                   name="name"
+                   placeholder="Podaj nazwę przedmiotu . . ."
+                   required #name="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label for="description">Opis:</label>
+            <textarea [(ngModel)]="subjectEdited.description"
+                      class="form-control"
+                      name="description"
+                      id="description"
+                      placeholder="Podaj opis  . . ."
+                      required #description="ngModel"
+                      cols="30" rows="auto"></textarea>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            <button type="submit" [disabled]="!subjectForm.form.valid" class="btn btn-info" data-dismiss="modal"
+                    (click)="onSubmit()">Zapisz zmiany
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal teacher -->
+<div class="modal fade bd-example-modal-lg" id="editTeacher" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Zmiana nauczyciela:</h5>
+      </div>
+
+      <div class="modal-body">
+        <form (ngSubmit)="onSubmit()" #teacherForm="ngForm">
+
+          <div class="form-group">
+            <label for="teacherId">Nauczyciel:</label>
+            <select [(ngModel)]="subjectEdited.teacherId" class="form-control" id="teacherId" name="teacherId" required
+                    #teacherId="ngModel">
+              <option *ngFor="let user of users" [value]="user.id">{{user.id}}. {{user.firstName}} {{user.lastName}}
+                (PESEL: {{user.pesel}})
+              </option>
+            </select>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            <button type="submit" [disabled]="!teacherForm.form.valid" class="btn btn-info" data-dismiss="modal"
+                    (click)="onSubmit()">Zapisz zmiany
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Modal Lesson -->
+<div class="modal fade bd-example-modal-lg" id="addLesson" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Dodawanie lekcji</h5>
+      </div>
+
+      <div class="modal-body">
+        <form (ngSubmit)="addLesson()" #lessonForm="ngForm">
+          <div class="form-group">
+            <label for="topic">Temat:</label>
+            <input type="text" [(ngModel)]="newLesson.topic"
+                   class="form-control"
+                   id="topic"
+                   name="topic"
+                   placeholder="Podaj temat lekcji . . ."
+                   required #topic="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label for="description">Opis:</label>
+            <textarea [(ngModel)]="newLesson.description"
+                      class="form-control"
+                      name="description"
+                      id="description"
+                      placeholder="Podaj opis  . . ."
+                      required #description="ngModel"
+                      cols="30" rows="auto"></textarea>
+          </div>
+
+
+          <div class="form-group">
+            <label for="startDate">Data lekcji</label>
+            <input id="startDate" name="startDate" [(ngModel)]="startDate"
+                   type="date" class="form-control" />
+          </div>
+
+          <div class="form-group">
+            <label for="startTime">Godzina rozpoczęcia</label>
+            <input id="startTime" name="startTime" [(ngModel)]="startTime"
+                   type="time" class="form-control" />
+          </div>
+
+          <div class="form-group">
+            <label for="finishTime">Godzina zakończenia</label>
+            <input id="finishTime" name="finishTime" [(ngModel)]="finishTime"
+                   type="time" class="form-control" />
+          </div>
+
+          <div class="form-group">
+            <label for="roomId">Pokój</label>
+            <select [(ngModel)]="newLesson.roomId" class="form-control" id="roomId" name="roomId" required
+                    #roomId="ngModel">
+              <option *ngFor="let room of rooms" [value]="room.id">{{room.id}}. {{room.number}} - {{room.destiny}}
+              </option>
+            </select>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            <button type="submit" [disabled]="!lessonForm.form.valid || timeIncorrect()" class="btn btn-info" data-dismiss="modal"
+                    (click)="addLesson()">Dodaj lekcję
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

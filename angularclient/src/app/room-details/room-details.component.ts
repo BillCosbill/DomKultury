@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from '../_model/user';
 import {Room} from '../_model/room';
 import {ActivatedRoute} from '@angular/router';
-import {TokenStorageService} from '../_services/token-storage.service';
 import {UserService} from '../_services/user.service';
 import {RoomService} from '../_services/room.service';
 import {ImageService} from '../_services/image.service';
@@ -17,26 +15,15 @@ export class RoomDetailsComponent implements OnInit {
   roomId: number;
   room: Room = new Room();
 
-  currentUser: any = null;
-  userId: number = null;
-  user: User = new User();
-
   base64Data: any;
   retrieveResonse: any;
 
-  constructor(private roomService: RoomService, private route: ActivatedRoute, private tokenStorageService: TokenStorageService, private userService: UserService, private imageService: ImageService) {
+  constructor(private roomService: RoomService, private route: ActivatedRoute, private userService: UserService, private imageService: ImageService) {
   }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.roomId = +params['id'];
-    });
-
-    this.currentUser = this.tokenStorageService.getUser();
-    this.userId = this.currentUser.id;
-
-    this.userService.getUser(this.userId).subscribe(result => {
-      this.user = result;
     });
 
     this.refreshData();

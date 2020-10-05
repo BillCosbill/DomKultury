@@ -4,10 +4,12 @@ import {SubjectService} from '../_services/subject.service';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../_services/user.service';
 import {User} from '../_model/user';
-import {Student} from '../_model/student';
-import {StudentService} from '../_services/student.service';
 import {Lesson} from '../_model/lesson';
 import {LessonService} from '../_services/lesson.service';
+import {TokenStorageService} from '../_services/token-storage.service';
+import {Room} from '../_model/room';
+import {RoomService} from '../_services/room.service';
+import {AuthService} from '../_services/auth.service';
 
 @Component({
   selector: 'app-subject-details',
@@ -20,10 +22,18 @@ export class SubjectDetailsComponent implements OnInit {
   subject: Subject = new Subject();
 
   teacher: User = new User();
-  students: Student[] = [];
   lessons: Lesson[] = [];
+  users: User[] = [];
+  rooms: Room[] = [];
 
-  constructor(private subjectService: SubjectService, private route: ActivatedRoute, private userService: UserService, private studentService: StudentService, private lessonService: LessonService) {
+  subjectEdited: Subject = new Subject();
+  newLesson: Lesson = new Lesson();
+
+  startDate: string = null;
+  startTime: string = null;
+  finishTime: string = null;
+
+  constructor(private authService: AuthService, private subjectService: SubjectService, private roomService: RoomService, private route: ActivatedRoute, private userService: UserService, private lessonService: LessonService) {
   }
 
   ngOnInit() {
@@ -42,20 +52,74 @@ export class SubjectDetailsComponent implements OnInit {
         this.teacher = user;
       });
 
-      this.students = [];
-
-      this.subject.studentsId.forEach(x => {
-        this.studentService.getStudent(x).subscribe(student => {
-          this.students.push(student);
-        });
-      });
-
       this.lessons = [];
       this.subject.lessonsId.forEach(x => {
         this.lessonService.getLesson(x).subscribe(lesson => {
           this.lessons.push(lesson);
         });
       });
+    });
+
+    this.userService.findAll().subscribe(users => {
+      this.users = users;
+    });
+
+    this.roomService.findAll().subscribe(rooms => {
+      this.rooms = rooms;
+    });
+  }
+
+  onSubmit() {
+    this.subjectService.updateSubject(this.subjectEdited, this.subject.id).subscribe(() => this.refreshData());
+  }
+
+  startEditing() {
+    this.subjectEdited = new Subject();
+    this.subjectEdited.id = this.subject.id;
+    this.subjectEdited.name = this.subject.name;
+    this.subjectEdited.description = this.subject.description;
+  }
+
+  startAddingLesson() {
+    this.newLesson = new Lesson();
+    this.startDate = null;
+    this.startTime = null;
+    this.finishTime = null;
+  }
+
+  addLesson() {
+    this.newLesson.startDate = this.startDate + 'T' + this.startTime + ':00';
+    this.newLesson.finishDate = this.startDate + 'T' + this.finishTime + ':00';
+    this.newLesson.subjectId = this.subjectId;
+
+    this.lessonService.addLesson(this.newLesson).subscribe(() => {
+      this.refreshData();
+    });
+  }
+
+  timeIncorrect() {
+    return this.finishTime <= this.startTime;
+  }
+
+  formatDateTime(datetime: string) {
+    return datetime.replace('T', ' ');
+  }
+
+  getRoomData(roomId: number) {
+    let room: Room = new Room();
+
+    this.rooms.forEach(x => {
+      if (x.id === roomId) {
+        room = x;
+      }
+    });
+
+    return room.number + ' - ' + room.destiny;
+  }
+
+  deleteLesson(id: number) {
+    this.lessonService.deleteLesson(id).subscribe(() => {
+      this.refreshData();
     });
   }
 }

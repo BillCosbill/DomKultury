@@ -1,21 +1,203 @@
-<div class="container small-nav pb-5">
-  <a class="nav-item" href="/lesson/{{lessonId}}">Informacje</a>
-  <a class="nav-item" href="/lesson_attendance/{{lessonId}}">Lista obecności</a>
+<div class="container small-nav">
+  <a class="nav-item" href="/subject/{{subjectId}}">Przedmiot</a>
+  <a class="nav-item active-link" href="/subject/{{subjectId}}/lesson/{{lessonId}}">Informacje</a>
+  <a class="nav-item" href="/subject/{{subjectId}}/lesson/{{lessonId}}/attendance">Lista obecności</a>
 </div>
 
-<div class="container">
+<div class="line container"></div>
+
+<div class="container pb-5 pt-3">
   <div>
 
-    <p>Temat: {{lesson.topic}}</p>
+    <div class="overlap">
+      <span class="font-weight-bold">Temat:</span>
+      <p>{{lesson.topic}}</p>
+    </div>
 
-    <p>Opis: {{lesson.description}}</p>
+    <div class="overlap">
+      <span class="font-weight-bold">Opis:</span>
+      <p>{{lesson.description}}</p>
+    </div>
 
-    <p>Data rozpoczęcia: {{lesson.startDate}}</p>
+    <div *ngIf="this.authService.isTeacherLoggedIn()" class="pt-3">
+      <a type="button" data-toggle="modal" data-target="#editLesson" (click)="startEditing()">Edytuj</a>
+    </div>
 
-    <p>Data zakończenia: {{lesson.finishDate}}</p>
+    <div class="overlap">
+      <span class="font-weight-bold">Data rozpoczęcia:</span>
+      <p>{{startDate}} {{startTime}}</p>
+      <i *ngIf="this.authService.isTeacherLoggedIn()" data-toggle="modal" data-target="#editStartDate" (click)="startEditingDatetime()" class="fas fa-edit"></i>
+    </div>
 
-    <p>Id sali: {{lesson.roomId}}</p>
+
+    <div class="overlap">
+      <span class="font-weight-bold">Data zakończenia:</span>
+      <p>{{startDate}} {{finishTime}}</p>
+      <i *ngIf="this.authService.isTeacherLoggedIn()" data-toggle="modal" data-target="#editFinishDate" (click)="startEditingDatetime()" class="fas fa-edit"></i>
+    </div>
+
+    <div class="overlap">
+      <span class="font-weight-bold">Sala:</span>
+      <p>{{room.number}} - {{room.destiny}}</p>
+      <i *ngIf="this.authService.isTeacherLoggedIn()" data-toggle="modal" data-target="#editRoom" (click)="startEditing()" class="fas fa-edit"></i>
+    </div>
+
 
   </div>
 
+</div>
+
+
+
+<!-- Modal lesson edit -->
+<div class="modal fade bd-example-modal-lg" id="editLesson" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edycja lekcji</h5>
+      </div>
+
+      <div class="modal-body">
+        <form (ngSubmit)="onSubmit()" #lessonForm="ngForm">
+          <div class="form-group">
+            <label for="topic">Temat:</label>
+            <input type="text" [(ngModel)]="editedLesson.topic"
+                   class="form-control"
+                   id="topic"
+                   name="topic"
+                   placeholder="Podaj temat lekcji . . ."
+                   required #topic="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label for="description">Opis:</label>
+            <textarea [(ngModel)]="editedLesson.description"
+                      class="form-control"
+                      name="description"
+                      id="description"
+                      placeholder="Podaj opis  . . ."
+                      required #description="ngModel"
+                      cols="30" rows="auto"></textarea>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            <button type="submit" [disabled]="!lessonForm.form.valid" class="btn btn-info" data-dismiss="modal"
+                    (click)="onSubmit()">Zapisz zmiany
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal startDate edit -->
+<div class="modal fade bd-example-modal-lg" id="editStartDate" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edycja lekcji</h5>
+      </div>
+
+      <div class="modal-body">
+        <form (ngSubmit)="changeDatetime()" #startDateForm="ngForm">
+          <div class="form-group">
+            <label for="startDate">Data lekcji</label>
+            <input id="startDate" name="startDate" [(ngModel)]="editedStartDate"
+                   type="date" class="form-control" />
+          </div>
+
+          <div class="form-group">
+            <label for="startTime">Godzina rozpoczęcia</label>
+            <input id="startTime" name="startTime" [(ngModel)]="editedStartTime"
+                   type="time" class="form-control" />
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            <button type="submit" [disabled]="!startDateForm.form.valid || timeIncorrect()" class="btn btn-info" data-dismiss="modal"
+                    (click)="changeDatetime()">Zapisz zmiany
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal finishDate edit -->
+<div class="modal fade bd-example-modal-lg" id="editFinishDate" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edycja lekcji</h5>
+      </div>
+
+      <div class="modal-body">
+        <form (ngSubmit)="changeDatetime()" #finishDateForm="ngForm">
+          <div class="form-group">
+            <label for="startDate">Data lekcji</label>
+            <input id="startDate" name="startDate" [(ngModel)]="editedStartDate"
+                   type="date" class="form-control" />
+          </div>
+
+          <div class="form-group">
+            <label for="finishTime">Godzina zakończenia</label>
+            <input id="finishTime" name="finishTime" [(ngModel)]="editedFinishTime"
+                   type="time" class="form-control" />
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            <button type="submit" [disabled]="!finishDateForm.form.valid || timeIncorrect()" class="btn btn-info" data-dismiss="modal"
+                    (click)="changeDatetime()">Zapisz zmiany
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal room edit -->
+<div class="modal fade bd-example-modal-lg" id="editRoom" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edycja lekcji</h5>
+      </div>
+
+      <div class="modal-body">
+        <form (ngSubmit)="onSubmit()" #roomForm="ngForm">
+          <div class="form-group">
+            <label for="roomId">Pokój</label>
+            <select [(ngModel)]="editedLesson.roomId" class="form-control" id="roomId" name="roomId" required
+                    #roomId="ngModel">
+              <option *ngFor="let room of rooms" [value]="room.id">{{room.id}}. {{room.number}} - {{room.destiny}}
+              </option>
+            </select>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            <button type="submit" [disabled]="!roomForm.form.valid || timeIncorrect()" class="btn btn-info" data-dismiss="modal"
+                    (click)="onSubmit()">Zapisz zmiany
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

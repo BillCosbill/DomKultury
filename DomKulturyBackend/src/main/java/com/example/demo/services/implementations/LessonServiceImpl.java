@@ -18,6 +18,7 @@ import com.example.demo.services.interfaces.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -52,6 +53,11 @@ public class LessonServiceImpl implements LessonService {
     @Override
     public void deleteLesson(Long id) {
         Lesson lesson = findById(id);
+
+        lesson.getAttendances().forEach(attendance -> {
+            attendanceRepository.delete(attendance);
+        });
+
         lessonRepository.delete(lesson);
     }
 

@@ -5,7 +5,9 @@ import com.example.demo.exceptions.SubjectExistsException;
 import com.example.demo.exceptions.SubjectNotFoundException;
 import com.example.demo.mappers.SubjectMapper;
 import com.example.demo.models.Subject;
+import com.example.demo.repository.LessonRepository;
 import com.example.demo.repository.SubjectRepository;
+import com.example.demo.services.interfaces.LessonService;
 import com.example.demo.services.interfaces.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +19,13 @@ public class SubjectServiceImpl implements SubjectService {
 
     SubjectRepository subjectRepository;
     SubjectMapper subjectMapper;
+    LessonService lessonService;
 
     @Autowired
-    public SubjectServiceImpl(SubjectRepository subjectRepository, SubjectMapper subjectMapper) {
+    public SubjectServiceImpl(SubjectRepository subjectRepository, SubjectMapper subjectMapper, LessonService lessonService) {
         this.subjectRepository = subjectRepository;
         this.subjectMapper = subjectMapper;
+        this.lessonService = lessonService;
     }
 
     @Override
@@ -37,6 +41,11 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public void deleteSubject(Long id) {
         Subject subject = findById(id);
+
+        subject.getLessons().forEach(lesson -> {
+            lessonService.deleteLesson(lesson.getId());
+        });
+
         subjectRepository.delete(subject);
     }
 
