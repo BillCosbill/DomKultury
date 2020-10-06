@@ -4,7 +4,6 @@ import com.example.demo.dto.UserDTO;
 import com.example.demo.exceptions.UserNotFoundException;
 import com.example.demo.mappers.UserMapper;
 import com.example.demo.models.User;
-import com.example.demo.repository.EventRepository;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.services.interfaces.UserService;
@@ -18,15 +17,13 @@ public class UserServiceImpl implements UserService {
 
     UserRepository userRepository;
     RoleRepository roleRepository;
-    EventRepository eventRepository;
     UserMapper userMapper;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, UserMapper userMapper, EventRepository eventRepository) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.userMapper = userMapper;
-        this.eventRepository = eventRepository;
     }
 
     @Override

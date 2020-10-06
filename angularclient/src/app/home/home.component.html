@@ -1,14 +1,14 @@
 <div class="container">
   <div class="container pt-5 pb-5">
     <div class="events card-deck">
-      <div [routerLink]="['/event', item.id]" class="card" *ngFor="let item of events | paginate: config">
+      <div [routerLink]="['/subject', item.id]" class="card" *ngFor="let item of subjects | paginate: config">
         <img
           src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712"
           class="card-img-top" alt="...">
         <div class="card-body">
-          <h5 class="card-title">{{item.title}}</h5>
+          <h5 class="card-title">{{item.name}}</h5>
           <p class="card-text">{{item.description}}</p>
-          <p class="card-text"><small>{{item.startDate}}</small></p>
+          <p class="card-text"><small>{{item.teacherId}}</small></p>
         </div>
       </div>
     </div>
@@ -30,7 +30,7 @@
       </div>
     </pagination-template>
 
-    <input routerLink="/events" type="submit" name="" value="ZOBACZ WIĘCEJ">
+    <input routerLink="/subjects" type="submit" name="" value="ZOBACZ WIĘCEJ">
   </div>
 
   <ejs-schedule #schedule locale='pl' [firstDayOfWeek]="weekFirstDay" [eventSettings]="eventObject"

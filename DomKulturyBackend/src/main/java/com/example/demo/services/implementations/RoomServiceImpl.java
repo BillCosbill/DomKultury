@@ -2,20 +2,16 @@ package com.example.demo.services.implementations;
 
 import com.example.demo.dto.RoomDTO;
 import com.example.demo.exceptions.RoomExistsException;
-import com.example.demo.exceptions.RoomIsUsedInEventException;
 import com.example.demo.exceptions.RoomNotFoundException;
 import com.example.demo.file.DBFile;
 import com.example.demo.file.DBFileRepository;
 import com.example.demo.mappers.RoomMapper;
-import com.example.demo.models.Event;
 import com.example.demo.models.Room;
-import com.example.demo.repository.EventRepository;
 import com.example.demo.repository.RoomRepository;
 import com.example.demo.services.interfaces.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,15 +19,13 @@ import java.util.Optional;
 public class RoomServiceImpl implements RoomService {
 
     RoomRepository roomRepository;
-    EventRepository eventRepository;
     RoomMapper roomMapper;
     DBFileRepository imageRepository;
 
     @Autowired
-    public RoomServiceImpl(RoomRepository roomRepository, RoomMapper roomMapper, EventRepository eventRepository, DBFileRepository imageRepository) {
+    public RoomServiceImpl(RoomRepository roomRepository, RoomMapper roomMapper, DBFileRepository imageRepository) {
         this.roomRepository = roomRepository;
         this.roomMapper = roomMapper;
-        this.eventRepository = eventRepository;
         this.imageRepository = imageRepository;
     }
 
@@ -48,13 +42,8 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public void deleteRoom(Long id) {
         Room room = findById(id);
-        List<Event> events = eventRepository.findAll();
 
-        events.forEach(x -> {
-            if(x.getRoom() == room) {
-                throw new RoomIsUsedInEventException(id);
-            }
-        });
+        //TODO usuwanie wszystkich lekcji (zły pomysł) albo ustawienie w każdej lekcji domyślnie innego pokoju lub pokoju jako null
 
         roomRepository.delete(room);
     }
@@ -73,13 +62,13 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public Room addRoom(Room room, String id) {
-        if(roomRepository.existsByNumber(room.getNumber())){
+        if (roomRepository.existsByNumber(room.getNumber())) {
             throw new RoomExistsException(room.getNumber());
         }
 
         Optional<DBFile> image = imageRepository.findById(id);
 
-        if(image.isPresent()){
+        if (image.isPresent()) {
             room.setImage(id);
         }
 

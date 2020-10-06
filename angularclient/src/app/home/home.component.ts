@@ -1,6 +1,4 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {EventService} from '../_services/event.service';
-import {Event} from '../_model/event';
 import {
   View,
   EventSettingsModel,
@@ -12,6 +10,8 @@ import {
 } from '@syncfusion/ej2-angular-schedule';
 
 import { L10n, loadCldr } from '@syncfusion/ej2-base';
+import {SubjectService} from '../_services/subject.service';
+import {Subject} from '../_model/subject';
 
 declare let require: Function;
 loadCldr(
@@ -162,18 +162,18 @@ export class HomeComponent implements OnInit {
     totalItems: 0
   };
 
-  events: Event[] = [];
+  subjects: Subject[] = [];
 
-  constructor(private eventService: EventService) {
+  constructor(private subjectService: SubjectService) {
   }
 
 
   ngOnInit() {
     // TODO Formatowanie daty pobieranej z Eventów
-    this.eventService.findAll().subscribe(data => {
-      this.events = data;
+    this.subjectService.findAll().subscribe(data => {
+      this.subjects = data;
     });
 
-    this.config.totalItems = this.events.length;
+    this.config.totalItems = this.subjects.length;
   }
 }

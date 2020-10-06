@@ -5,8 +5,6 @@ import {RegisterComponent} from './register/register.component';
 import {HomeComponent} from './home/home.component';
 import {RoomsComponent} from './rooms/rooms.component';
 import {ContactComponent} from './contact/contact.component';
-import {EventsComponent} from './events/events.component';
-import {EventDetailsComponent} from './event-details/event-details.component';
 import {AdministratorPanelComponent} from './administrator-panel/administrator-panel.component';
 import {AdminguardService} from './_guards/adminguard.service';
 import {ImageComponent} from './image/image.component';
@@ -30,8 +28,6 @@ const routes: Routes = [
   {path: 'subject/:id2/lesson/:id', component: LessonDetailsComponent, pathMatch: 'full', canActivate: [TeacherguardService]},
   {path: 'subject/:id2/lesson/:id/attendance', component: LessonDetailsAttendanceComponent, pathMatch: 'full', canActivate: [TeacherguardService]},
   {path: 'diary', component: DiaryComponent, canActivate: [TeacherguardService]},
-  {path: 'events',  component: EventsComponent},
-  {path: 'event/:id', component: EventDetailsComponent, pathMatch: 'full'},
   {path: 'room/:id', component: RoomDetailsComponent, pathMatch: 'full'},
   {path: 'rooms', component: RoomsComponent},
   {path: 'contact', component: ContactComponent},

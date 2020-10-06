@@ -33,9 +33,6 @@ public class Room {
     private String image;
 
     @OneToMany(mappedBy = "room")
-    private List<Event> events;
-
-    @OneToMany(mappedBy = "room")
     private List<Lesson> lessons;
 
     public Room(String number, String destiny, String description, int seats) {

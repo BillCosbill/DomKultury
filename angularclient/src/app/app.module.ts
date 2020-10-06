@@ -10,9 +10,7 @@ import {RegisterComponent} from './register/register.component';
 import {HomeComponent} from './home/home.component';
 import {RoomsComponent} from './rooms/rooms.component';
 import {ContactComponent} from './contact/contact.component';
-import {EventsComponent} from './events/events.component';
 import {NgxPaginationModule} from 'ngx-pagination';
-import {EventDetailsComponent} from './event-details/event-details.component';
 import {authInterceptorProviders} from './_helpers/auth.interceptor';
 import {AdministratorPanelComponent} from './administrator-panel/administrator-panel.component';
 import {
@@ -44,8 +42,6 @@ import { DiaryComponent } from './diary/diary.component';
     HomeComponent,
     RoomsComponent,
     ContactComponent,
-    EventsComponent,
-    EventDetailsComponent,
     AdministratorPanelComponent,
     ImageComponent,
     AddRoomComponent,

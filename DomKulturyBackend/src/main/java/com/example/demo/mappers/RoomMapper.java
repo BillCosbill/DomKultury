@@ -2,11 +2,10 @@ package com.example.demo.mappers;
 
 import com.example.demo.dto.RoomDTO;
 import com.example.demo.exceptions.EventNotFoundException;
-import com.example.demo.exceptions.ImageNotFoundException;
 import com.example.demo.file.DBFileRepository;
-import com.example.demo.models.Event;
+import com.example.demo.models.Lesson;
 import com.example.demo.models.Room;
-import com.example.demo.repository.EventRepository;
+import com.example.demo.repository.LessonRepository;
 import com.example.demo.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,14 +18,14 @@ import java.util.stream.Collectors;
 public class RoomMapper {
 
     RoomRepository roomRepository;
-    EventRepository eventRepository;
     DBFileRepository imageRepository;
+    LessonRepository lessonRepository;
 
     @Autowired
-    public RoomMapper(RoomRepository roomRepository, EventRepository eventRepository, DBFileRepository imageRepository) {
+    public RoomMapper(RoomRepository roomRepository, DBFileRepository imageRepository, LessonRepository lessonRepository) {
         this.roomRepository = roomRepository;
-        this.eventRepository = eventRepository;
         this.imageRepository = imageRepository;
+        this.lessonRepository = lessonRepository;
     }
 
     public List<RoomDTO> toRoomsDTO(List<Room> rooms) {
@@ -47,10 +46,10 @@ public class RoomMapper {
         }
         roomDTO.setSeats(room.getSeats());
 
-        List<Long> eventsIds = new ArrayList<>();
-        room.getEvents()
-            .forEach(x -> eventsIds.add(x.getId()));
-        roomDTO.setEventsId(eventsIds);
+        List<Long> lessonsId = new ArrayList<>();
+        room.getLessons()
+            .forEach(x -> lessonsId.add(x.getId()));
+        roomDTO.setLessonsId(lessonsId);
 
         return roomDTO;
     }
@@ -78,12 +77,12 @@ public class RoomMapper {
             room.setSeats(roomDTO.getSeats());
         }
 
-        if (roomDTO.getEventsId() != null) {
-            List<Event> events = new ArrayList<>();
-            roomDTO.getEventsId()
-                   .forEach(x -> events.add(eventRepository.findById(x)
+        if (roomDTO.getLessonsId() != null) {
+            List<Lesson> lessons = new ArrayList<>();
+            roomDTO.getLessonsId()
+                   .forEach(x -> lessons.add(lessonRepository.findById(x)
                                                            .orElseThrow(() -> new EventNotFoundException(x))));
-            room.setEvents(events);
+            room.setLessons(lessons);
         }
 
         return room;

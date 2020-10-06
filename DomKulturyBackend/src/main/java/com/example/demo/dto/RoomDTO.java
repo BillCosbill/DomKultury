@@ -16,5 +16,5 @@ public class RoomDTO {
     private String description;
     private int seats;
     private String imageId;
-    private List<Long> eventsId;
+    private List<Long> lessonsId;
 }

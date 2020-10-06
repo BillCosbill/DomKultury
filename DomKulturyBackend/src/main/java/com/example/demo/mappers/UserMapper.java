@@ -1,11 +1,8 @@
 package com.example.demo.mappers;
 
 import com.example.demo.dto.UserDTO;
-import com.example.demo.exceptions.EventNotFoundException;
 import com.example.demo.exceptions.UserNotFoundException;
-import com.example.demo.models.Event;
 import com.example.demo.models.User;
-import com.example.demo.repository.EventRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +15,10 @@ import java.util.stream.Collectors;
 public class UserMapper {
 
     UserRepository userRepository;
-    EventRepository eventRepository;
 
     @Autowired
-    public UserMapper(UserRepository userRepository, EventRepository eventRepository) {
+    public UserMapper(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.eventRepository = eventRepository;
     }
 
     public List<UserDTO> toUsersDTO(List<User> users) {
@@ -40,14 +35,6 @@ public class UserMapper {
         userDTO.setPesel(user.getPesel());
         userDTO.setEmail(user.getEmail());
         userDTO.setRoles(user.getRoles());
-
-        List<Long> conductedId = new ArrayList<>();
-        user.getClassConducted().forEach(x -> conductedId.add(x.getId()));
-        userDTO.setClassConductedId(conductedId);
-
-        List<Long> attendedId = new ArrayList<>();
-        user.getClassAttended().forEach(x -> attendedId.add(x.getId()));
-        userDTO.setClassAttendedId(attendedId);
 
         userDTO.setEnable(user.isEnable());
 
