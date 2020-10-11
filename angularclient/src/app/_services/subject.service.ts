@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {Subject} from '../_model/subject';
+import {Student} from '../_model/student';
 
 @Injectable({
   providedIn: 'root'
@@ -46,4 +47,21 @@ export class SubjectService {
     return throwError(error);
   }
 
+  deleteStudentFromSubject(subjectId: number, studentIdToDelete: number) {
+    return this.http.delete(this.subjectUrl + '/' + subjectId + '/deleteStudent/' + studentIdToDelete).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  addStudentToSubject(studentToAdd: Student, subjectId: number) {
+    return this.http.post<Student>(this.subjectUrl + '/' + subjectId + '/addStudent', studentToAdd).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  addStudentFromDatabaseToSubject(subjectId: number, studentId: number) {
+    return this.http.patch(this.subjectUrl + '/' + subjectId + '/addStudentFromDatabase/' + studentId, null).pipe(
+      catchError(this.handleError)
+    );
+  }
 }

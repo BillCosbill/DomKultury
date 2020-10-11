@@ -5,7 +5,9 @@ import com.example.demo.exceptions.StudentExistsException;
 import com.example.demo.exceptions.StudentNotFoundException;
 import com.example.demo.mappers.StudentMapper;
 import com.example.demo.models.Student;
+import com.example.demo.repository.AttendanceRepository;
 import com.example.demo.repository.StudentRepository;
+import com.example.demo.repository.SubjectRepository;
 import com.example.demo.services.interfaces.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +19,15 @@ public class StudentServiceImpl implements StudentService {
 
     StudentRepository studentRepository;
     StudentMapper studentMapper;
+    SubjectRepository subjectRepository;
+    AttendanceRepository attendanceRepository;
 
     @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository, StudentMapper studentMapper) {
+    public StudentServiceImpl(StudentRepository studentRepository, StudentMapper studentMapper,  SubjectRepository subjectRepository, AttendanceRepository attendanceRepository) {
         this.studentRepository = studentRepository;
         this.studentMapper = studentMapper;
+        this.subjectRepository = subjectRepository;
+        this.attendanceRepository = attendanceRepository;
     }
 
     @Override
@@ -38,6 +44,17 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void deleteStudent(Long id) {
         Student student = findById(id);
+
+        attendanceRepository.findAll().forEach(attendance -> {
+            if(attendance.getStudent() == student) {
+                attendanceRepository.delete(attendance);
+            }
+        });
+
+        subjectRepository.findAll().forEach(subject -> {
+            subject.getStudents().remove(student);
+        });
+
         studentRepository.delete(student);
     }
 
@@ -60,7 +77,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student addStudent(Student student) {
-        //TODO można sprawdzić czy nie istnieje już podany adres email
+        if(studentRepository.existsByPesel(student.getPesel())) {
+            throw new StudentExistsException(student.getId());
+        }
 
         return save(student);
     }

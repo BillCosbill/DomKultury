@@ -1,4 +1,11 @@
-<div class="container">
+<div class="container small-nav">
+  <a class="nav-item active-link" href="/diary">Moje przedmioty</a>
+  <a class="nav-item" href="/diary/students">Baza uczniów</a>
+</div>
+
+<div class="line container"></div>
+
+<div class="container pb-5 pt-3">
   <h3 class="text-center">Twoje przedmioty</h3>
   <div class="table-body">
     <table class="table-table">
@@ -12,11 +19,11 @@
       </tr>
       </thead>
       <tbody>
-      <tr [routerLink]="['/subject', (subject.id)]" *ngFor="let subject of subjects">
-        <td>{{ subject.id }}</td>
-        <td>{{ subject.name }}</td>
-        <td>{{ subject.description }}</td>
-        <td>{{ subject.teacherId}}</td>
+      <tr *ngFor="let subject of subjects">
+        <td [routerLink]="['/subject', (subject.id)]">{{ subject.id }}</td>
+        <td [routerLink]="['/subject', (subject.id)]">{{ subject.name }}</td>
+        <td [routerLink]="['/subject', (subject.id)]">{{ subject.description }}</td>
+        <td [routerLink]="['/subject', (subject.id)]">{{ subject.teacherId}}</td>
         <td>
           <button (click)="delete(subject.id)" class="admin-panel-button">Usuń</button>
         </td>

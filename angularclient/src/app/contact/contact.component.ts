@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import * as mapboxgl from "mapbox-gl";
+import {Component, OnInit} from '@angular/core';
+import * as mapboxgl from 'mapbox-gl';
 
 @Component({
   selector: 'app-contact',
@@ -13,7 +13,8 @@ export class ContactComponent implements OnInit {
   lat = 53.116847;
   lng = 23.146574;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
     Object.getOwnPropertyDescriptor(mapboxgl, 'accessToken').set('pk.eyJ1IjoiYmlsbGNvc2J5IiwiYSI6ImNrOXBtbDI1ODBidjUzZm1tdHNibHlkcm0ifQ.hlcWkDT_XaeP3t1S5Hyvyw');

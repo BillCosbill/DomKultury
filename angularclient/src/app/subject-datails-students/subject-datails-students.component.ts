@@ -4,6 +4,7 @@ import {StudentService} from '../_services/student.service';
 import {Student} from '../_model/student';
 import {Subject} from '../_model/subject';
 import {SubjectService} from '../_services/subject.service';
+import {AuthService} from '../_services/auth.service';
 
 @Component({
   selector: 'app-subject-datails-students',
@@ -16,7 +17,12 @@ export class SubjectDatailsStudentsComponent implements OnInit {
   subject: Subject = new Subject();
   students: Student[] = [];
 
-  constructor(private route: ActivatedRoute, private studentService: StudentService, private subjectService: SubjectService) { }
+  allStudents: Student[] = [];
+
+  studentIdToDelete: number = null;
+  studentToAdd: Student = new Student();
+
+  constructor(private route: ActivatedRoute, private studentService: StudentService, private subjectService: SubjectService, private authService: AuthService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -38,6 +44,40 @@ export class SubjectDatailsStudentsComponent implements OnInit {
         });
       });
     });
+
+    this.studentService.findAll().subscribe(students => {
+      this.allStudents = students;
+    });
   }
 
+  selectStudentIdToDelete(id: number) {
+    this.studentIdToDelete = id;
+  }
+
+  deleteStudentFromSubject() {
+    this.subjectService.deleteStudentFromSubject(this.subjectId, this.studentIdToDelete).subscribe(() => {
+      this.refreshData();
+    });
+  }
+
+  startAddingStudent() {
+    this.studentToAdd = new Student();
+  }
+
+  validateDate(dateToValidate: string) {
+    const date = Date.parse(dateToValidate);
+    return isNaN(date);
+  }
+
+  addStudent() {
+    this.subjectService.addStudentToSubject(this.studentToAdd, this.subjectId).subscribe(() => {
+      this.refreshData();
+    });
+  }
+
+  addStudentToSubject() {
+    this.subjectService.addStudentFromDatabaseToSubject(this.subjectId, this.studentToAdd.id).subscribe(() => {
+      this.refreshData();
+    });
+  }
 }

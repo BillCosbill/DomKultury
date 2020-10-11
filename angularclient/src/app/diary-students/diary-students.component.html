@@ -1,65 +1,41 @@
 <div class="container small-nav">
-  <a class="nav-item" href="/subject/{{subjectId}}">Informacje</a>
-  <a class="nav-item active-link" href="/subject/{{subjectId}}/students">Lista uczniów</a>
+  <a class="nav-item" href="/diary">Moje przedmioty</a>
+  <a class="nav-item active-link" href="/diary/students">Baza uczniów</a>
 </div>
 
 <div class="line container"></div>
 
 <div class="container pb-5 pt-3">
-  <p>Uczniowe zapisani na przedmiot "{{subject.name}}":</p>
+  <h3 class="text-center">Baza studentów</h3>
   <div class="table-body">
     <table class="table-table">
       <thead>
       <tr>
+        <th scope="col">Id</th>
         <th scope="col">Imię</th>
         <th scope="col">Nazwisko</th>
         <th scope="col">PESEL</th>
-        <th scope="col">E-mail</th>
+        <th scope="col">Email</th>
         <th scope="col">Data urodzenia</th>
         <th scope="col">Opcje</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let student of students">
-        <td>{{ student.firstName }}</td>
-        <td>{{ student.lastName }}</td>
-        <td>{{ student.pesel }}</td>
-        <td>{{ student.email }}</td>
-        <td>{{ student.birthday }}</td>
+        <td [routerLink]="['/student', (student.id)]">{{ student.id }}</td>
+        <td [routerLink]="['/student', (student.id)]">{{ student.firstName }}</td>
+        <td [routerLink]="['/student', (student.id)]">{{ student.lastName }}</td>
+        <td [routerLink]="['/student', (student.id)]">{{ student.pesel}}</td>
+        <td [routerLink]="['/student', (student.id)]">{{ student.email}}</td>
+        <td [routerLink]="['/student', (student.id)]">{{ student.birthday}}</td>
         <td *ngIf="this.authService.isAdminLoggedIn()"><i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteStudent" (click)="selectStudentIdToDelete(student.id)"></i></td>
       </tr>
       </tbody>
     </table>
   </div>
-  <div *ngIf="this.authService.isTeacherLoggedIn()" class="pt-5 row">
-    <a class="col" type="button" data-toggle="modal" data-target="#addStudent" (click)="startAddingStudent()">Dodaj ucznia do bazy</a>
-    <a class="col" type="button" data-toggle="modal" data-target="#addStudentFromDatabase" (click)="startAddingStudent()">Dodaj ucznia z bazy</a>
-  </div>
-</div>
 
-
-
-<!-- Modal deleteStudent -->
-<div class="modal fade bd-example-modal-lg" id="deleteStudent" tabindex="-1" role="dialog"
-     aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Uwaga</h5>
-      </div>
-
-      <div class="modal-body">
-        Czy na pewno chcesz usunąć tego ucznia?
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-        <button type="submit" class="btn btn-primary" data-dismiss="modal"
-                (click)="deleteStudentFromSubject()">Usuń ucznia
-        </button>
-      </div>
-    </div>
+  <div *ngIf="this.authService.isTeacherLoggedIn()" class="pt-5">
+    <a type="button" data-toggle="modal" data-target="#addStudent" (click)="startAddingStudent()">Dodaj</a>
   </div>
 </div>
 
@@ -126,7 +102,7 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
             <button type="submit" [disabled]="!studentForm.form.valid || validateDate(this.studentToAdd.birthday)" class="btn btn-info" data-dismiss="modal"
-                    (click)="addStudent()">Dodaj ucznia
+                    (click)="addStudent()">Dodaj studenta
             </button>
           </div>
         </form>
@@ -136,35 +112,28 @@
 </div>
 
 
-<!-- Modal add Student from Database -->
-<div class="modal fade bd-example-modal-lg" id="addStudentFromDatabase" tabindex="-1" role="dialog"
+
+
+
+<!-- Modal deleteStudent -->
+<div class="modal fade bd-example-modal-lg" id="deleteStudent" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
 
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Zmiana nauczyciela:</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Uwaga</h5>
       </div>
 
       <div class="modal-body">
-        <form (ngSubmit)="addStudentToSubject()" #studentFromDatabaseForm="ngForm">
+        Czy na pewno chcesz usunąć tego ucznia?
+      </div>
 
-          <div class="form-group">
-            <label for="studentIdToAdd">Uczeń:</label>
-            <select [(ngModel)]="this.studentToAdd.id" class="form-control" id="studentIdToAdd" name="studentIdToAdd" required>
-              <option *ngFor="let student of allStudents" [value]="student.id">{{student.id}}. {{student.firstName}} {{student.lastName}}
-                (PESEL: {{student.pesel}})
-              </option>
-            </select>
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-            <button type="submit" [disabled]="!studentFromDatabaseForm.form.valid" class="btn btn-info" data-dismiss="modal"
-                    (click)="addStudentToSubject()">Dodaj ucznia
-            </button>
-          </div>
-        </form>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+        <button type="submit" class="btn btn-primary" data-dismiss="modal"
+                (click)="deleteStudent(studentIdToDelete)">Usuń ucznia
+        </button>
       </div>
     </div>
   </div>

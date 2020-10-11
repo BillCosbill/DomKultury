@@ -112,7 +112,7 @@ public class WebAppApplication {
         studentsList.add(userUser2);
         studentsList.add(userUser3);
 
-        Subject subject1 = new Subject("Programowanie w językui Java", "Celem przedmiotu jest poznanie przez uczestników zajęć podstaw języka Java, które pozwolą im na samodzielne tworzenie prostych aplikacji okienkowych", teacherUser, studentsList1);
+        Subject subject1 = new Subject("Programowanie w języku Java", "Celem przedmiotu jest poznanie przez uczestników zajęć podstaw języka Java, które pozwolą im na samodzielne tworzenie prostych aplikacji okienkowych", teacherUser, studentsList1);
         Subject subject2 = new Subject("Angielski", "Kurs angielskiego na poziomie B2, którego celem jest przygotowanie do egzaminu maturalnego", adminUser, studentsList2);
 
         subjectRepository.save(subject1);

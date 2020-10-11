@@ -1,6 +1,7 @@
 package com.example.demo.services.interfaces;
 
 import com.example.demo.dto.SubjectDTO;
+import com.example.demo.models.Student;
 import com.example.demo.models.Subject;
 
 import java.util.List;
@@ -17,4 +18,10 @@ public interface SubjectService {
     Subject save(Subject subject);
 
     Subject addSubject(Subject subject);
+
+    void deleteStudentFromSubject(Long id, Long studentId);
+
+    void addStudentToSubject(Student student, Long id);
+
+    void addStudentFromDatabase(Long subjectId, Long studentId);
 }

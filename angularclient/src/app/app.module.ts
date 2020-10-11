@@ -32,6 +32,7 @@ import {LessonDetailsComponent} from './lesson-details/lesson-details.component'
 import { SubjectDatailsStudentsComponent } from './subject-datails-students/subject-datails-students.component';
 import { LessonDetailsAttendanceComponent } from './lesson-details-attendance/lesson-details-attendance.component';
 import { DiaryComponent } from './diary/diary.component';
+import { DiaryStudentsComponent } from './diary-students/diary-students.component';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { DiaryComponent } from './diary/diary.component';
     SubjectDatailsStudentsComponent,
     LessonDetailsAttendanceComponent,
     DiaryComponent,
+    DiaryStudentsComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,7 @@ import { DiaryComponent } from './diary/diary.component';
     HttpClientModule,
     NgxPaginationModule,
     RecurrenceEditorAllModule,
-    ScheduleAllModule,
+    ScheduleAllModule
   ],
   providers: [authInterceptorProviders, DayService, WeekService, WorkWeekService, MonthService, MonthAgendaService],
   bootstrap: [AppComponent]

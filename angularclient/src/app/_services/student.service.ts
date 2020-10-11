@@ -4,6 +4,7 @@ import {Observable, throwError} from 'rxjs';
 import {Subject} from '../_model/subject';
 import {catchError} from 'rxjs/operators';
 import {Student} from '../_model/student';
+import {Lesson} from '../_model/lesson';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,12 @@ export class StudentService {
 
   public getStudent(id: number) {
     return this.http.get<Student>(this.studentUrl + '/' + id).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  public addStudent(student: Student) {
+    return this.http.post<Student>(this.studentUrl, student).pipe(
       catchError(this.handleError)
     );
   }
