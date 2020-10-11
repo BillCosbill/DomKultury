@@ -24,9 +24,11 @@
         <td [routerLink]="['/subject', (subject.id)]">{{ subject.name }}</td>
         <td [routerLink]="['/subject', (subject.id)]">{{ subject.description }}</td>
         <td [routerLink]="['/subject', (subject.id)]">{{ subject.teacherId}}</td>
-        <td>
-          <button (click)="delete(subject.id)" class="admin-panel-button">Usuń</button>
-        </td>
+        <td *ngIf="this.authService.isAdminLoggedIn()"><i class="fas fa-trash-alt" (click)="delete(subject.id)"></i></td>
+
+        <!--        <td>-->
+<!--          <button (click)="delete(subject.id)" class="admin-panel-button">Usuń</button>-->
+<!--        </td>-->
       </tr>
       </tbody>
     </table>

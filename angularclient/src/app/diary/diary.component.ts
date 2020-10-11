@@ -3,6 +3,7 @@ import {Subject} from '../_model/subject';
 import {SubjectService} from '../_services/subject.service';
 import {User} from '../_model/user';
 import {TokenStorageService} from '../_services/token-storage.service';
+import {AuthService} from '../_services/auth.service';
 
 @Component({
   selector: 'app-diary',
@@ -14,7 +15,7 @@ export class DiaryComponent implements OnInit {
   subjects: Subject[] = [];
   currentUser: User;
 
-  constructor(private subjectService: SubjectService, private token: TokenStorageService) {
+  constructor(private subjectService: SubjectService, private token: TokenStorageService, private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -31,6 +32,7 @@ export class DiaryComponent implements OnInit {
     });
   }
 
+  //TODO usuwanie jako wyskakujący modal
   delete(id: number) {
     this.subjectService.deleteSubject(id).subscribe(() => this.ngOnInit());
   }

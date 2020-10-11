@@ -18,6 +18,11 @@
       </tbody>
     </table>
   </div>
+
+  <div *ngIf="this.authService.isTeacherLoggedIn()" class="pt-5">
+    <a type="button" data-toggle="modal" data-target="#addSubject" (click)="startAddingSubject()">Dodaj przedmiot</a>
+  </div>
+
 </div>
 
 
@@ -40,6 +45,63 @@
         <button type="submit" class="btn btn-primary" data-dismiss="modal"
                 (click)="deleteSubject(this.subjectIdToDelete)">Usuń przedmiot
         </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal subject -->
+<div class="modal fade bd-example-modal-lg" id="addSubject" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Dodawanie przedmiotu</h5>
+      </div>
+
+      <div class="modal-body">
+        <form (ngSubmit)="addSubject()" #subjectForm="ngForm">
+          <div class="form-group">
+            <label for="name">Nazwa:</label>
+            <input type="text" [(ngModel)]="subjectToAdd.name"
+                   class="form-control"
+                   id="name"
+                   name="name"
+                   placeholder="Podaj nazwę przedmiotu . . ."
+                   required #name="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label for="description">Opis:</label>
+            <textarea [(ngModel)]="subjectToAdd.description"
+                      class="form-control"
+                      name="description"
+                      id="description"
+                      placeholder="Podaj opis . . ."
+                      required #description="ngModel"
+                      cols="30" rows="auto"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="teacherId">Nauczyciel:</label>
+            <select [(ngModel)]="subjectToAdd.teacherId" class="form-control" id="teacherId" name="teacherId" required
+                    #teacherId="ngModel">
+              <option *ngFor="let user of users" [value]="user.id">{{user.id}}. {{user.firstName}} {{user.lastName}}
+                (PESEL: {{user.pesel}})
+              </option>
+            </select>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            <button type="submit" [disabled]="!subjectForm.form.valid" class="btn btn-info" data-dismiss="modal"
+                    (click)="addSubject()">Dodaj przedmiot
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

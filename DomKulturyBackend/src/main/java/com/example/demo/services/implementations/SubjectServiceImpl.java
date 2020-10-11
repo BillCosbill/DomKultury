@@ -70,8 +70,9 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public Subject addSubject(Subject subject) {
+    public Subject addSubject(SubjectDTO subjectDTO) {
         //TODO można sprawdzić czy nie istnieje już podany adres email
+        Subject subject = subjectMapper.toSubjectAdd(subjectDTO);
 
         return save(subject);
     }

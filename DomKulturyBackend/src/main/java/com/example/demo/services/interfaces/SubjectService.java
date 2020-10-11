@@ -17,7 +17,7 @@ public interface SubjectService {
 
     Subject save(Subject subject);
 
-    Subject addSubject(Subject subject);
+    Subject addSubject(SubjectDTO subjectDTO);
 
     void deleteStudentFromSubject(Long id, Long studentId);
 

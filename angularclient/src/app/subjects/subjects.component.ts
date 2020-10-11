@@ -16,6 +16,7 @@ export class SubjectsComponent implements OnInit {
   users: User[] = [];
 
   subjectIdToDelete: number = null;
+  subjectToAdd: Subject = new Subject();
 
   constructor(private subjectService: SubjectService, private userService: UserService, private authService: AuthService) {
   }
@@ -54,5 +55,15 @@ export class SubjectsComponent implements OnInit {
 
   selectSubjectIdToDelete(id: number) {
     this.subjectIdToDelete = id;
+  }
+
+  startAddingSubject() {
+    this.subjectToAdd = new Subject();
+  }
+
+  addSubject() {
+    this.subjectService.addSubject(this.subjectToAdd).subscribe(() => {
+      this.ngOnInit();
+    });
   }
 }

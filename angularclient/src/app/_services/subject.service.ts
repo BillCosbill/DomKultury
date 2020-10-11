@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
@@ -24,6 +24,12 @@ export class SubjectService {
 
   public getSubject(id: number) {
     return this.http.get<Subject>(this.subjectUrl + '/' + id).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  public addSubject(subject: Subject) {
+    return this.http.post<Subject>(this.subjectUrl, subject).pipe(
       catchError(this.handleError)
     );
   }

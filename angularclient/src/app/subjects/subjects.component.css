@@ -44,8 +44,23 @@ h1 {
   background: #2ecc71;
 }
 
+a[type = "button"]{
+  background: none;
+  text-align: center;
+  border: 2px solid #2ecc71;
+  padding: 14px 40px;
+  outline: none;
+  color: white;
+  border-radius: 24px;
+  transition: 0.25s;
+  cursor: pointer;
+  text-decoration: none;
+}
+a[type = "button"]:hover{
+  background: #2ecc71;
+}
+
 .modal {
   color: black;
 }
-
 

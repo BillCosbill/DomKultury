@@ -63,8 +63,36 @@ public class SubjectMapper {
     }
 
     public Subject toSubject(SubjectDTO subjectDTO, Long id) {
-        //TODO wyjątek zmienić
         Subject subject = subjectRepository.findById(id).orElseThrow(() -> new SubjectNotFoundException(id));
+
+        if (subjectDTO.getName() != null) {
+            subject.setName(subjectDTO.getName());
+        }
+        if (subjectDTO.getDescription() != null) {
+            subject.setDescription(subjectDTO.getDescription());
+        }
+        if (subjectDTO.getTeacherId() != null) {
+            subject.setTeacher(userRepository.findById(subjectDTO.getTeacherId())
+                                             .orElseThrow(() -> new UserNotFoundException(subject.getTeacher().getId())));
+        }
+        if (subjectDTO.getStudentsId() != null) {
+            List<Student> students = new ArrayList<>();
+            subjectDTO.getStudentsId()
+                      .forEach(x -> students.add(studentRepository.findById(x).orElseThrow(() -> new StudentNotFoundException(x))));
+            subject.setStudents(students);
+        }
+        if (subjectDTO.getLessonsId() != null) {
+            List<Lesson> lessons = new ArrayList<>();
+            subjectDTO.getLessonsId()
+                      .forEach(x -> lessons.add(lessonRepository.findById(x).orElseThrow(() -> new LessonNotFoundException(x))));
+            subject.setLessons(lessons);
+        }
+
+        return subject;
+    }
+
+    public Subject toSubjectAdd(SubjectDTO subjectDTO) {
+        Subject subject = new Subject();
 
         if (subjectDTO.getName() != null) {
             subject.setName(subjectDTO.getName());

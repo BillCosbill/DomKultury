@@ -42,8 +42,8 @@ public class SubjectController {
     }
 
     @PostMapping
-    public Subject addSubject(@RequestBody Subject subject) {
-        return subjectService.addSubject(subject);
+    public Subject addSubject(@RequestBody SubjectDTO subjectDTO) {
+        return subjectService.addSubject(subjectDTO);
     }
 
     @DeleteMapping("/{id}")
