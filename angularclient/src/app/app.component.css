@@ -4,10 +4,13 @@
   background-color: #000!important;
 }
 
+.nav-item {
+  margin-right: 0!important;
+}
+
 .nav-link {
   font-size: 20px;
   font-weight: bold;
-  margin-left: 10px;
 }
 
 /*CONTENT*/
@@ -37,8 +40,4 @@
   color: rgba(255, 255, 255, 0.75);
 }
 
-.nav-item:hover {
-  cursor: pointer;
-  color: rgba(255, 255, 255, 0.75);
-}
 
