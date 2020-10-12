@@ -1,6 +1,6 @@
 <div class="container small-nav">
-  <a class="nav-item active-link" href="/subject/{{subjectId}}">Informacje</a>
-  <a class="nav-item" href="/subject/{{subjectId}}/students" *ngIf="this.authService.isTeacherLoggedIn()">Lista uczniów</a>
+  <a class="nav-item active-link" [routerLink]="['/subject', (subject.id)]">Informacje</a>
+  <a class="nav-item" [routerLink]="['/subject', (subject.id), 'students']" *ngIf="this.authService.isTeacherLoggedIn()">Lista uczniów</a>
 </div>
 
 <div class="line container"></div>
@@ -51,7 +51,7 @@
             <td>{{ formatDateTime(lesson.startDate) }}</td>
             <td>{{ formatDateTime(lesson.finishDate) }}</td>
             <td>{{ getRoomData(lesson.roomId) }}</td>
-            <td><i class="fas fa-trash-alt" (click)="deleteLesson(lesson.id)"></i></td>
+            <td class="text-center"><i class="fas fa-trash-alt" (click)="deleteLesson(lesson.id)"></i></td>
           </tr>
           </tbody>
 

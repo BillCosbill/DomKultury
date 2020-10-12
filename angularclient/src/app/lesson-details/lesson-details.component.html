@@ -1,7 +1,7 @@
 <div class="container small-nav">
-  <a class="nav-item" href="/subject/{{subjectId}}">Przedmiot</a>
-  <a class="nav-item active-link" href="/subject/{{subjectId}}/lesson/{{lessonId}}">Informacje</a>
-  <a class="nav-item" href="/subject/{{subjectId}}/lesson/{{lessonId}}/attendance">Lista obecności</a>
+  <a class="nav-item" [routerLink]="['/subject', (subjectId)]" href="/subject/{{subjectId}}">Przedmiot</a>
+  <a class="nav-item active-link" [routerLink]="['/subject', (subjectId), 'lesson', (lessonId)]">Informacje</a>
+  <a class="nav-item" [routerLink]="['/subject', (subjectId), 'lesson', (lessonId), 'attendance']">Lista obecności</a>
 </div>
 
 <div class="line container"></div>

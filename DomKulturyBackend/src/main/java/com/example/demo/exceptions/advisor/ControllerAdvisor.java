@@ -34,6 +34,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }
 
+
     @ExceptionHandler(EmailInUseException.class)
     public ResponseEntity<Object> handleEmailInUseException(EmailInUseException ex, WebRequest request) {
         Map<String, Object> body = new LinkedHashMap<>();

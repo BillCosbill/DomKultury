@@ -1,47 +1,73 @@
-<div class="container">
-  <div class="row pt-5 pb-5">
-    <div class="col-3">
-      <a class="nav-link" href="admin_panel">Użytkownicy</a>
-      <a class="nav-link" href="admin_panel_activations">Prośby o aktywację</a>
+<div class="container small-nav">
+  <a class="nav-item" [routerLink]="['/admin_panel']">Użytkownicy</a>
+  <a class="nav-item" [routerLink]="['/admin_panel_activations']">Prośby o aktywację</a>
+</div>
+
+<div class="line container"></div>
+
+<div class="container pb-5 pt-3">
+    <h3 class="text-center">Lista użytkowników</h3>
+    <div class="table-body">
+      <table class="table-table">
+        <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Nazwa użytkownika</th>
+          <th scope="col">Adres email</th>
+          <th scope="col">Uprawnienia</th>
+          <th scope="col">Opcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.id }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <ng-container *ngFor="let role of user.roles">
+              {{makePrettyRoleName(role.name)}}<br>
+            </ng-container>
+          </td>
+          <td class="text-center">
+            <button (click)="delete(user.id)" class="admin-panel-button">Usuń</button>
+            <button (click)="selectUserToChangeRole(user.id)" data-toggle="modal" data-target="#editRole" class="admin-panel-button">Zmień uprawnienia</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="col-9">
-      <h1>Lista użytkowników</h1>
-      <div class="table-body">
-        <table class="table-table">
-          <thead>
-          <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Nazwa użytkownika</th>
-            <th scope="col">Adres email</th>
-            <th scope="col">Uprawnienia</th>
-            <th scope="col">Opcje</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr *ngFor="let user of users">
-            <td>{{ user.id }}</td>
-            <td>{{ user.username }}</td>
-            <td>{{ user.email }}</td>
-            <td>
-              <ng-container *ngFor="let role of user.roles">
-                {{makePrettyRoleName(role.name)}}<br>
-              </ng-container>
-            </td>
-            <td>
-              <button (click)="delete(user.id)" class="admin-panel-button">Usuń</button>
-              <button *ngIf="!checkIfContaintsRole(user.roles, 'ROLE_USER')" (click)="changeRole(user.id, 'ROLE_USER')"
-                      class="admin-panel-button">Użytkownik
-              </button>
-              <button *ngIf="!checkIfContaintsRole(user.roles, 'ROLE_TEACHER')"
-                      (click)="changeRole(user.id, 'ROLE_TEACHER')" class="admin-panel-button">Nauczyciel
-              </button>
-              <button *ngIf="!checkIfContaintsRole(user.roles, 'ROLE_ADMIN')"
-                      (click)="changeRole(user.id, 'ROLE_ADMIN')" class="admin-panel-button">Administrator
-              </button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+</div>
+
+
+
+<!-- Modal teacher -->
+<div class="modal fade bd-example-modal-lg" id="editRole" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Zmiana uprawnień:</h5>
+      </div>
+
+      <div class="modal-body">
+        <form (ngSubmit)="changeRole()" #teacherForm="ngForm">
+
+          <div class="form-group">
+            <label for="selectRole">Rola:</label>
+            <select [(ngModel)]="this.selectRole" class="form-control" id="selectRole" name="selectRole" required>
+              <option value="ROLE_TEACHER">ROLE_TEACHER</option>
+              <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+            </select>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            <button type="submit" [disabled]="!teacherForm.form.valid" class="btn btn-info" data-dismiss="modal"
+                    (click)="changeRole(this.selectUserId, this.selectRole)">Zmień rolę
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

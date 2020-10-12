@@ -1,6 +1,6 @@
 <div class="container small-nav">
-  <a class="nav-item active-link" href="/diary">Moje przedmioty</a>
-  <a class="nav-item" href="/diary/students">Baza uczniów</a>
+  <a class="nav-item active-link" [routerLink]="['/diary']">Moje przedmioty</a>
+  <a class="nav-item" [routerLink]="['/diary/students']">Baza uczniów</a>
 </div>
 
 <div class="line container"></div>
@@ -24,11 +24,7 @@
         <td [routerLink]="['/subject', (subject.id)]">{{ subject.name }}</td>
         <td [routerLink]="['/subject', (subject.id)]">{{ subject.description }}</td>
         <td [routerLink]="['/subject', (subject.id)]">{{ subject.teacherId}}</td>
-        <td *ngIf="this.authService.isAdminLoggedIn()"><i class="fas fa-trash-alt" (click)="delete(subject.id)"></i></td>
-
-        <!--        <td>-->
-<!--          <button (click)="delete(subject.id)" class="admin-panel-button">Usuń</button>-->
-<!--        </td>-->
+        <td class="text-center" *ngIf="this.authService.isTeacherLoggedIn()"><i class="fas fa-trash-alt" (click)="delete(subject.id)"></i></td>
       </tr>
       </tbody>
     </table>

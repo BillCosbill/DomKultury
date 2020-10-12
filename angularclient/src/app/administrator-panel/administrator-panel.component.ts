@@ -12,6 +12,8 @@ import {Role} from '../_model/role';
 export class AdministratorPanelComponent implements OnInit {
 
   users: User[] = [];
+  selectUserId: number = null;
+  selectRole: string = null;
 
   constructor(private userService: UserService, private router: Router) {
   }
@@ -47,15 +49,7 @@ export class AdministratorPanelComponent implements OnInit {
     this.userService.changeRole(role, id).subscribe(() => this.refreshData());
   }
 
-  activate(id: number) {
-    this.userService.activeAccount(id).subscribe(() => this.refreshData());
-  }
-
-  checkIfEnable(user: User) {
-    if (user.enable) {
-      return 'Aktywny';
-    } else {
-      return 'Nieaktywny';
-    }
+  selectUserToChangeRole(id: number) {
+    this.selectUserId = id;
   }
 }

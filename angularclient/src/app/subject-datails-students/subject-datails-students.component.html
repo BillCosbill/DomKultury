@@ -1,6 +1,6 @@
 <div class="container small-nav">
-  <a class="nav-item" href="/subject/{{subjectId}}">Informacje</a>
-  <a class="nav-item active-link" href="/subject/{{subjectId}}/students">Lista uczniów</a>
+  <a class="nav-item" [routerLink]="['/subject', (subject.id)]">Informacje</a>
+  <a class="nav-item active-link" [routerLink]="['/subject', (subject.id), 'students']" *ngIf="this.authService.isTeacherLoggedIn()">Lista uczniów</a>
 </div>
 
 <div class="line container"></div>
@@ -26,7 +26,7 @@
         <td>{{ student.pesel }}</td>
         <td>{{ student.email }}</td>
         <td>{{ student.birthday }}</td>
-        <td *ngIf="this.authService.isAdminLoggedIn()"><i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteStudent" (click)="selectStudentIdToDelete(student.id)"></i></td>
+        <td class="text-center" *ngIf="this.authService.isAdminLoggedIn()"><i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteStudent" (click)="selectStudentIdToDelete(student.id)"></i></td>
       </tr>
       </tbody>
     </table>
