@@ -1,6 +1,6 @@
 <div class="container">
   <div *ngIf="this.authService.isAdminLoggedIn()" class="row">
-    <a type="button" href="addRoom">Dodaj pokój</a>
+    <a type="button" [routerLink]="['/addRoom']">Dodaj pokój</a>
   </div>
 
   <div class="row row-cols-1 row-cols-md-2 pt-5">
