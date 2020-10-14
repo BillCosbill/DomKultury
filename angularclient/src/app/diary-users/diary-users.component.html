@@ -1,0 +1,34 @@
+<div class="container small-nav">
+  <a class="nav-item" [routerLink]="['/diary']">Moje przedmioty</a>
+  <a class="nav-item" [routerLink]="['/diary/mylessons']">Dzisiejsze lekcje</a>
+  <a class="nav-item" [routerLink]="['/diary/students']">Baza uczniów</a>
+  <a class="nav-item active-link" [routerLink]="['/diary/users']">Baza nauczycieli</a>
+</div>
+
+<div class="line container"></div>
+
+<div class="container pb-5 pt-3">
+  <h3 class="text-center">Baza nauczycieli</h3>
+  <div class="table-body">
+    <table class="table-table">
+      <thead>
+      <tr>
+        <th scope="col">Nazwa użytkownika</th>
+        <th scope="col">Imię</th>
+        <th scope="col">Nazwisko</th>
+        <th scope="col">PESEL</th>
+        <th scope="col">Email</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users">
+        <td [routerLink]="['/user', (user.id)]">{{ user.username }}</td>
+        <td [routerLink]="['/user', (user.id)]">{{ user.firstName }}</td>
+        <td [routerLink]="['/user', (user.id)]">{{ user.lastName }}</td>
+        <td [routerLink]="['/user', (user.id)]">{{ user.pesel}}</td>
+        <td [routerLink]="['/user', (user.id)]">{{ user.email}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

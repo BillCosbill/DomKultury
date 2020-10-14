@@ -44,9 +44,9 @@ public class WebAppApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void fillDB() {
-        Room music = new Room("01", "Muzyka", "Sala przeaznaczona do celów muzycznych. Wyposażona w sprzęt do nagrywania oraz instrumenty", 20);
-        Room dance = new Room("02", "Taniec", "Sala taneczna o dużej powierzchni i lustrami na ścianach", 10);
-        Room it = new Room("03", "Komputery", "Sala komputerowa", 12);
+        Room music = new Room("01", "Sala muzyczna", "Sala przeaznaczona do celów muzycznych. Wyposażona w sprzęt do nagrywania oraz instrumenty", 20);
+        Room dance = new Room("02", "Sala gimnastyczna", "Sala gimnastyczna o dużej powierzchni", 10);
+        Room it = new Room("03", "Sala komputerowa", "Sala komputerowa posiadająca 20 stanowisk wyposażonych w komputery stacjonarne.", 12);
 
         roomRepository.save(music);
         roomRepository.save(dance);
@@ -60,11 +60,11 @@ public class WebAppApplication {
         roleRepository.save(teacher);
         roleRepository.save(admin);
 
-        Student student1 = new Student("Tomasz", "Szeligowski", "97092606913", "t.szeligowski@onet.pl", LocalDate
+        Student student1 = new Student("Mieczysław", "Boczek", "97092606913", "m.boczek@onet.pl", LocalDate
                 .of(1997, 9, 26));
-        Student student2 = new Student("Aleksandra", "Toczko", "99062713215", "a.toczko@onet.pl", LocalDate
+        Student student2 = new Student("Katarzyna", "Pączek", "99062713215", "k.paczek@onet.pl", LocalDate
                 .of(1999, 6, 27));
-        Student student3 = new Student("Andrzej", "Duda", "98022224156", "a.duda@onet.pl", LocalDate.of(1998, 2, 22));
+        Student student3 = new Student("Andrzej", "Wielki", "98022224156", "a.wielki@onet.pl", LocalDate.of(1998, 2, 22));
         Student student4 = new Student("Agnieszka", "Niemieszkalska", "97101023162", "a.niemieszkalska@onet.pl", LocalDate
                 .of(1997, 10, 10));
 
@@ -87,23 +87,23 @@ public class WebAppApplication {
         adminUser.setRoles(adminRole);
         userRepository.save(adminUser);
 
-        User userUser = new User("user","Jan","Kowalski","11111111111", "user@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
+        User userUser = new User("teacher1","Jan","Kowalski","11111111111", "teacher1@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         Set<Role> userRole = new HashSet<>();
-        userRole.add(user);
+        userRole.add(teacher);
         userUser.setRoles(userRole);
         userRepository.save(userUser);
 
-        User userUser2 = new User("user2","Ola","Nowak","22222222222", "user2@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
-        userUser2.setRoles(userRole);
-        userRepository.save(userUser2);
-
-        User userUser3 = new User("user3","Jerzy","Dudek","33333333333", "user3@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
-        userUser3.setRoles(userRole);
-        userRepository.save(userUser3);
-
-        User teacherUser = new User("teacher","Andrzej","Samczy","44444444444", "teacher@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
+        User userUser2 = new User("teacher2","Ola","Nowak","22222222222", "teacher2@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         Set<Role> teacherRole = new HashSet<>();
         teacherRole.add(teacher);
+        userUser2.setRoles(teacherRole);
+        userRepository.save(userUser2);
+
+        User userUser3 = new User("teacher3","Jerzy","Dudek","33333333333", "teacher3@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
+        userUser3.setRoles(teacherRole);
+        userRepository.save(userUser3);
+
+        User teacherUser = new User("teacher4","Andrzej","Samczy","44444444444", "teacher4@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         teacherUser.setRoles(teacherRole);
         userRepository.save(teacherUser);
 

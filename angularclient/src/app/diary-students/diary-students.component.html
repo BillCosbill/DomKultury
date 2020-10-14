@@ -1,6 +1,8 @@
 <div class="container small-nav">
   <a class="nav-item" [routerLink]="['/diary']">Moje przedmioty</a>
+  <a class="nav-item" [routerLink]="['/diary/mylessons']">Dzisiejsze lekcje</a>
   <a class="nav-item active-link" [routerLink]="['/diary/students']">Baza uczniów</a>
+  <a class="nav-item" [routerLink]="['/diary/users']">Baza nauczycieli</a>
 </div>
 
 <div class="line container"></div>
@@ -11,7 +13,6 @@
     <table class="table-table">
       <thead>
       <tr>
-        <th scope="col">Id</th>
         <th scope="col">Imię</th>
         <th scope="col">Nazwisko</th>
         <th scope="col">PESEL</th>
@@ -22,13 +23,14 @@
       </thead>
       <tbody>
       <tr *ngFor="let student of students">
-        <td [routerLink]="['/student', (student.id)]">{{ student.id }}</td>
         <td [routerLink]="['/student', (student.id)]">{{ student.firstName }}</td>
         <td [routerLink]="['/student', (student.id)]">{{ student.lastName }}</td>
         <td [routerLink]="['/student', (student.id)]">{{ student.pesel}}</td>
         <td [routerLink]="['/student', (student.id)]">{{ student.email}}</td>
         <td [routerLink]="['/student', (student.id)]">{{ student.birthday}}</td>
-        <td class="text-center" *ngIf="this.authService.isTeacherLoggedIn()"><i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteStudent" (click)="selectStudentIdToDelete(student.id)"></i></td>
+        <td class="text-center" *ngIf="this.authService.isTeacherLoggedIn()">
+          <i class="fas fa-trash-alt asd" data-toggle="modal" data-target="#deleteStudent" (click)="selectStudentId(student.id)"></i>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -54,7 +56,7 @@
         <form (ngSubmit)="addStudent()" #studentForm="ngForm">
           <div class="form-group">
             <label for="firstName">Imię:</label>
-            <input type="text" [(ngModel)]="studentToAdd.firstName"
+            <input type="text" [(ngModel)]="studentModel.firstName"
                    class="form-control"
                    id="firstName"
                    name="firstName"
@@ -64,7 +66,7 @@
 
           <div class="form-group">
             <label for="lastName">Nazwisko:</label>
-            <input type="text" [(ngModel)]="studentToAdd.lastName"
+            <input type="text" [(ngModel)]="studentModel.lastName"
                    class="form-control"
                    id="lastName"
                    name="lastName"
@@ -74,7 +76,7 @@
 
           <div class="form-group">
             <label for="pesel">PESEL:</label>
-            <input type="text" [(ngModel)]="studentToAdd.pesel"
+            <input type="text" [(ngModel)]="studentModel.pesel"
                    class="form-control"
                    id="pesel"
                    name="pesel"
@@ -85,7 +87,7 @@
 
           <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" [(ngModel)]="studentToAdd.email"
+            <input type="email" [(ngModel)]="studentModel.email"
                    class="form-control"
                    id="email"
                    name="email"
@@ -95,13 +97,13 @@
 
           <div class="form-group">
             <label for="birthday">Data urodzenia</label>
-            <input id="birthday" name="birthday" [(ngModel)]="studentToAdd.birthday"
+            <input id="birthday" name="birthday" [(ngModel)]="studentModel.birthday"
                    type="date" class="form-control" />
           </div>
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-            <button type="submit" [disabled]="!studentForm.form.valid || validateDate(this.studentToAdd.birthday)" class="btn btn-info" data-dismiss="modal"
+            <button type="submit" [disabled]="!studentForm.form.valid || validateDate(this.studentModel.birthday)" class="btn btn-info" data-dismiss="modal"
                     (click)="addStudent()">Dodaj studenta
             </button>
           </div>
@@ -110,9 +112,6 @@
     </div>
   </div>
 </div>
-
-
-
 
 
 <!-- Modal deleteStudent -->
@@ -132,7 +131,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
         <button type="submit" class="btn btn-primary" data-dismiss="modal"
-                (click)="deleteStudent(studentIdToDelete)">Usuń ucznia
+                (click)="deleteStudent(studentIdSelected)">Usuń ucznia
         </button>
       </div>
     </div>

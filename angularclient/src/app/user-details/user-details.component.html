@@ -1,0 +1,148 @@
+<div class="container pb-5 pt-3">
+
+  <h3 class="text-center">Informacje</h3>
+
+  <div class="overlap">
+    <span class="font-weight-bold">Nazwa użytkownika:</span>
+    <p>{{user.username}}</p>
+  </div>
+
+  <div class="overlap">
+    <span class="font-weight-bold">Imię:</span>
+    <p>{{user.firstName}}</p>
+  </div>
+
+  <div class="overlap">
+    <span class="font-weight-bold">Nazwisko:</span>
+    <p>{{user.lastName}}</p>
+  </div>
+
+  <div class="overlap">
+    <span class="font-weight-bold">PESEL:</span>
+    <p>{{user.pesel}}</p>
+  </div>
+
+  <div class="overlap">
+    <span class="font-weight-bold">Email:</span>
+    <p>{{user.email}}</p>
+  </div>
+
+  <div *ngIf="this.authService.isAdminLoggedIn()" class="pt-3 pb-5">
+    <a type="button" data-toggle="modal" data-target="#editUser" (click)="startEditing()">Edytuj</a>
+  </div>
+
+  <div class="line container"></div>
+
+  <h3 class="text-center pt-5">Przypisane przedmioty</h3>
+
+  <div class="table-body pb-5">
+    <table class="table-table">
+      <thead>
+      <tr>
+        <th scope="col">Nazwa</th>
+        <th scope="col">Nauczyciel</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let subject of subjects">
+        <td [routerLink]="['/subject', (subject.id)]">{{ subject.name }}</td>
+        <td>{{getTeacher(subject.teacherId)}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="line container"></div>
+
+  <h3 class="text-center pt-5">Rozkład zajęć</h3>
+
+  <ejs-schedule #schedule locale='pl' [firstDayOfWeek]="weekFirstDay" [eventSettings]="eventObject"
+                [currentView]="setView" [readonly]="true">
+    <e-views>
+      <e-view option="Day" startHour="08:00" endHour="21:00"></e-view>
+      <e-view option="Week" startHour="08:00" endHour="21:00"></e-view>
+      <!--    <e-view option="WorkWeek" startHour="08:00" endHour="21:00"></e-view>-->
+      <e-view option="Month"></e-view>
+      <!--    <e-view option="Agenda" startHour="08:00" endHour="21:00"></e-view>-->
+    </e-views>
+  </ejs-schedule>
+
+</div>
+
+
+
+
+<!-- Modal Subject -->
+<div class="modal fade bd-example-modal-lg" id="editUser" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edycja użytkownika</h5>
+      </div>
+
+      <div class="modal-body">
+        <form (ngSubmit)="editUser()" #userForm="ngForm">
+          <div class="form-group">
+            <label for="username">Nazwa użytkownika:</label>
+            <input type="text" [(ngModel)]="userEdited.username"
+                   class="form-control"
+                   id="username"
+                   name="username"
+                   placeholder="Podaj nazwę użytkownika . . ."
+                   required #username="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label for="firstName">Imię:</label>
+            <input type="text" [(ngModel)]="userEdited.firstName"
+                   class="form-control"
+                   id="firstName"
+                   name="firstName"
+                   placeholder="Podaj imię . . ."
+                   required #firstName="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label for="lastName">Nazwisko:</label>
+            <input type="text" [(ngModel)]="userEdited.lastName"
+                   class="form-control"
+                   id="lastName"
+                   name="lastName"
+                   placeholder="Podaj nazwisko . . ."
+                   required #lastName="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label for="pesel">PESEL:</label>
+            <input type="text" [(ngModel)]="userEdited.pesel"
+                   class="form-control"
+                   id="pesel"
+                   name="pesel"
+                   placeholder="Podaj PESEL . . ."
+                   minlength="11" maxlength="11"
+                   required #pesel="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" [(ngModel)]="userEdited.email"
+                   class="form-control"
+                   id="email"
+                   name="email"
+                   placeholder="Podaj Email . . ."
+                   email required #email="ngModel">
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-info" data-dismiss="modal"
+                    (click)="editUser()">Zapisz zmiany
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

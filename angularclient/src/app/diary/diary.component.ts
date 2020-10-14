@@ -15,6 +15,8 @@ export class DiaryComponent implements OnInit {
   subjects: Subject[] = [];
   currentUser: User;
 
+  subjectsToday: Subject[] = [];
+
   constructor(private subjectService: SubjectService, private token: TokenStorageService, private authService: AuthService) {
   }
 

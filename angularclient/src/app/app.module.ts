@@ -22,7 +22,6 @@ import {
   WeekService,
   WorkWeekService
 } from '@syncfusion/ej2-angular-schedule';
-import {ImageComponent} from './image/image.component';
 import {AddRoomComponent} from './add-room/add-room.component';
 import {RoomDetailsComponent} from './room-details/room-details.component';
 import {AdministratorPanelActivationsComponent} from './administrator-panel-activations/administrator-panel-activations.component';
@@ -33,7 +32,10 @@ import { SubjectDatailsStudentsComponent } from './subject-datails-students/subj
 import { LessonDetailsAttendanceComponent } from './lesson-details-attendance/lesson-details-attendance.component';
 import { DiaryComponent } from './diary/diary.component';
 import { DiaryStudentsComponent } from './diary-students/diary-students.component';
-
+import { DiaryUsersComponent } from './diary-users/diary-users.component';
+import { StudentDetailsComponent } from './student-details/student-details.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
+import { DiaryTodayLessonsComponent } from './diary-today-lessons/diary-today-lessons.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,6 @@ import { DiaryStudentsComponent } from './diary-students/diary-students.componen
     RoomsComponent,
     ContactComponent,
     AdministratorPanelComponent,
-    ImageComponent,
     AddRoomComponent,
     RoomDetailsComponent,
     AdministratorPanelActivationsComponent,
@@ -55,6 +56,10 @@ import { DiaryStudentsComponent } from './diary-students/diary-students.componen
     LessonDetailsAttendanceComponent,
     DiaryComponent,
     DiaryStudentsComponent,
+    DiaryUsersComponent,
+    StudentDetailsComponent,
+    UserDetailsComponent,
+    DiaryTodayLessonsComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,7 +68,7 @@ import { DiaryStudentsComponent } from './diary-students/diary-students.componen
     HttpClientModule,
     NgxPaginationModule,
     RecurrenceEditorAllModule,
-    ScheduleAllModule
+    ScheduleAllModule,
   ],
   providers: [authInterceptorProviders, DayService, WeekService, WorkWeekService, MonthService, MonthAgendaService],
   bootstrap: [AppComponent]

@@ -6,7 +6,6 @@ import {UserService} from '../_services/user.service';
 import {User} from '../_model/user';
 import {Lesson} from '../_model/lesson';
 import {LessonService} from '../_services/lesson.service';
-import {TokenStorageService} from '../_services/token-storage.service';
 import {Room} from '../_model/room';
 import {RoomService} from '../_services/room.service';
 import {AuthService} from '../_services/auth.service';

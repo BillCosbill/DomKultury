@@ -1,0 +1,130 @@
+<div class="container pb-5 pt-3">
+
+  <h3 class="text-center">Informacje</h3>
+
+  <div class="overlap">
+    <span class="font-weight-bold">Imię:</span>
+    <p>{{student.firstName}}</p>
+  </div>
+
+  <div class="overlap">
+    <span class="font-weight-bold">Nazwisko:</span>
+    <p>{{student.lastName}}</p>
+  </div>
+
+  <div class="overlap">
+    <span class="font-weight-bold">PESEL:</span>
+    <p>{{student.pesel}}</p>
+  </div>
+
+  <div class="overlap">
+    <span class="font-weight-bold">Email:</span>
+    <p>{{student.email}}</p>
+  </div>
+
+  <div class="overlap">
+    <span class="font-weight-bold">Data urodzenia:</span>
+    <p>{{student.birthday}}</p>
+  </div>
+
+  <div *ngIf="this.authService.isTeacherLoggedIn()" class="pt-3 pb-5">
+    <a type="button" data-toggle="modal" data-target="#editStudent" (click)="startEditing()">Edytuj</a>
+  </div>
+
+  <div class="line container"></div>
+
+  <h3 class="text-center pt-5">Przypisane przedmioty</h3>
+
+  <div class="table-body pb-5">
+    <table class="table-table">
+      <thead>
+      <tr>
+        <th scope="col">Nazwa</th>
+        <th scope="col">Nauczyciel</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let subject of subjects">
+        <td [routerLink]="['/subject', (subject.id)]">{{ subject.name }}</td>
+        <td>{{getTeacher(subject.teacherId)}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+
+
+
+<!-- Modal Subject -->
+<div class="modal fade bd-example-modal-lg" id="editStudent" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edycja przedmiotu</h5>
+      </div>
+
+      <div class="modal-body">
+        <form (ngSubmit)="editStudent()" #studentForm="ngForm">
+          <div class="form-group">
+            <label for="firstName">Imię:</label>
+            <input type="text" [(ngModel)]="studentEdited.firstName"
+                   class="form-control"
+                   id="firstName"
+                   name="firstName"
+                   placeholder="Podaj imię . . ."
+                   required #firstName="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label for="lastName">Nazwisko:</label>
+            <input type="text" [(ngModel)]="studentEdited.lastName"
+                   class="form-control"
+                   id="lastName"
+                   name="lastName"
+                   placeholder="Podaj nazwisko . . ."
+                   required #lastName="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label for="pesel">PESEL:</label>
+            <input type="text" [(ngModel)]="studentEdited.pesel"
+                   class="form-control"
+                   id="pesel"
+                   name="pesel"
+                   placeholder="Podaj PESEL . . ."
+                   minlength="11" maxlength="11"
+                   required #pesel="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="text" [(ngModel)]="studentEdited.email"
+                   class="form-control"
+                   id="email"
+                   name="email"
+                   placeholder="Podaj Email . . ."
+                   email required #email="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label for="birthday">Data urodzenia</label>
+            <input id="birthday" name="birthday" [(ngModel)]="studentEdited.birthday"
+                   type="date" class="form-control" />
+          </div>
+
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            <button type="submit" [disabled]="!studentForm.form.valid" class="btn btn-info" data-dismiss="modal"
+                    (click)="editStudent()">Zapisz zmiany
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

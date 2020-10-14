@@ -41,6 +41,12 @@ export class StudentService {
     );
   }
 
+  public updateStudent(student: Student, id: number) {
+    return this.http.put<Student>(this.studentUrl + '/' + id, student).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   //TODO zrobić jakieś popapy z errorami i z udanymi akcjami np addUserToEvent
   //TODO dodać obsługę błędów w innych serwisach !!!!!!!!!!!!!!!!
   handleError(error: HttpErrorResponse) {

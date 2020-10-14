@@ -1,6 +1,8 @@
 <div class="container small-nav">
   <a class="nav-item active-link" [routerLink]="['/diary']">Moje przedmioty</a>
+  <a class="nav-item" [routerLink]="['/diary/mylessons']">Dzisiejsze lekcje</a>
   <a class="nav-item" [routerLink]="['/diary/students']">Baza uczniów</a>
+  <a class="nav-item" [routerLink]="['/diary/users']">Baza nauczycieli</a>
 </div>
 
 <div class="line container"></div>
@@ -11,7 +13,6 @@
     <table class="table-table">
       <thead>
       <tr>
-        <th scope="col">Id</th>
         <th scope="col">Nazwa</th>
         <th scope="col">Opis</th>
         <th scope="col">Id nauczyciela</th>
@@ -20,7 +21,6 @@
       </thead>
       <tbody>
       <tr *ngFor="let subject of subjects">
-        <td [routerLink]="['/subject', (subject.id)]">{{ subject.id }}</td>
         <td [routerLink]="['/subject', (subject.id)]">{{ subject.name }}</td>
         <td [routerLink]="['/subject', (subject.id)]">{{ subject.description }}</td>
         <td [routerLink]="['/subject', (subject.id)]">{{ subject.teacherId}}</td>

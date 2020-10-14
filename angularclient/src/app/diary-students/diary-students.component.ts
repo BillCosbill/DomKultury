@@ -11,9 +11,9 @@ import {AuthService} from '../_services/auth.service';
 export class DiaryStudentsComponent implements OnInit {
 
   students: Student [] = [];
-  studentIdToDelete: number = null;
+  studentIdSelected: number = null;
 
-  studentToAdd: Student = new Student();
+  studentModel: Student = new Student();
 
   constructor(private studentService: StudentService, private authService: AuthService) {
   }
@@ -28,12 +28,12 @@ export class DiaryStudentsComponent implements OnInit {
     this.studentService.deleteStudent(id).subscribe(() => this.ngOnInit());
   }
 
-  selectStudentIdToDelete(id: number) {
-    this.studentIdToDelete = id;
+  selectStudentId(id: number) {
+    this.studentIdSelected = id;
   }
 
   startAddingStudent() {
-    this.studentToAdd = new Student();
+    this.studentModel = new Student();
   }
 
   validateDate(dateToValidate: string) {
@@ -42,7 +42,7 @@ export class DiaryStudentsComponent implements OnInit {
   }
 
   addStudent() {
-    this.studentService.addStudent(this.studentToAdd).subscribe(() => {
+    this.studentService.addStudent(this.studentModel).subscribe(() => {
       this.ngOnInit();
     });
   }

@@ -1,6 +1,7 @@
 <div class="container small-nav">
   <a class="nav-item active-link" [routerLink]="['/subject', (subject.id)]">Informacje</a>
-  <a class="nav-item" [routerLink]="['/subject', (subject.id), 'students']" *ngIf="this.authService.isTeacherLoggedIn()">Lista uczniów</a>
+  <a class="nav-item" [routerLink]="['/subject', (subject.id), 'students']"
+     *ngIf="this.authService.isTeacherLoggedIn()">Lista uczniów</a>
 </div>
 
 <div class="line container"></div>
@@ -25,10 +26,9 @@
     <div class="overlap">
       <span class="font-weight-bold">Nauczyciel prowadzący:</span>
       <p>{{teacher.firstName}} {{teacher.lastName}} (PESEL: {{teacher.pesel}}) </p>
-      <i *ngIf="this.authService.isAdminLoggedIn()" data-toggle="modal" data-target="#editTeacher" (click)="startEditing()" class="fas fa-user-edit"></i>
+      <i *ngIf="this.authService.isAdminLoggedIn()" data-toggle="modal" data-target="#editTeacher"
+         (click)="startEditing()" class="fas fa-user-edit"></i>
     </div>
-
-
 
 
     <div>
@@ -47,7 +47,7 @@
 
           <tbody *ngIf="this.authService.isTeacherLoggedIn()">
           <tr *ngFor="let lesson of lessons">
-            <td [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]" >{{ lesson.topic }}</td>
+            <td [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ lesson.topic }}</td>
             <td>{{ formatDateTime(lesson.startDate) }}</td>
             <td>{{ formatDateTime(lesson.finishDate) }}</td>
             <td>{{ getRoomData(lesson.roomId) }}</td>
@@ -158,8 +158,6 @@
 </div>
 
 
-
-
 <!-- Modal Lesson -->
 <div class="modal fade bd-example-modal-lg" id="addLesson" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -197,19 +195,19 @@
           <div class="form-group">
             <label for="startDate">Data lekcji</label>
             <input id="startDate" name="startDate" [(ngModel)]="startDate"
-                   type="date" class="form-control" />
+                   type="date" class="form-control"/>
           </div>
 
           <div class="form-group">
             <label for="startTime">Godzina rozpoczęcia</label>
             <input id="startTime" name="startTime" [(ngModel)]="startTime"
-                   type="time" class="form-control" />
+                   type="time" class="form-control"/>
           </div>
 
           <div class="form-group">
             <label for="finishTime">Godzina zakończenia</label>
             <input id="finishTime" name="finishTime" [(ngModel)]="finishTime"
-                   type="time" class="form-control" />
+                   type="time" class="form-control"/>
           </div>
 
           <div class="form-group">
@@ -223,7 +221,8 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-            <button type="submit" [disabled]="!lessonForm.form.valid || timeIncorrect()" class="btn btn-info" data-dismiss="modal"
+            <button type="submit" [disabled]="!lessonForm.form.valid || timeIncorrect()" class="btn btn-info"
+                    data-dismiss="modal"
                     (click)="addLesson()">Dodaj lekcję
             </button>
           </div>

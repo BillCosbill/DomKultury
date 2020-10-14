@@ -1,0 +1,35 @@
+<div class="container small-nav">
+  <a class="nav-item" [routerLink]="['/diary']">Moje przedmioty</a>
+  <a class="nav-item active-link" [routerLink]="['/diary/mylessons']">Dzisiejsze lekcje</a>
+  <a class="nav-item" [routerLink]="['/diary/students']">Baza uczniów</a>
+  <a class="nav-item" [routerLink]="['/diary/users']">Baza nauczycieli</a>
+</div>
+
+<div class="line container"></div>
+
+<div class="container">
+  <p class="pt-5">Dzisiejsze lekcje:</p>
+  <div class="table-body">
+    <table class="table-table">
+      <thead>
+      <tr>
+        <th scope="col">Temat</th>
+        <th scope="col">Data rozpoczęcia</th>
+        <th scope="col">Data zakończenia</th>
+        <th scope="col">Sala</th>
+        <th *ngIf="this.authService.isTeacherLoggedIn()" scope="col">Opcje</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let lesson of lessons">
+        <td [routerLink]="['/subject', (lesson.subjectId), 'lesson', (lesson.id)]" >{{ lesson.topic }}</td>
+        <td>{{ formatDateTime(lesson.startDate) }}</td>
+        <td>{{ formatDateTime(lesson.finishDate) }}</td>
+        <td>{{ getRoomData(lesson.roomId) }}</td>
+        <td class="text-center"><i class="fas fa-trash-alt" (click)="deleteLesson(lesson.id)"></i></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
