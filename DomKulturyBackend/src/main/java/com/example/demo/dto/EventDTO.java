@@ -1,6 +1,5 @@
 package com.example.demo.dto;
 
-import com.example.demo.models.Room;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

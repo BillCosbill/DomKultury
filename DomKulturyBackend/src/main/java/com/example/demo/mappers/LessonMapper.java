@@ -4,7 +4,6 @@ import com.example.demo.dto.LessonDTO;
 import com.example.demo.exceptions.*;
 import com.example.demo.models.Attendance;
 import com.example.demo.models.Lesson;
-import com.example.demo.models.Student;
 import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

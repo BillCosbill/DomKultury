@@ -16,5 +16,5 @@ public interface AttendanceService {
 
     Attendance save(Attendance attendance);
 
-    AttendanceDTO addAttendance(AttendanceDTO attendanceDTO);
+    Attendance addAttendance(Attendance attendance);
 }

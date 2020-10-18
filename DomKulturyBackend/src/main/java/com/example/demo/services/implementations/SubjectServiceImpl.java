@@ -1,13 +1,16 @@
 package com.example.demo.services.implementations;
 
+import com.example.demo.dto.AttendanceDTO;
 import com.example.demo.dto.SubjectDTO;
 import com.example.demo.exceptions.StudentExistsException;
 import com.example.demo.exceptions.SubjectExistsException;
 import com.example.demo.exceptions.SubjectNotFoundException;
 import com.example.demo.mappers.SubjectMapper;
+import com.example.demo.models.Attendance;
 import com.example.demo.models.Student;
 import com.example.demo.models.Subject;
 import com.example.demo.repository.SubjectRepository;
+import com.example.demo.services.interfaces.AttendanceService;
 import com.example.demo.services.interfaces.LessonService;
 import com.example.demo.services.interfaces.StudentService;
 import com.example.demo.services.interfaces.SubjectService;
@@ -19,17 +22,19 @@ import java.util.List;
 @Service
 public class SubjectServiceImpl implements SubjectService {
 
-    SubjectRepository subjectRepository;
-    SubjectMapper subjectMapper;
-    LessonService lessonService;
-    StudentService studentService;
+    private final SubjectRepository subjectRepository;
+    private final SubjectMapper subjectMapper;
+    private final LessonService lessonService;
+    private final StudentService studentService;
+    private final AttendanceService attendanceService;
 
     @Autowired
-    public SubjectServiceImpl(SubjectRepository subjectRepository, SubjectMapper subjectMapper, LessonService lessonService, StudentService studentService) {
+    public SubjectServiceImpl(SubjectRepository subjectRepository, SubjectMapper subjectMapper, LessonService lessonService, StudentService studentService, AttendanceService attendanceService) {
         this.subjectRepository = subjectRepository;
         this.subjectMapper = subjectMapper;
         this.lessonService = lessonService;
         this.studentService = studentService;
+        this.attendanceService = attendanceService;
     }
 
     @Override
@@ -92,11 +97,15 @@ public class SubjectServiceImpl implements SubjectService {
     public void addStudentToSubject(Student student, Long id) {
 
         //TODO dodawanie attendance dla nowych studentów
-
         studentService.addStudent(student);
 
         Subject subject = findById(id);
         subject.getStudents().add(student);
+
+        subject.getLessons().forEach(lesson -> {
+            attendanceService.addAttendance(new Attendance(lesson, student));
+        });
+
         save(subject);
     }
 
@@ -112,6 +121,10 @@ public class SubjectServiceImpl implements SubjectService {
             //TODO inny wyjątek stworzyć
             throw new StudentExistsException(studentId);
         }
+
+        subject.getLessons().forEach(lesson -> {
+            attendanceService.addAttendance(new Attendance(lesson, student));
+        });
 
         subject.getStudents().add(student);
         save(subject);

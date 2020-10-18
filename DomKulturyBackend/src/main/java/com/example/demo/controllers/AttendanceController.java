@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.dto.AttendanceDTO;
 import com.example.demo.mappers.AttendanceMapper;
+import com.example.demo.models.Attendance;
 import com.example.demo.payload.response.MessageResponse;
 import com.example.demo.services.interfaces.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,18 +28,20 @@ public class AttendanceController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AttendanceDTO>> getAttendance() {
-        return ResponseEntity.ok(attendanceMapper.toAttendancesDTO(attendanceService.findAll()));
+    public List<AttendanceDTO> getAttendance() {
+        return attendanceMapper.toAttendancesDTO(attendanceService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AttendanceDTO> getAttendance(@PathVariable Long id) {
-        return ResponseEntity.ok(attendanceMapper.toAttendanceDTO(attendanceService.findById(id)));
+    public AttendanceDTO getAttendance(@PathVariable Long id) {
+        return attendanceMapper.toAttendanceDTO(attendanceService.findById(id));
     }
 
     @PostMapping
     public AttendanceDTO addAttendance(@RequestBody AttendanceDTO attendanceDTO) {
-        return attendanceService.addAttendance(attendanceDTO);
+        Attendance attendance = attendanceMapper.toAttendanceAdd(attendanceDTO);
+        attendanceService.addAttendance(attendance);
+        return getAttendance(attendance.getId());
     }
 
     @DeleteMapping("/{id}")
@@ -49,7 +52,7 @@ public class AttendanceController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AttendanceDTO> updateEvent(@RequestBody AttendanceDTO attendanceDTO, @PathVariable Long id) {
+    public ResponseEntity<AttendanceDTO> updateAttendance(@RequestBody AttendanceDTO attendanceDTO, @PathVariable Long id) {
         attendanceService.updateAttendance(attendanceDTO, id);
         return ResponseEntity.status(HttpStatus.OK).body(attendanceDTO);
     }

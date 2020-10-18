@@ -93,5 +93,4 @@ export class LessonDetailsAttendanceComponent implements OnInit {
   changePresentValue(studentAttendance: StudentAttendance) {
     studentAttendance.present = !studentAttendance.present;
   }
-
 }

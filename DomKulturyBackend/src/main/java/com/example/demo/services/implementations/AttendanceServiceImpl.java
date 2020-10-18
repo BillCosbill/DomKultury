@@ -57,8 +57,8 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public AttendanceDTO addAttendance(AttendanceDTO attendanceDTO) {
-        save(attendanceMapper.toAttendanceAdd(attendanceDTO));
-        return attendanceDTO;
+    public Attendance addAttendance(Attendance attendance) {
+        save(attendance);
+        return attendance;
     }
 }
