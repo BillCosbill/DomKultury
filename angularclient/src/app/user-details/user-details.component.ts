@@ -19,7 +19,7 @@ export class UserDetailsComponent implements OnInit {
   public setView: View = 'Month';
   public weekFirstDay = 1;
   public eventObject: EventSettingsModel = {
-    dataSource: [{}]
+    dataSource: []
   };
 
   scheduleData: DataSource[] = [];
@@ -36,6 +36,9 @@ export class UserDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.subjects = [];
+    this.scheduleData = [];
+
     this.route.params.subscribe(params => {
       this.userId = +params['id'];
     });
@@ -44,27 +47,25 @@ export class UserDetailsComponent implements OnInit {
       this.user = user;
     });
 
-    this.subjects = [];
-    this.scheduleData = [];
-    this.subjectService.findAll().subscribe(subjects => {
-      subjects.forEach(subject => {
-        if (subject.teacherId === this.userId) {
-          this.subjects.push(subject);
+    this.userService.getUserSubjects(this.userId).subscribe(subjects => {
+      this.subjects = subjects;
 
-          subject.lessonsId.forEach(lessonId => {
-            this.lessonService.getLesson(lessonId).subscribe(lesson => {
-              this.scheduleData.push(new DataSource(lesson.topic, lesson.startDate, lesson.finishDate));
-            });
+      subjects.forEach(subject => {
+        subject.lessonsId.forEach(lessonId => {
+          this.lessonService.getLesson(lessonId).subscribe(lesson => {
+            this.scheduleData.push(new DataSource(lesson.topic, lesson.startDate, lesson.finishDate));
           });
-        }
+        });
       });
     });
+
 
     this.userService.findAll().subscribe(users => {
       this.users = users;
     });
 
     this.eventObject.dataSource = this.scheduleData;
+
   }
 
   getTeacher(teacherId: number) {
@@ -93,5 +94,10 @@ export class UserDetailsComponent implements OnInit {
     this.userService.updateUser(this.userEdited, this.userId).subscribe(() => {
       this.ngOnInit();
     });
+  }
+
+  dataImportedIntoScheduler() {
+    // @ts-ignore
+    return this.eventObject.dataSource.length > 0;
   }
 }

@@ -14,7 +14,6 @@ public class RoomDTO {
     private String number;
     private String destiny;
     private String description;
-    private int seats;
     private String imageId;
     private List<Long> lessonsId;
 }

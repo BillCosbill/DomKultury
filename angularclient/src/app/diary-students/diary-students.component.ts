@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Student} from '../_model/student';
 import {StudentService} from '../_services/student.service';
 import {AuthService} from '../_services/auth.service';
+import {ValidationService} from '../_services/validation/validation.service';
 
 @Component({
   selector: 'app-diary-students',
@@ -15,7 +16,7 @@ export class DiaryStudentsComponent implements OnInit {
 
   studentModel: Student = new Student();
 
-  constructor(private studentService: StudentService, private authService: AuthService) {
+  constructor(private studentService: StudentService, private authService: AuthService, private validationService: ValidationService) {
   }
 
   ngOnInit() {
@@ -34,11 +35,6 @@ export class DiaryStudentsComponent implements OnInit {
 
   startAddingStudent() {
     this.studentModel = new Student();
-  }
-
-  validateDate(dateToValidate: string) {
-    const date = Date.parse(dateToValidate);
-    return isNaN(date);
   }
 
   addStudent() {

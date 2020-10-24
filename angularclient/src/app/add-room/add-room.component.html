@@ -46,28 +46,13 @@
         </div>
 
         <div class="form-group">
-          <label for="seats">Ilość miejsc:</label>
-          <input #seats="ngModel" [(ngModel)]="room.seats"
-                 class="form-control"
-                 id="seats"
-                 name="seats"
-                 placeholder="Podaj ilość miejsc . . ."
-                 min="1"
-                 required type="number">
-          <!--          <div [hidden]="!seats.pristine" class="alert alert-danger">Liczba miejsc jest wymagana</div>-->
-          <div [hidden]="seatsInRange() || seats.pristine" class="alert alert-danger">Liczba miejsc musi być większa od
-            0
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Ilość miejsc:</label>
+          <label>Zdjęcie:</label>
           <div class="col-md-6">
             <input type="file" (change)="onFileChanged($event)">
           </div>
         </div>
 
-        <button type="submit" [disabled]="!userForm.form.valid || !seatsInRange()"
+        <button type="submit" [disabled]="!userForm.form.valid"
                 class="btn btn-info">Dodaj
         </button>
 

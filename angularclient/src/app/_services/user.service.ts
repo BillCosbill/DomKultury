@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {User} from '../_model/user';
+import {Subject} from '../_model/subject';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,10 @@ export class UserService {
 
   public findAll(): Observable<User[]> {
     return this.http.get<User[]>(this.usersUrl);
+  }
+
+  public getUserSubjects(userId: number): Observable<Subject[]> {
+    return this.http.get<Subject[]>(this.usersUrl + '/' + userId + '/subjects');
   }
 
   public getUser(id: number) {

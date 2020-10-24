@@ -44,8 +44,6 @@ public class RoomMapper {
         if (room.getImage() != null) {
             roomDTO.setImageId(room.getImage());
         }
-        roomDTO.setSeats(room.getSeats());
-
         List<Long> lessonsId = new ArrayList<>();
         room.getLessons()
             .forEach(x -> lessonsId.add(x.getId()));
@@ -73,10 +71,6 @@ public class RoomMapper {
         if (roomDTO.getImageId() != null) {
             room.setImage(roomDTO.getImageId());
         }
-        if (roomDTO.getSeats() > 0) {
-            room.setSeats(roomDTO.getSeats());
-        }
-
         if (roomDTO.getLessonsId() != null) {
             List<Lesson> lessons = new ArrayList<>();
             roomDTO.getLessonsId()

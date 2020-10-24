@@ -27,18 +27,14 @@ public class Room {
     @NotBlank
     private String description;
 
-    @NotBlank
-    private int seats;
-
     private String image;
 
     @OneToMany(mappedBy = "room")
     private List<Lesson> lessons;
 
-    public Room(String number, String destiny, String description, int seats) {
+    public Room(String number, String destiny, String description) {
         this.number = number;
         this.destiny = destiny;
         this.description = description;
-        this.seats = seats;
     }
 }

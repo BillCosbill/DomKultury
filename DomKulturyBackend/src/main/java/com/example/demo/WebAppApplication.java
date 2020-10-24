@@ -44,9 +44,9 @@ public class WebAppApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void fillDB() {
-        Room music = new Room("01", "Sala muzyczna", "Sala przeaznaczona do celów muzycznych. Wyposażona w sprzęt do nagrywania oraz instrumenty", 20);
-        Room dance = new Room("02", "Sala gimnastyczna", "Sala gimnastyczna o dużej powierzchni", 10);
-        Room it = new Room("03", "Sala komputerowa", "Sala komputerowa posiadająca 20 stanowisk wyposażonych w komputery stacjonarne.", 12);
+        Room music = new Room("01", "Sala muzyczna", "Sala przeaznaczona do celów muzycznych. Wyposażona w sprzęt do nagrywania oraz instrumenty");
+        Room dance = new Room("02", "Sala gimnastyczna", "Sala gimnastyczna o dużej powierzchni");
+        Room it = new Room("03", "Sala komputerowa", "Sala komputerowa posiadająca 20 stanowisk wyposażonych w komputery stacjonarne.");
 
         roomRepository.save(music);
         roomRepository.save(dance);
@@ -119,13 +119,13 @@ public class WebAppApplication {
         subjectRepository.save(subject2);
 
         Lesson lesson1 = new Lesson("Funkcje w Java","Uczeń poznaje funkcje w języku java",
-                LocalDateTime.of(2020, Month.SEPTEMBER, 11, 15, 0, 0),
-                LocalDateTime.of(2020, Month.SEPTEMBER, 11, 17, 0, 0),
+                LocalDateTime.of(2020, Month.OCTOBER, 11, 15, 0, 0),
+                LocalDateTime.of(2020, Month.OCTOBER, 11, 17, 0, 0),
                 it, subject1);
 
         Lesson lesson2 = new Lesson("JavaFX","Uczeń uczy się tworzyć aplikacje okienkowe",
-                LocalDateTime.of(2020, Month.SEPTEMBER, 18, 15, 0, 0),
-                LocalDateTime.of(2020, Month.SEPTEMBER, 18, 17, 0, 0),
+                LocalDateTime.of(2020, Month.OCTOBER, 18, 15, 0, 0),
+                LocalDateTime.of(2020, Month.OCTOBER, 18, 17, 0, 0),
                 it, subject1);
 
         lessonRepository.save(lesson1);

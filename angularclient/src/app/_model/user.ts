@@ -10,4 +10,5 @@ export class User {
   password: string;
   roles: Role[];
   enable: boolean;
+  subjects: number[];
 }

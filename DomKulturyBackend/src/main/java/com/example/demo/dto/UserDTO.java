@@ -21,7 +21,6 @@ public class UserDTO {
     private String pesel;
     private String email;
     private Set<Role> roles = new HashSet<>();
-    private List<Long> classConductedId;
-    private List<Long> classAttendedId;
     private boolean isEnable;
+    private List<Long> subjectsId;
 }

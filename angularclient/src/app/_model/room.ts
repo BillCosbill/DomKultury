@@ -5,6 +5,4 @@ export class Room {
   description: string;
   imageId: string;
   retrievedImage: any;
-  seats: number;
-  eventsIds: number[];
 }

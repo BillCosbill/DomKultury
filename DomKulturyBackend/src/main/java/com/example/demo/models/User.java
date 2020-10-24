@@ -1,5 +1,6 @@
 package com.example.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -52,6 +54,10 @@ public class User {
 
     @NotBlank
     private boolean isEnable;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "teacher")
+    private List<Subject> subjects;
 
     public User(String username, String firstName, String lastName, String pesel, String email, String password, boolean isEnable) {
         this.username = username;
