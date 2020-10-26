@@ -1,0 +1,15 @@
+.small-nav {
+  width: 100%;
+}
+
+.overlap {
+  border: 2px solid grey;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border-radius: 10px;
+}
+
+.overlap:hover {
+  background-color: grey;
+  cursor: pointer;
+}

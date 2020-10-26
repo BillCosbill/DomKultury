@@ -8,6 +8,7 @@ import {ActivatedRoute} from '@angular/router';
 import {EventSettingsModel, View} from '@syncfusion/ej2-angular-schedule';
 import {DataSource} from '../_model/data-source';
 import {LessonService} from '../_services/lesson.service';
+import {TokenStorageService} from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-user-details',
@@ -32,7 +33,7 @@ export class UserDetailsComponent implements OnInit {
 
   userEdited: User = new User();
 
-  constructor(private lessonService: LessonService, private userService: UserService, private authService: AuthService, private subjectService: SubjectService, private route: ActivatedRoute) {
+  constructor(private tokenStorage: TokenStorageService, private lessonService: LessonService, private userService: UserService, private authService: AuthService, private subjectService: SubjectService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -83,7 +84,7 @@ export class UserDetailsComponent implements OnInit {
   startEditing() {
     this.userEdited = new User();
     this.userEdited.id = this.user.id;
-    this.userEdited.username = this.user.username;
+    // this.userEdited.username = this.user.username;
     this.userEdited.firstName = this.user.firstName;
     this.userEdited.lastName = this.user.lastName;
     this.userEdited.pesel = this.user.pesel;
@@ -91,7 +92,15 @@ export class UserDetailsComponent implements OnInit {
   }
 
   editUser() {
-    this.userService.updateUser(this.userEdited, this.userId).subscribe(() => {
+    this.userService.updateUser(this.userEdited, this.userId).subscribe(user => {
+
+      // if edit yourself
+      if (this.userId === this.tokenStorage.getUser().id) {
+        const form = this.tokenStorage.getUser();
+        form.email = user.email;
+        this.tokenStorage.saveUser(form);
+      }
+
       this.ngOnInit();
     });
   }

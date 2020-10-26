@@ -37,6 +37,7 @@ import { StudentDetailsComponent } from './student-details/student-details.compo
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { DiaryTodayLessonsComponent } from './diary-today-lessons/diary-today-lessons.component';
 import { AdministratorPanelAddTeacherComponent } from './administrator-panel-add-teacher/administrator-panel-add-teacher.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { AdministratorPanelAddTeacherComponent } from './administrator-panel-add
     UserDetailsComponent,
     DiaryTodayLessonsComponent,
     AdministratorPanelAddTeacherComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,12 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {User} from '../_model/user';
 import {Subject} from '../_model/subject';
+
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
+};
 
 @Injectable({
   providedIn: 'root'
@@ -45,5 +49,12 @@ export class UserService {
 
   public changeRole(role: string, id: number) {
     return this.http.patch<User>(this.usersUrl + '/changeRole/' + id + '?newRole=' + role, null);
+  }
+
+  public changePassword(passwordRequest, id: number) {
+    return this.http.patch(this.usersUrl + '/changePassword/' + id, {
+      password: passwordRequest.password,
+      newPassword: passwordRequest.newPassword
+    }, httpOptions);
   }
 }

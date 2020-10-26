@@ -7,6 +7,7 @@ import {SubjectService} from '../_services/subject.service';
 import {User} from '../_model/user';
 import {UserService} from '../_services/user.service';
 import {AuthService} from '../_services/auth.service';
+import {TokenStorageService} from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-student-details',
@@ -64,7 +65,7 @@ export class StudentDetailsComponent implements OnInit {
 
   editStudent() {
     this.studentService.updateStudent(this.studentEdited, this.studentId).subscribe(() => {
-      this.ngOnInit()
+      this.ngOnInit();
     });
   }
 

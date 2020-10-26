@@ -51,9 +51,9 @@ public class WebAppApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void fillDB() throws MessagingException {
-        Room music = new Room("01", "Sala muzyczna", "Sala przeaznaczona do celów muzycznych. Wyposażona w sprzęt do nagrywania oraz instrumenty", 20);
-        Room dance = new Room("02", "Sala gimnastyczna", "Sala gimnastyczna o dużej powierzchni", 10);
-        Room it = new Room("03", "Sala komputerowa", "Sala komputerowa posiadająca 20 stanowisk wyposażonych w komputery stacjonarne.", 12);
+        Room music = new Room("01", "Sala muzyczna", "Sala przeaznaczona do celów muzycznych. Wyposażona w sprzęt do nagrywania oraz instrumenty");
+        Room dance = new Room("02", "Sala gimnastyczna", "Sala gimnastyczna o dużej powierzchni");
+        Room it = new Room("03", "Sala komputerowa", "Sala komputerowa posiadająca 20 stanowisk wyposażonych w komputery stacjonarne.");
 
         roomRepository.save(music);
         roomRepository.save(dance);

@@ -1,7 +1,9 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.dto.UserDTO;
+import com.example.demo.exceptions.EmailInUseException;
 import com.example.demo.exceptions.UserNotFoundException;
+import com.example.demo.exceptions.UsernameTakenException;
 import com.example.demo.mappers.UserMapper;
 import com.example.demo.models.Subject;
 import com.example.demo.models.User;
@@ -50,12 +52,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUser(UserDTO userDTO, Long id) {
 
+        User user = findById(id);
+
         //TODO inny wyjątek, żeby się zgadzało
         if(!userDTO.getId().equals(id)) {
             throw new UserNotFoundException(id);
         }
 
-        User user = userMapper.toUser(userDTO, id);
+        if(!user.getEmail().equals(userDTO.getEmail()) && userRepository.existsByEmail(userDTO.getEmail())) {
+            throw new EmailInUseException(userDTO.getEmail());
+        }
+
+        if(!user.getUsername().equals(userDTO.getUsername()) && userRepository.existsByUsername(userDTO.getUsername())) {
+            throw new UsernameTakenException(userDTO.getUsername());
+        }
+
+        if(!user.getPesel().equals(userDTO.getPesel()) && userRepository.existsByPesel(userDTO.getPesel())) {
+            throw new EmailInUseException(userDTO.getPesel());
+        }
+
+        user = userMapper.toUser(userDTO, id);
 
         return save(user);
     }
