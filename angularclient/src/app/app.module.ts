@@ -36,6 +36,7 @@ import { DiaryUsersComponent } from './diary-users/diary-users.component';
 import { StudentDetailsComponent } from './student-details/student-details.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { DiaryTodayLessonsComponent } from './diary-today-lessons/diary-today-lessons.component';
+import { AdministratorPanelAddTeacherComponent } from './administrator-panel-add-teacher/administrator-panel-add-teacher.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { DiaryTodayLessonsComponent } from './diary-today-lessons/diary-today-le
     StudentDetailsComponent,
     UserDetailsComponent,
     DiaryTodayLessonsComponent,
+    AdministratorPanelAddTeacherComponent,
   ],
   imports: [
     BrowserModule,

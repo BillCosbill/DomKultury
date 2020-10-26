@@ -22,6 +22,7 @@ import {DiaryUsersComponent} from './diary-users/diary-users.component';
 import {StudentDetailsComponent} from './student-details/student-details.component';
 import {UserDetailsComponent} from './user-details/user-details.component';
 import {DiaryTodayLessonsComponent} from './diary-today-lessons/diary-today-lessons.component';
+import {AdministratorPanelAddTeacherComponent} from './administrator-panel-add-teacher/administrator-panel-add-teacher.component';
 
 
 const routes: Routes = [
@@ -44,7 +45,8 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'addRoom', component: AddRoomComponent},
   {path: 'admin_panel', component: AdministratorPanelComponent, canActivate: [AdminguardService]},
-  {path: 'admin_panel_activations', component: AdministratorPanelActivationsComponent, canActivate: [AdminguardService]},
+  // {path: 'admin_panel_activations', component: AdministratorPanelActivationsComponent, canActivate: [AdminguardService]},
+  {path: 'admin_panel_add_teacher', component: AdministratorPanelAddTeacherComponent, canActivate: [AdminguardService]},
   {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 

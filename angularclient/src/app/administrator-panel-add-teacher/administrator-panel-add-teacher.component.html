@@ -1,0 +1,101 @@
+<div class="container small-nav">
+  <a class="nav-item" [routerLink]="['/admin_panel']">Użytkownicy</a>
+  <a class="nav-item active" [routerLink]="['/admin_panel_add_teacher']">Dodaj nauczyciela</a>
+</div>
+
+<div class="line container"></div>
+
+<div class="container pb-5 pt-3">
+  <div class="container">
+    <form *ngIf="!isSuccessful" name="form" class="box" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+      <h3 class="text-center pb-5">Dodaj nauczyciela</h3>
+      <div class="form-group">
+        <label for="username"></label>
+        <input type="text" class="form-control" name="username" placeholder="Nazwa użytkownika"
+               [(ngModel)]="form.username" required minlength="3" maxlength="20" #username="ngModel"/>
+        <div class="alert alert-danger container" *ngIf="f.submitted && username.invalid">
+          <div *ngIf="username.errors.required">Nazwa użytkownika jest wymagana</div>
+          <div *ngIf="username.errors.minlength">
+            Nazwa użytkownika musi mieć przynajmniej 3 znaki
+          </div>
+          <div *ngIf="username.errors.maxlength">
+            Nazwa użytkownika może mieć maksymalnie 20 znaków
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="firstName"></label>
+        <input type="text" class="form-control" name="firstName" placeholder="Imię" [(ngModel)]="form.firstName"
+               required minlength="3" maxlength="30" #firstName="ngModel"/>
+        <div class="alert alert-danger container" *ngIf="f.submitted && firstName.invalid">
+          <div *ngIf="firstName.errors.required">Imię jest wymagane</div>
+          <div *ngIf="firstName.errors.minlength">
+            Imię musi mieć przynajmniej 3 znaki
+          </div>
+          <div *ngIf="firstName.errors.maxlength">
+            Imię może mieć maksymalnie 30 znaków
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="lastName"></label>
+        <input type="text" class="form-control" name="lastName" placeholder="Nazwisko" [(ngModel)]="form.lastName"
+               required minlength="3" maxlength="30" #lastName="ngModel"/>
+        <div class="alert alert-danger container" *ngIf="f.submitted && lastName.invalid">
+          <div *ngIf="lastName.errors.required">Nazwisko jest wymagane</div>
+          <div *ngIf="lastName.errors.minlength">
+            Nazwisko musi mieć przynajmniej 3 znaki
+          </div>
+          <div *ngIf="lastName.errors.maxlength">
+            Nazwisko może mieć maksymalnie 30 znaków
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="pesel"></label>
+        <input type="text" class="form-control" name="pesel" placeholder="Pesel" [(ngModel)]="form.pesel" required
+               minlength="11" maxlength="11" #pesel="ngModel"/>
+        <div class="alert alert-danger container" *ngIf="f.submitted && pesel.invalid">
+          <div *ngIf="pesel.errors.required">Pesel jest wymagany</div>
+          <div *ngIf="pesel.errors.minlength">
+            Pesel musi mieć 11 znaków
+          </div>
+          <div *ngIf="pesel.errors.maxlength">
+            Pesel musi mieć 11 znaków
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email"></label>
+        <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="form.email" required
+               email #email="ngModel"/>
+        <div class="alert alert-danger container" *ngIf="f.submitted && email.invalid">
+          <div *ngIf="email.errors.required">Adres email jest wymagany</div>
+          <div *ngIf="email.errors.email">
+            Adres email musi być poprawny
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input type="submit" name="" value="Zarejestruj">
+      </div>
+
+      <div class="alert alert-warning container" *ngIf="f.submitted && isSignUpFailed">
+        Nie udało się zarejestrować!<br/>{{ errorMessage }}
+      </div>
+
+    </form>
+
+
+    <div class="alert alert-success container" *ngIf="isSuccessful">
+      Udało się zarejestrować!
+    </div>
+  </div>
+</div>
+
+

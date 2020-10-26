@@ -1,13 +1,19 @@
 package com.example.demo;
 
+import com.example.demo.email.EmailService;
 import com.example.demo.models.*;
 import com.example.demo.repository.*;
-import com.example.demo.services.interfaces.AttendanceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -42,8 +48,9 @@ public class WebAppApplication {
         SpringApplication.run(WebAppApplication.class, args);
     }
 
+
     @EventListener(ApplicationReadyEvent.class)
-    public void fillDB() {
+    public void fillDB() throws MessagingException {
         Room music = new Room("01", "Sala muzyczna", "Sala przeaznaczona do celów muzycznych. Wyposażona w sprzęt do nagrywania oraz instrumenty", 20);
         Room dance = new Room("02", "Sala gimnastyczna", "Sala gimnastyczna o dużej powierzchni", 10);
         Room it = new Room("03", "Sala komputerowa", "Sala komputerowa posiadająca 20 stanowisk wyposażonych w komputery stacjonarne.", 12);
@@ -52,11 +59,11 @@ public class WebAppApplication {
         roomRepository.save(dance);
         roomRepository.save(it);
 
-        Role user = new Role(ERole.ROLE_USER);
+//        Role user = new Role(ERole.ROLE_USER);
         Role teacher = new Role(ERole.ROLE_TEACHER);
         Role admin = new Role(ERole.ROLE_ADMIN);
 
-        roleRepository.save(user);
+//        roleRepository.save(user);
         roleRepository.save(teacher);
         roleRepository.save(admin);
 
@@ -64,7 +71,8 @@ public class WebAppApplication {
                 .of(1997, 9, 26));
         Student student2 = new Student("Katarzyna", "Pączek", "99062713215", "k.paczek@onet.pl", LocalDate
                 .of(1999, 6, 27));
-        Student student3 = new Student("Andrzej", "Wielki", "98022224156", "a.wielki@onet.pl", LocalDate.of(1998, 2, 22));
+        Student student3 = new Student("Andrzej", "Wielki", "98022224156", "a.wielki@onet.pl", LocalDate
+                .of(1998, 2, 22));
         Student student4 = new Student("Agnieszka", "Niemieszkalska", "97101023162", "a.niemieszkalska@onet.pl", LocalDate
                 .of(1997, 10, 10));
 
@@ -81,29 +89,29 @@ public class WebAppApplication {
         studentsList2.add(student1);
         studentsList2.add(student4);
 
-        User adminUser = new User("admin","Tomasz","Szeligowski","97092606913", "admin@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
+        User adminUser = new User("admin", "Tomasz", "Szeligowski", "97092606913", "admin@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         Set<Role> adminRole = new HashSet<>();
         adminRole.add(admin);
         adminUser.setRoles(adminRole);
         userRepository.save(adminUser);
 
-        User userUser = new User("teacher1","Jan","Kowalski","11111111111", "teacher1@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
+        User userUser = new User("teacher1", "Jan", "Kowalski", "11111111111", "teacher1@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         Set<Role> userRole = new HashSet<>();
         userRole.add(teacher);
         userUser.setRoles(userRole);
         userRepository.save(userUser);
 
-        User userUser2 = new User("teacher2","Ola","Nowak","22222222222", "teacher2@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
+        User userUser2 = new User("teacher2", "Ola", "Nowak", "22222222222", "teacher2@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         Set<Role> teacherRole = new HashSet<>();
         teacherRole.add(teacher);
         userUser2.setRoles(teacherRole);
         userRepository.save(userUser2);
 
-        User userUser3 = new User("teacher3","Jerzy","Dudek","33333333333", "teacher3@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
+        User userUser3 = new User("teacher3", "Jerzy", "Dudek", "33333333333", "teacher3@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         userUser3.setRoles(teacherRole);
         userRepository.save(userUser3);
 
-        User teacherUser = new User("teacher4","Andrzej","Samczy","44444444444", "teacher4@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
+        User teacherUser = new User("teacher4", "Andrzej", "Samczy", "44444444444", "teacher4@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         teacherUser.setRoles(teacherRole);
         userRepository.save(teacherUser);
 
@@ -118,12 +126,12 @@ public class WebAppApplication {
         subjectRepository.save(subject1);
         subjectRepository.save(subject2);
 
-        Lesson lesson1 = new Lesson("Funkcje w Java","Uczeń poznaje funkcje w języku java",
+        Lesson lesson1 = new Lesson("Funkcje w Java", "Uczeń poznaje funkcje w języku java",
                 LocalDateTime.of(2020, Month.SEPTEMBER, 11, 15, 0, 0),
                 LocalDateTime.of(2020, Month.SEPTEMBER, 11, 17, 0, 0),
                 it, subject1);
 
-        Lesson lesson2 = new Lesson("JavaFX","Uczeń uczy się tworzyć aplikacje okienkowe",
+        Lesson lesson2 = new Lesson("JavaFX", "Uczeń uczy się tworzyć aplikacje okienkowe",
                 LocalDateTime.of(2020, Month.SEPTEMBER, 18, 15, 0, 0),
                 LocalDateTime.of(2020, Month.SEPTEMBER, 18, 17, 0, 0),
                 it, subject1);

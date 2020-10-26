@@ -1,5 +1,6 @@
 package com.example.demo.services.implementations;
 
+import com.example.demo.email.EmailService;
 import com.example.demo.exceptions.EmailInUseException;
 import com.example.demo.exceptions.RoleNotFoundException;
 import com.example.demo.exceptions.UsernameTakenException;
@@ -36,15 +37,17 @@ public class AuthServiceImpl implements AuthService {
     RoleRepository roleRepository;
     PasswordEncoder encoder;
     JwtUtils jwtUtils;
+    private final EmailService emailService;
 
     @Autowired
     public AuthServiceImpl(AuthenticationManager authenticationManager, UserRepository userRepository,
-                           RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils) {
+                           RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils, EmailService emailService) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.encoder = encoder;
         this.jwtUtils = jwtUtils;
+        this.emailService = emailService;
     }
 
     @Override
@@ -57,8 +60,8 @@ public class AuthServiceImpl implements AuthService {
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
+                                        .map(item -> item.getAuthority())
+                                        .collect(Collectors.toList());
 
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
@@ -77,40 +80,102 @@ public class AuthServiceImpl implements AuthService {
             throw new EmailInUseException(signUpRequest.getEmail());
         }
 
+        // TODO generate password
+        signUpRequest.setPassword("testpassword123");
+
         // Create new user's account
-        User user = new User(signUpRequest.getUsername(), signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getPesel(), signUpRequest.getEmail(), encoder.encode(signUpRequest.getPassword()), false);
+        User user = new User(signUpRequest.getUsername(), signUpRequest.getFirstName(), signUpRequest
+                .getLastName(), signUpRequest.getPesel(), signUpRequest.getEmail(), encoder
+                .encode(signUpRequest.getPassword()), true);
 
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_USER));
+            Role userRole = roleRepository.findByName(ERole.ROLE_TEACHER)
+                                          .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_TEACHER));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin":
                         Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_ADMIN));
+                                                       .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_ADMIN));
                         roles.add(adminRole);
 
                         break;
-                    case "teacher":
+                    default:
                         Role teacherRole = roleRepository.findByName(ERole.ROLE_TEACHER)
-                                .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_TEACHER));
+                                                         .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_TEACHER));
                         roles.add(teacherRole);
 
-                        break;
-                    default:
-                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_USER));
-                        roles.add(userRole);
+
+//                    case "teacher":
+//                        Role teacherRole = roleRepository.findByName(ERole.ROLE_TEACHER)
+//                                .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_TEACHER));
+//                        roles.add(teacherRole);
+//
+//                        break;
+//                    default:
+//                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+//                                .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_USER));
+//                        roles.add(userRole);
                 }
             });
         }
 
         user.setRoles(roles);
+
+        emailService.sendMail(user.getEmail(), "Dane do logowanie w serwisie Domu Kultury",
+                "<b>Login: </b> " + signUpRequest.getUsername() + " <br><b>Hasło: </b> " + signUpRequest.getPassword());
+
         userRepository.save(user);
     }
+
+//    @Override
+//    public void registerUser(SignupRequest signUpRequest) {
+//        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+//            throw new UsernameTakenException(signUpRequest.getUsername());
+//        }
+//
+//        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+//            throw new EmailInUseException(signUpRequest.getEmail());
+//        }
+//
+//        // Create new user's account
+//        User user = new User(signUpRequest.getUsername(), signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getPesel(), signUpRequest.getEmail(), encoder.encode(signUpRequest.getPassword()), false);
+//
+//        Set<String> strRoles = signUpRequest.getRole();
+//        Set<Role> roles = new HashSet<>();
+//
+//        if (strRoles == null) {
+//            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+//                    .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_USER));
+//            roles.add(userRole);
+//        } else {
+//            strRoles.forEach(role -> {
+//                switch (role) {
+//                    case "admin":
+//                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+//                                .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_ADMIN));
+//                        roles.add(adminRole);
+//
+//                        break;
+//                    case "teacher":
+//                        Role teacherRole = roleRepository.findByName(ERole.ROLE_TEACHER)
+//                                .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_TEACHER));
+//                        roles.add(teacherRole);
+//
+//                        break;
+//                    default:
+//                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+//                                .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_USER));
+//                        roles.add(userRole);
+//                }
+//            });
+//        }
+//
+//        user.setRoles(roles);
+//        userRepository.save(user);
+//    }
 }
