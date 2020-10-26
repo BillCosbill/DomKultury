@@ -1,8 +1,11 @@
 package com.example.demo.mappers;
 
 import com.example.demo.dto.UserDTO;
+import com.example.demo.exceptions.SubjectNotFoundException;
 import com.example.demo.exceptions.UserNotFoundException;
+import com.example.demo.models.Subject;
 import com.example.demo.models.User;
+import com.example.demo.repository.SubjectRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +17,13 @@ import java.util.stream.Collectors;
 @Service
 public class UserMapper {
 
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final SubjectRepository subjectRepository;
 
     @Autowired
-    public UserMapper(UserRepository userRepository) {
+    public UserMapper(UserRepository userRepository, SubjectRepository subjectRepository) {
         this.userRepository = userRepository;
+        this.subjectRepository = subjectRepository;
     }
 
     public List<UserDTO> toUsersDTO(List<User> users) {
@@ -35,8 +40,11 @@ public class UserMapper {
         userDTO.setPesel(user.getPesel());
         userDTO.setEmail(user.getEmail());
         userDTO.setRoles(user.getRoles());
-
         userDTO.setEnable(user.isEnable());
+
+        List<Long> subjectsId = new ArrayList<>();
+        user.getSubjects().forEach(subject -> subjectsId.add(subject.getId()));
+        userDTO.setSubjectsId(subjectsId);
 
         return userDTO;
     }
@@ -61,6 +69,11 @@ public class UserMapper {
         }
         if (userDTO.getEmail() != null) {
             user.setEmail(userDTO.getEmail());
+        }
+        if (userDTO.getSubjectsId() != null) {
+            List<Subject> subjects = new ArrayList<>();
+            userDTO.getSubjectsId().forEach(subjectId -> subjects.add(subjectRepository.findById(subjectId).orElseThrow(() -> new SubjectNotFoundException(subjectId))));
+            user.setSubjects(subjects);
         }
 
         return user;

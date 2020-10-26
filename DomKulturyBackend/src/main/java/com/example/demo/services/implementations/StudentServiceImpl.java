@@ -78,7 +78,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student addStudent(Student student) {
         if(studentRepository.existsByPesel(student.getPesel())) {
-            throw new StudentExistsException(student.getId());
+            throw new StudentExistsException(student.getPesel());
         }
 
         return save(student);

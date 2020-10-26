@@ -5,6 +5,7 @@ import {Student} from '../_model/student';
 import {Subject} from '../_model/subject';
 import {SubjectService} from '../_services/subject.service';
 import {AuthService} from '../_services/auth.service';
+import {ValidationService} from '../_services/validation/validation.service';
 
 @Component({
   selector: 'app-subject-datails-students',
@@ -22,7 +23,7 @@ export class SubjectDatailsStudentsComponent implements OnInit {
   studentIdToDelete: number = null;
   studentToAdd: Student = new Student();
 
-  constructor(private route: ActivatedRoute, private studentService: StudentService, private subjectService: SubjectService, private authService: AuthService) { }
+  constructor(private route: ActivatedRoute, private studentService: StudentService, private subjectService: SubjectService, private authService: AuthService, private validationService: ValidationService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -62,11 +63,6 @@ export class SubjectDatailsStudentsComponent implements OnInit {
 
   startAddingStudent() {
     this.studentToAdd = new Student();
-  }
-
-  validateDate(dateToValidate: string) {
-    const date = Date.parse(dateToValidate);
-    return isNaN(date);
   }
 
   addStudent() {

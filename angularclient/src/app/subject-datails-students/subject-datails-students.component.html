@@ -107,6 +107,10 @@
                    required #pesel="ngModel">
           </div>
 
+          <div class="alert alert-danger container" role="alert" *ngIf="validationService.studentExistsWithGivenPesel(studentToAdd.pesel)">
+            Podany pesel jest już zajęty
+          </div>
+
           <div class="form-group">
             <label for="email">Email:</label>
             <input type="email" [(ngModel)]="studentToAdd.email"
@@ -117,15 +121,24 @@
                    required email #email="ngModel">
           </div>
 
+          <div class="alert alert-danger container" role="alert" *ngIf="validationService.studentExistsWithGivenEmail(studentToAdd.email)">
+            Podany email jest już zajęty
+          </div>
+
           <div class="form-group">
             <label for="birthday">Data urodzenia</label>
             <input id="birthday" name="birthday" [(ngModel)]="studentToAdd.birthday"
                    type="date" class="form-control" />
           </div>
 
+          <div class="alert alert-info container" role="alert" *ngIf="!validationService.validateBirthdayIfCorrect(studentToAdd.birthday)">
+            Podaj prawidłową datę urodzin
+          </div>
+
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-            <button type="submit" [disabled]="!studentForm.form.valid || validateDate(this.studentToAdd.birthday)" class="btn btn-info" data-dismiss="modal"
+            <button type="submit" [disabled]="!studentForm.form.valid || !validationService.validateBirthdayIfCorrect(this.studentToAdd.birthday)
+             || validationService.studentExistsWithGivenPesel(studentToAdd.pesel) || validationService.studentExistsWithGivenEmail(studentToAdd.email)" class="btn btn-info" data-dismiss="modal"
                     (click)="addStudent()">Dodaj ucznia
             </button>
           </div>

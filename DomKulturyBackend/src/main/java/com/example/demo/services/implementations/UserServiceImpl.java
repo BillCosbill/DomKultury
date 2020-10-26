@@ -3,9 +3,10 @@ package com.example.demo.services.implementations;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.exceptions.UserNotFoundException;
 import com.example.demo.mappers.UserMapper;
+import com.example.demo.models.Subject;
 import com.example.demo.models.User;
-import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.services.interfaces.SubjectService;
 import com.example.demo.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,20 +16,24 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    UserRepository userRepository;
-    RoleRepository roleRepository;
-    UserMapper userMapper;
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
+
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
         this.userMapper = userMapper;
     }
 
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public List<Subject> getUserSubjects(Long userId) {
+        return findById(userId).getSubjects();
     }
 
     @Override

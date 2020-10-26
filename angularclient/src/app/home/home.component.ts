@@ -37,12 +37,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.eventObject.dataSource = this.scheduleData;
-
-    // TODO Formatowanie daty pobieranej z Eventów
-    this.subjectService.findAll().subscribe(data => {
-      this.subjects = data;
-    });
+    this.scheduleData = [];
 
     this.lessonService.findAll().subscribe(lessons => {
       lessons.forEach(lesson => {
@@ -50,7 +45,19 @@ export class HomeComponent implements OnInit {
       });
     });
 
+    this.eventObject.dataSource = this.scheduleData;
+
+    // TODO Formatowanie daty pobieranej z Eventów
+    this.subjectService.findAll().subscribe(data => {
+      this.subjects = data;
+    });
+
     this.config.totalItems = this.subjects.length;
     this.eventObject.dataSource = this.scheduleData;
+  }
+
+  dataImportedIntoScheduler() {
+    // @ts-ignore
+    return this.eventObject.dataSource.length > 0;
   }
 }

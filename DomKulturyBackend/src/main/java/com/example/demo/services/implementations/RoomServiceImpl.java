@@ -66,10 +66,12 @@ public class RoomServiceImpl implements RoomService {
             throw new RoomExistsException(room.getNumber());
         }
 
-        Optional<DBFile> image = imageRepository.findById(id);
+        if (id != null) {
+            Optional<DBFile> image = imageRepository.findById(id);
 
-        if (image.isPresent()) {
-            room.setImage(id);
+            if (image.isPresent()) {
+                room.setImage(id);
+            }
         }
 
         return save(room);

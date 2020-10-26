@@ -1,6 +1,8 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dto.SubjectDTO;
 import com.example.demo.dto.UserDTO;
+import com.example.demo.mappers.SubjectMapper;
 import com.example.demo.mappers.UserMapper;
 import com.example.demo.models.ERole;
 import com.example.demo.models.Role;
@@ -26,17 +28,24 @@ public class UserController {
     private final UserService userService;
     private final RoleService roleService;
     private final UserMapper userMapper;
+    private final SubjectMapper subjectMapper;
 
     @Autowired
-    public UserController(UserService userService, RoleService roleService, UserMapper userMapper) {
+    public UserController(UserService userService, RoleService roleService, UserMapper userMapper, SubjectMapper subjectMapper) {
         this.userService = userService;
         this.roleService = roleService;
         this.userMapper = userMapper;
+        this.subjectMapper = subjectMapper;
     }
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getUsers() {
         return ResponseEntity.ok(userMapper.toUsersDTO(userService.findAll()));
+    }
+
+    @GetMapping("/{userId}/subjects")
+    public ResponseEntity<List<SubjectDTO>> getUserSubjects(@PathVariable Long userId) {
+        return ResponseEntity.ok(subjectMapper.toSubjectsDTO(userService.getUserSubjects(userId)));
     }
 
     @GetMapping("/{id}")

@@ -24,22 +24,22 @@ export class AddRoomComponent {
     this.selectedFile = event.target.files[0];
   }
 
-  seatsInRange() {
-    return this.room.seats > 0 || this.room.seats == null;
-  }
-
   onSubmit() {
-    const uploadImageData = new FormData();
-    uploadImageData.append('file', this.selectedFile, this.selectedFile.name);
+    if (this.selectedFile !== undefined && this.selectedFile !== null) {
+      const uploadImageData = new FormData();
+      uploadImageData.append('file', this.selectedFile, this.selectedFile.name);
 
-    this.imageService.saveImage(uploadImageData)
-      .subscribe((response) => {
-          let a = JSON.stringify(response.body);
-          let b = JSON.parse(a);
-          this.uploadedImageId = b.id;
-          this.roomService.addRoom(this.room, this.uploadedImageId).subscribe(() => this.goToRoomsList());
-        }
-      );
+      this.imageService.saveImage(uploadImageData)
+        .subscribe((response) => {
+            let a = JSON.stringify(response.body);
+            let b = JSON.parse(a);
+            this.uploadedImageId = b.id;
+            this.roomService.addRoom(this.room, this.uploadedImageId).subscribe(() => this.goToRoomsList());
+          }
+        );
+    } else {
+      this.roomService.addRoom(this.room, null).subscribe(() => this.goToRoomsList());
+    }
   }
 
   goToRoomsList() {
