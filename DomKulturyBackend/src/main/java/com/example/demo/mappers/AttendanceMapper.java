@@ -57,7 +57,6 @@ public class AttendanceMapper {
                                                    .orElseThrow(() -> new StudentNotFoundException(attendanceDTO.getStudentId())));
         }
 
-        //TODO możliwe że obecność będzie wariowała przez tą linijkę, bo nie sprawdzam czy w attendanceDTO została zmieniona lub poadana wartość present
         attendance.setPresent(attendanceDTO.isPresent());
 
         return attendance;
@@ -78,7 +77,6 @@ public class AttendanceMapper {
                                                    .orElseThrow(() -> new StudentNotFoundException(attendanceDTO.getStudentId())));
         }
 
-        //TODO możliwe że obecność będzie wariowała przez tą linijkę, bo nie sprawdzam czy w attendanceDTO została zmieniona lub poadana wartość present
         attendance.setPresent(attendanceDTO.isPresent());
 
         return attendance;

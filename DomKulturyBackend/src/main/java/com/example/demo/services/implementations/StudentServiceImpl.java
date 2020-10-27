@@ -37,7 +37,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student findById(Long id) {
-        //TODO exception zmienić
         return studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
     }
 

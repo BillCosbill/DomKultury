@@ -76,7 +76,6 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public Subject addSubject(SubjectDTO subjectDTO) {
-        //TODO można sprawdzić czy nie istnieje już podany adres email
         Subject subject = subjectMapper.toSubjectAdd(subjectDTO);
 
         return save(subject);
@@ -95,8 +94,6 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public void addStudentToSubject(Student student, Long id) {
-
-        //TODO dodawanie attendance dla nowych studentów
         studentService.addStudent(student);
 
         Subject subject = findById(id);
@@ -111,9 +108,6 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public void addStudentFromDatabase(Long subjectId, Long studentId) {
-
-        //TODO dodawanie attendance dla nowych studentów
-
         Subject subject = findById(subjectId);
         Student student = studentService.findById(studentId);
 

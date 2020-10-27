@@ -188,6 +188,24 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }
+
+    @ExceptionHandler(WrongPasswordException.class)
+    public ResponseEntity<Object> handleWrongPasswordException(WrongPasswordException ex, WebRequest request) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(UserAssignedToSubjectException.class)
+    public ResponseEntity<Object> handleUserAssignedToSubjectException(UserAssignedToSubjectException ex, WebRequest request) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+    }
 }
 
 

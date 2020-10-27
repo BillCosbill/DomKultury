@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {User} from '../_model/user';
 import {Subject} from '../_model/subject';
+import {catchError} from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -24,37 +25,54 @@ export class UserService {
   }
 
   public findAll(): Observable<User[]> {
-    return this.http.get<User[]>(this.usersUrl);
+    return this.http.get<User[]>(this.usersUrl).pipe(
+      catchError(this.handleError)
+    );
   }
 
   public getUserSubjects(userId: number): Observable<Subject[]> {
-    return this.http.get<Subject[]>(this.usersUrl + '/' + userId + '/subjects');
+    return this.http.get<Subject[]>(this.usersUrl + '/' + userId + '/subjects').pipe(
+      catchError(this.handleError)
+    );
   }
 
   public getUser(id: number) {
-    return this.http.get<User>(this.usersUrl + '/' + id);
+    return this.http.get<User>(this.usersUrl + '/' + id).pipe(
+      catchError(this.handleError)
+    );
   }
 
   public deleteUser(id: number) {
-    return this.http.delete<User>(this.usersUrl + '/' + id);
+    return this.http.delete<User>(this.usersUrl + '/' + id).pipe(
+      catchError(this.handleError)
+    );
   }
 
   public updateUser(user: User, id: number) {
-    return this.http.put<User>(this.usersUrl + '/' + id, user);
-  }
-
-  public activeAccount(id: number) {
-    return this.http.patch<User>(this.usersUrl + '/activeAccount/' + id, null);
+    return this.http.put<User>(this.usersUrl + '/' + id, user).pipe(
+      catchError(this.handleError)
+    );
   }
 
   public changeRole(role: string, id: number) {
-    return this.http.patch<User>(this.usersUrl + '/changeRole/' + id + '?newRole=' + role, null);
+    return this.http.patch<User>(this.usersUrl + '/changeRole/' + id + '?newRole=' + role, null).pipe(
+      catchError(this.handleError)
+    );
   }
 
   public changePassword(passwordRequest, id: number) {
     return this.http.patch(this.usersUrl + '/changePassword/' + id, {
       password: passwordRequest.password,
       newPassword: passwordRequest.newPassword
-    }, httpOptions);
+    }, httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  //TODO zrobić jakieś popapy z errorami i z udanymi akcjami np addUserToEvent
+  //TODO dodać obsługę błędów w innych serwisach !!!!!!!!!!!!!!!!
+  handleError(error: HttpErrorResponse) {
+    console.log(error.error.message);
+    return throwError(error);
   }
 }

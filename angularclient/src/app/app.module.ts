@@ -24,7 +24,6 @@ import {
 } from '@syncfusion/ej2-angular-schedule';
 import {AddRoomComponent} from './add-room/add-room.component';
 import {RoomDetailsComponent} from './room-details/room-details.component';
-import {AdministratorPanelActivationsComponent} from './administrator-panel-activations/administrator-panel-activations.component';
 import {SubjectsComponent} from './subjects/subjects.component';
 import {SubjectDetailsComponent} from './subject-details/subject-details.component';
 import {LessonDetailsComponent} from './lesson-details/lesson-details.component';
@@ -50,7 +49,6 @@ import { ProfileComponent } from './profile/profile.component';
     AdministratorPanelComponent,
     AddRoomComponent,
     RoomDetailsComponent,
-    AdministratorPanelActivationsComponent,
     SubjectsComponent,
     SubjectDetailsComponent,
     LessonDetailsComponent,

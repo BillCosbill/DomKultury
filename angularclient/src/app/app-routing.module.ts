@@ -9,7 +9,6 @@ import {AdministratorPanelComponent} from './administrator-panel/administrator-p
 import {AdminguardService} from './_guards/adminguard.service';
 import {AddRoomComponent} from './add-room/add-room.component';
 import {RoomDetailsComponent} from './room-details/room-details.component';
-import {AdministratorPanelActivationsComponent} from './administrator-panel-activations/administrator-panel-activations.component';
 import {SubjectsComponent} from './subjects/subjects.component';
 import {SubjectDetailsComponent} from './subject-details/subject-details.component';
 import {LessonDetailsComponent} from './lesson-details/lesson-details.component';
@@ -46,7 +45,6 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'addRoom', component: AddRoomComponent},
   {path: 'admin_panel', component: AdministratorPanelComponent, canActivate: [AdminguardService]},
-  // {path: 'admin_panel_activations', component: AdministratorPanelActivationsComponent, canActivate: [AdminguardService]},
   {path: 'admin_panel_add_teacher', component: AdministratorPanelAddTeacherComponent, canActivate: [AdminguardService]},
   {path: 'profile', component: ProfileComponent, canActivate: [TeacherguardService]},
   {path: '', redirectTo: 'home', pathMatch: 'full'}

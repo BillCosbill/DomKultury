@@ -24,7 +24,7 @@ public class Subject {
     @NotBlank
     private String description;
 
-    @ManyToOne(fetch = FetchType.EAGER) //TODO czemu przy FetchType.LAZY wywala błąd i program ?!?!?!?!
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(	name = "subject_teacher",
             joinColumns = @JoinColumn(name = "subject_id"),
             inverseJoinColumns = @JoinColumn(name = "teacher_id"))

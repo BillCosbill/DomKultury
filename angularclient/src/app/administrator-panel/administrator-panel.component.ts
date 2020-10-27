@@ -30,8 +30,11 @@ export class AdministratorPanelComponent implements OnInit {
     return roles[0].name === role;
   }
 
+  // TODO modal jakiś ładny z komunikatem o błędzie
   delete(id: number) {
-    this.userService.deleteUser(id).subscribe(() => this.refreshData());
+    this.userService.deleteUser(id).subscribe(() => this.refreshData(), error => {
+      alert(error.error.message);
+    });
   }
 
   private refreshData() {

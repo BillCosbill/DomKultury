@@ -1,6 +1,6 @@
 package com.example.demo.file;
 
-import com.example.demo.models.Test;
+import com.example.demo.models.Image;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,11 +33,10 @@ public class FileController {
     }
 
     @GetMapping("/downloadFile/{fileId}")
-    public Test downloadFile(@PathVariable String fileId) {
+    public Image downloadFile(@PathVariable String fileId) {
         DBFile dbFile = dbFileStorageService.getFile(fileId);
 
-        //TODO zwracać DBFile zamiast Image, jakiś dziwny błąd wywala backend jak próbuję to zamienić :(
-        Test img = new Test(dbFile.getFileName(), dbFile.getFileType(), decompressBytes(dbFile.getData()));
+        Image img = new Image(dbFile.getFileName(), dbFile.getFileType(), decompressBytes(dbFile.getData()));
 
         return img;
     }

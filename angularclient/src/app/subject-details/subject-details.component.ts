@@ -86,6 +86,7 @@ export class SubjectDetailsComponent implements OnInit {
     this.finishTime = null;
   }
 
+  //TODO sprawdzenie czy wybrana sala jest wolna w podanym terminie
   addLesson() {
     this.newLesson.startDate = this.startDate + 'T' + this.startTime + ':00';
     this.newLesson.finishDate = this.startDate + 'T' + this.finishTime + ':00';

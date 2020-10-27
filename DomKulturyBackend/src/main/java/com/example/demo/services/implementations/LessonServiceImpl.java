@@ -80,7 +80,7 @@ public class LessonServiceImpl implements LessonService {
     @Override
     public LessonDTO addLesson(LessonDTO lessonDTO) {
 
-        //TODO można sprawdzić czy nie istnieje już coś
+        //TODO sprawdzić czy sala jest wolna w tym terminie
         Lesson lesson = lessonMapper.toLessonAdd(lessonDTO);
 
         save(lesson);

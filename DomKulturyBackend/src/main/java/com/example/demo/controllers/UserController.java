@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.dto.SubjectDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.exceptions.EmailInUseException;
+import com.example.demo.exceptions.WrongPasswordException;
 import com.example.demo.mappers.SubjectMapper;
 import com.example.demo.mappers.UserMapper;
 import com.example.demo.models.ERole;
@@ -36,20 +37,13 @@ public class UserController {
     private final RoleService roleService;
     private final UserMapper userMapper;
     private final SubjectMapper subjectMapper;
-    private final PasswordEncoder encoder;
 
     @Autowired
-    AuthenticationManager authenticationManager;
-    @Autowired
-    JwtUtils jwtUtils;
-
-    @Autowired
-    public UserController(UserService userService, RoleService roleService, UserMapper userMapper, SubjectMapper subjectMapper, PasswordEncoder encoder) {
+    public UserController(UserService userService, RoleService roleService, UserMapper userMapper, SubjectMapper subjectMapper) {
         this.userService = userService;
         this.roleService = roleService;
         this.userMapper = userMapper;
         this.subjectMapper = subjectMapper;
-        this.encoder = encoder;
     }
 
     @GetMapping
@@ -73,7 +67,6 @@ public class UserController {
         return ResponseEntity.ok(roleService.findAll());
     }
 
-    //TODO nie działa usuwanie, trzeba usunąć jednocześnie powiązane tabele
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
@@ -81,57 +74,22 @@ public class UserController {
         return ResponseEntity.ok(new MessageResponse("User deleted successfully!"));
     }
 
-    //TODO zmienia jedynie id, imie i email
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, @PathVariable Long id) {
         userService.updateUser(userDTO, id);
         return ResponseEntity.status(HttpStatus.OK).body(userDTO);
     }
 
-    //TODO można też dodać dezaktywację konta
-    //TODO DODAĆ DO SERWISU!!!!!!!!!!!!
-    @PatchMapping("/activeAccount/{id}")
-    public ResponseEntity<MessageResponse> activeAccount(@PathVariable Long id) {
-        User user = userService.findById(id);
-
-        user.setEnable(true);
-
-        userService.save(user);
-
-        return ResponseEntity.ok(new MessageResponse("User account: " + user.getUsername() + " has been activated"));
-    }
-
-    //TODO DODAĆ DO SERWISU!!!!!!!!!!!!
     @PatchMapping("/changeRole/{id}")
     public ResponseEntity<MessageResponse> changeRole(@RequestParam ERole newRole, @PathVariable Long id) {
-        Role role = roleService.findByName(newRole);
-        User user = userService.findById(id);
-
-        Set<Role> newRoles = new HashSet<>();
-        newRoles.add(role);
-
-        user.setRoles(newRoles);
-        userService.save(user);
+        userService.changeRole(newRole, id);
 
         return ResponseEntity.ok(new MessageResponse("User role has been changed to: " + newRole));
     }
 
-    //TODO DODAĆ DO SERWISU!!!!!!!!!!!!
     @PatchMapping("/changePassword/{id}")
-    public ResponseEntity<MessageResponse> changeRole(@RequestBody PasswordChangeRequest passwordChangeRequest, @PathVariable Long id) {
-        User user = userService.findById(id);
-
-        Authentication authentication = null;
-
-        authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getUsername(), passwordChangeRequest.getPassword()));
-
-        if (authentication == null) {
-            // TODO wyjątek że złe hasło aktualne podano
-            throw new EmailInUseException("dupa");
-        }
-        user.setPassword(encoder.encode(passwordChangeRequest.getNewPassword()));
-        userService.save(user);
+    public ResponseEntity<MessageResponse> changePassword(@RequestBody PasswordChangeRequest passwordChangeRequest, @PathVariable Long id) {
+        userService.changePassword(passwordChangeRequest, id);
 
         return ResponseEntity.ok(new MessageResponse("User password has been changed"));
     }

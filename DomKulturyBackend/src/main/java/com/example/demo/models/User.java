@@ -35,7 +35,6 @@ public class User {
     @NotBlank
     private String lastName;
 
-    //TODO dać peselowi docelową liczbę znaków (11)
     @NotBlank
     private String pesel;
 

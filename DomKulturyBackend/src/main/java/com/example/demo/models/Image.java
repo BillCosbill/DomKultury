@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Test {
+public class Image {
 
     private Long id;
 
@@ -19,7 +19,7 @@ public class Test {
     private byte[] picByte;
 
 
-    public Test(String name, String type, byte[] picByte) {
+    public Image(String name, String type, byte[] picByte) {
         this.name = name;
         this.type = type;
         this.picByte = picByte;
