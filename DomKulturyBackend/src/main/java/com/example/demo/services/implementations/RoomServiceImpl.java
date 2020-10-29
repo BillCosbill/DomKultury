@@ -6,27 +6,32 @@ import com.example.demo.exceptions.RoomNotFoundException;
 import com.example.demo.file.DBFile;
 import com.example.demo.file.DBFileRepository;
 import com.example.demo.mappers.RoomMapper;
+import com.example.demo.models.Lesson;
 import com.example.demo.models.Room;
 import com.example.demo.repository.RoomRepository;
+import com.example.demo.services.interfaces.LessonService;
 import com.example.demo.services.interfaces.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class RoomServiceImpl implements RoomService {
 
-    RoomRepository roomRepository;
-    RoomMapper roomMapper;
-    DBFileRepository imageRepository;
+    private final RoomRepository roomRepository;
+    private final RoomMapper roomMapper;
+    private final DBFileRepository imageRepository;
+    private final LessonService lessonService;
 
     @Autowired
-    public RoomServiceImpl(RoomRepository roomRepository, RoomMapper roomMapper, DBFileRepository imageRepository) {
+    public RoomServiceImpl(RoomRepository roomRepository, RoomMapper roomMapper, DBFileRepository imageRepository, LessonService lessonService) {
         this.roomRepository = roomRepository;
         this.roomMapper = roomMapper;
         this.imageRepository = imageRepository;
+        this.lessonService = lessonService;
     }
 
     @Override
@@ -37,6 +42,15 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public Room findById(Long id) {
         return roomRepository.findById(id).orElseThrow(() -> new RoomNotFoundException(id));
+    }
+
+    @Override
+    public List<Lesson> getRoomLessons(Long id) {
+        Room room = findById(id);
+
+        List<Lesson> lessons = room.getLessons();
+
+        return lessons;
     }
 
     @Override

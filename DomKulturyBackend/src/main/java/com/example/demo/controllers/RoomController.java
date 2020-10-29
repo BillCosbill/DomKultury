@@ -1,6 +1,8 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dto.LessonDTO;
 import com.example.demo.dto.RoomDTO;
+import com.example.demo.mappers.LessonMapper;
 import com.example.demo.mappers.RoomMapper;
 import com.example.demo.models.Room;
 import com.example.demo.payload.response.MessageResponse;
@@ -20,11 +22,13 @@ public class RoomController {
 
     private final RoomService roomService;
     private final RoomMapper roomMapper;
+    private final LessonMapper lessonMapper;
 
     @Autowired
-    public RoomController(RoomService roomService, RoomMapper roomMapper) {
+    public RoomController(RoomService roomService, RoomMapper roomMapper, LessonMapper lessonMapper) {
         this.roomService = roomService;
         this.roomMapper = roomMapper;
+        this.lessonMapper = lessonMapper;
     }
 
     @GetMapping
@@ -35,6 +39,11 @@ public class RoomController {
     @GetMapping("/{id}")
     public ResponseEntity<RoomDTO> getRoom(@PathVariable Long id) {
         return ResponseEntity.ok(roomMapper.toRoomDTO(roomService.findById(id)));
+    }
+
+    @GetMapping("/{id}/lessons")
+    public ResponseEntity<List<LessonDTO>> getRoomLessons(@PathVariable Long id) {
+        return ResponseEntity.ok(lessonMapper.toLessonsDTO(roomService.getRoomLessons(id)));
     }
 
     @PostMapping

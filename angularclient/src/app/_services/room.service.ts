@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {Room} from '../_model/room';
+import {Lesson} from '../_model/lesson';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,16 @@ export class RoomService {
     );
   }
 
+  public getRoomLessons(id: number) {
+    return this.http.get<Lesson[]>(this.roomUrl + '/' + id + '/lessons').pipe(
+      catchError(this.handleError)
+    );
+  }
+
   public addRoom(room: Room, imageId: string) {
-    return this.http.post<Room>(this.roomUrl + '?imageId=' + imageId, room);
+    return this.http.post<Room>(this.roomUrl + '?imageId=' + imageId, room).pipe(
+      catchError(this.handleError)
+    );
   }
 
   public getRoom(id: number) {

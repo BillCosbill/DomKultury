@@ -1,14 +1,12 @@
-.room-details-photo {
-  width: 30%;
+.image {
+  width: 50%;
   height: 100%;
-  float: left;
 }
 
-.room-details-photo img {
+.image img {
   max-width: 100%;
   max-height: 100%;
-  display: block;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .room-details-info {

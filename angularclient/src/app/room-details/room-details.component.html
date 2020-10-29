@@ -1,32 +1,66 @@
+<!--<div class="container">-->
+<!--  <div class="container pt-5">-->
+<!--    <div class="room-details-photo">-->
+<!--      <img *ngIf="!gotImage()"-->
+<!--           src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712"-->
+<!--           alt="...">-->
+<!--      <img *ngIf="gotImage()" [src]="room.retrievedImage" alt="...">-->
+<!--    </div>-->
+
+<!--    <div class="room-details-info">-->
+<!--      <div class="room-details-title">-->
+<!--        <p>-->
+<!--          Numer: {{room.number}}-->
+<!--        </p>-->
+<!--      </div>-->
+
+<!--      <div class="room-details-description">-->
+<!--        <p>-->
+<!--          Przeznaczenie: {{room.destiny}}-->
+<!--        </p>-->
+<!--      </div>-->
+
+<!--      <div class="room-details-description">-->
+<!--        <p>-->
+<!--          Opis: {{room.description}}-->
+<!--        </p>-->
+<!--      </div>-->
+
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
 <div class="container">
-  <div class="container pt-5">
-    <div class="room-details-photo">
-      <img *ngIf="!gotImage()"
-           src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712"
-           alt="...">
-      <img *ngIf="gotImage()" [src]="room.retrievedImage" alt="...">
-    </div>
 
-    <div class="room-details-info">
-      <div class="room-details-title">
-        <p>
-          Numer: {{room.number}}
-        </p>
-      </div>
+  <h3 class="text-center">{{ room.destiny }} - {{ room.number }}</h3>
 
-      <div class="room-details-description">
-        <p>
-          Przeznaczenie: {{room.destiny}}
-        </p>
-      </div>
+  <div class="image mx-auto d-block pt-3">
+    <img *ngIf="!gotImage()"
+         src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712"
+         alt="...">
+    <img *ngIf="gotImage()" [src]="room.retrievedImage" alt="...">
+  </div>
 
-      <div class="room-details-description">
-        <p>
-          Opis: {{room.description}}
-        </p>
-      </div>
+  <div class="pt-5 pb-5">
+    {{ room.description }}
+  </div>
 
-    </div>
+  <div class="line container"></div>
+
+  <h3 class="text-center pt-5 pb-3">Terminy zajęć w sali</h3>
+
+  <div class="pb-5">
+    <ejs-schedule *ngIf="dataImportedIntoScheduler()" #schedule locale='pl' [firstDayOfWeek]="weekFirstDay"
+                  [eventSettings]="eventObject"
+                  [currentView]="setView" [readonly]="true">
+      <e-views>
+        <e-view option="Day" startHour="08:00" endHour="21:00"></e-view>
+        <e-view option="Week" startHour="08:00" endHour="21:00"></e-view>
+        <e-view option="Month"></e-view>
+      </e-views>
+    </ejs-schedule>
+
+    <div *ngIf="!dataImportedIntoScheduler()" class="text-center">Brak zaplanowanych zajęć w tej sali</div>
   </div>
 </div>
 
