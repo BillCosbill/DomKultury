@@ -1,39 +1,55 @@
 <div class="container">
+
   <div class="container pt-5 pb-5">
+    <h3 class="text-center pb-3">Aplikacja webowa wspomagająca pracę domu kultury</h3>
 
-    <div class="events card-deck">
-      <div [routerLink]="['/subject', item.id]" class="card" *ngFor="let item of subjects | paginate: config">
-        <img
-          src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712"
-          class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">{{item.name}}</h5>
-          <p class="card-text">{{item.description}}</p>
-        </div>
-      </div>
-    </div>
+    <p>Na tej stronie znajdziesz informację na temat naszego Domu Kultury oraz ofertę jaką proponujemy.
+    W sekcji "PRZEDMIOTY" znajdują się zajęcia które odbywają się w pomieszczeniach naszego budynku.
+    Zachęcamy do przeglądania i kontaktowania się z nami telefonicznie, mailowo lub osobiście w celu
+    zapisania się na zajęcia. Informacje kontaktowe znajdują się w zakładce "KONTAKT".
+    Dodatkowo można obejrzeć pomieszczenia jakimi Dom Kultury dysponuje.</p>
 
-    <pagination-template #p="paginationApi" [id]="config.id" (pageChange)="config.currentPage = $event">
-      <div class="custom-pagination">
-
-        <div class="pagination-previous" [class.disabled]="p.isFirstPage()">
-        <span *ngIf="!p.isFirstPage()" (click)="p.previous()">
-        <
-        </span>
-        </div>
-
-        <div class="pagination-next" [class.disabled]="p.isLastPage()">
-        <span *ngIf="!p.isLastPage()" (click)="p.next()">
-        >
-        </span>
-        </div>
-      </div>
-    </pagination-template>
-
-    <input routerLink="/subjects" type="submit" name="" value="ZOBACZ WIĘCEJ">
   </div>
 
-  <div class="pb-5" *ngIf="dataImportedIntoScheduler()" >
+<!--  <div class="container pt-5 pb-5">-->
+
+<!--    <div class="events card-deck">-->
+<!--      <div [routerLink]="['/subject', item.id]" class="card" *ngFor="let item of subjects | paginate: config">-->
+<!--        <img-->
+<!--          src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712"-->
+<!--          class="card-img-top" alt="...">-->
+<!--        <div class="card-body">-->
+<!--          <h5 class="card-title">{{item.name}}</h5>-->
+<!--          <p class="card-text">{{item.description}}</p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    <pagination-template #p="paginationApi" [id]="config.id" (pageChange)="config.currentPage = $event">-->
+<!--      <div class="custom-pagination">-->
+
+<!--        <div class="pagination-previous" [class.disabled]="p.isFirstPage()">-->
+<!--        <span *ngIf="!p.isFirstPage()" (click)="p.previous()">-->
+<!--        <-->
+<!--        </span>-->
+<!--        </div>-->
+
+<!--        <div class="pagination-next" [class.disabled]="p.isLastPage()">-->
+<!--        <span *ngIf="!p.isLastPage()" (click)="p.next()">-->
+<!--        >-->
+<!--        </span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </pagination-template>-->
+
+<!--    <input routerLink="/subjects" type="submit" name="" value="ZOBACZ WIĘCEJ">-->
+<!--  </div>-->
+
+  <div class="line container"></div>
+
+  <h3 class="text-center pt-5">Harmonogram zajęć w domu kultury</h3>
+
+  <div class="pb-5 pt-5" *ngIf="dataImportedIntoScheduler()">
     <ejs-schedule #schedule locale='pl' [firstDayOfWeek]="weekFirstDay"
                   [eventSettings]="eventObject"
                   [currentView]="setView" [readonly]="true">

@@ -10381,3 +10381,9 @@ a[type = "button"]:hover{
   cursor: pointer;
   color: rgba(255, 255, 255, 0.75);
 }
+
+
+/* to convert \n to </br> */
+p {
+  white-space: pre-line;
+}

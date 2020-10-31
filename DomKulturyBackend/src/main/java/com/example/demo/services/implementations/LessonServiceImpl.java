@@ -4,6 +4,7 @@ import com.example.demo.dto.AttendanceDTO;
 import com.example.demo.dto.LessonDTO;
 import com.example.demo.exceptions.LessonExistsException;
 import com.example.demo.exceptions.LessonNotFoundException;
+import com.example.demo.exceptions.RoomOccupiedAtTheTimeException;
 import com.example.demo.exceptions.SubjectNotFoundException;
 import com.example.demo.mappers.AttendanceMapper;
 import com.example.demo.mappers.LessonMapper;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LessonServiceImpl implements LessonService {
@@ -80,8 +82,16 @@ public class LessonServiceImpl implements LessonService {
     @Override
     public LessonDTO addLesson(LessonDTO lessonDTO) {
 
-        //TODO sprawdzić czy sala jest wolna w tym terminie
         Lesson lesson = lessonMapper.toLessonAdd(lessonDTO);
+
+        Optional<Lesson> lessonOpt = findAll().stream().filter(anyLesson ->
+                (lesson.getStartDate().isAfter(anyLesson.getStartDate()) && lesson.getStartDate().isBefore(anyLesson.getFinishDate())) ||
+                        (lesson.getFinishDate().isAfter(anyLesson.getStartDate()) && lesson.getFinishDate().isBefore(anyLesson.getFinishDate())))
+                .findAny();
+
+        if (lessonOpt.isPresent()) {
+            throw new RoomOccupiedAtTheTimeException(lesson.getRoom().getNumber());
+        }
 
         save(lesson);
 
