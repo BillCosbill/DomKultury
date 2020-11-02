@@ -4,6 +4,7 @@ import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {Room} from '../_model/room';
 import {Lesson} from '../_model/lesson';
+import {Subject} from '../_model/subject';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +43,21 @@ export class RoomService {
 
   public deleteRoom(id: number) {
     return this.http.delete<Room>(this.roomUrl + '/' + id).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  public deleteImageFromRoom(id: number) {
+    return this.http.patch(this.roomUrl + '/' + id + '/deleteImage', null).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  public updateRoom(room: Room, id: number, imageId: string) {
+    console.log(room);
+    console.log(id);
+    console.log(imageId);
+    return this.http.put<Room>(this.roomUrl + '/' + id + '?imageId=' + imageId, room).pipe(
       catchError(this.handleError)
     );
   }

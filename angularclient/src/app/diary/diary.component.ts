@@ -15,7 +15,7 @@ export class DiaryComponent implements OnInit {
   subjects: Subject[] = [];
   currentUser: User;
 
-  subjectsToday: Subject[] = [];
+  subjectIdToDelete: number = null;
 
   constructor(private subjectService: SubjectService, private token: TokenStorageService, private authService: AuthService) {
   }
@@ -37,5 +37,13 @@ export class DiaryComponent implements OnInit {
   //TODO usuwanie jako wyskakujący modal
   delete(id: number) {
     this.subjectService.deleteSubject(id).subscribe(() => this.ngOnInit());
+  }
+
+  selectSubjectIdToDelete(id: number) {
+    this.subjectIdToDelete = id;
+  }
+
+  deleteSubject() {
+    this.subjectService.deleteSubject(this.subjectIdToDelete).subscribe(() => this.ngOnInit());
   }
 }

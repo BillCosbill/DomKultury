@@ -58,15 +58,33 @@ public class RoomServiceImpl implements RoomService {
         Room room = findById(id);
 
         //TODO usuwanie wszystkich lekcji (zły pomysł) albo ustawienie w każdej lekcji domyślnie innego pokoju lub pokoju jako null
+        if (lessonService.findAll().stream().filter(lesson -> lesson.getRoom() == room).findAny().isPresent()) {
+            //TODO zrobić wyjątek inny odpowiedni
+            throw new RoomExistsException(room.getNumber());
+        }
 
         roomRepository.delete(room);
     }
 
     @Override
-    public Room updateRoom(RoomDTO roomDTO, Long id) {
+    public Room updateRoom(RoomDTO roomDTO, Long id, String imageId) {
         //TODO inny wyjątek, żeby się zgadzało
         if (!roomDTO.getId().equals(id)) {
             throw new RoomNotFoundException(id);
+        }
+
+        Room roomOpt = findById(id);
+
+        if (!roomOpt.getNumber().equals(roomDTO.getNumber()) && roomRepository.existsByNumber(roomDTO.getNumber())) {
+            throw new RoomExistsException(roomDTO.getNumber());
+        }
+
+        if (imageId != null) {
+            Optional<DBFile> image = imageRepository.findById(imageId);
+
+            if (image.isPresent()) {
+                roomDTO.setImageId(imageId);
+            }
         }
 
         Room room = roomMapper.toRoom(roomDTO, id);
@@ -89,6 +107,15 @@ public class RoomServiceImpl implements RoomService {
         }
 
         return save(room);
+    }
+
+    @Override
+    public void deleteImage(Long id) {
+        Room room = findById(id);
+
+        room.setImage(null);
+
+        save(room);
     }
 
     @Override

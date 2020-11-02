@@ -31,7 +31,7 @@
             </ng-container>
           </td>
           <td class="text-center">
-            <button (click)="delete(user.id)" class="admin-panel-button">Usuń</button>
+            <button data-toggle="modal" data-target="#deleteUser" (click)="selectUserIdToDelete(user.id)" class="admin-panel-button">Usuń</button>
             <button (click)="selectUserToChangeRole(user.id)" data-toggle="modal" data-target="#editRole" class="admin-panel-button">Zmień uprawnienia</button>
           </td>
         </tr>
@@ -70,6 +70,31 @@
             </button>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal deleteStudent -->
+<div class="modal fade bd-example-modal-lg" id="deleteUser" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Uwaga</h5>
+      </div>
+
+      <div class="modal-body">
+        Czy na pewno chcesz usunąć tego użytkownika?
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+        <button type="submit" class="btn btn-primary" data-dismiss="modal"
+                (click)="deleteUser()">Usuń użytkownika
+        </button>
       </div>
     </div>
   </div>

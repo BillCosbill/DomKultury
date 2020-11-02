@@ -28,7 +28,7 @@
         <td [routerLink]="['/student', (student.id)]">{{ student.pesel}}</td>
         <td [routerLink]="['/student', (student.id)]">{{ student.email}}</td>
         <td [routerLink]="['/student', (student.id)]">{{ student.birthday}}</td>
-        <td class="text-center" *ngIf="this.authService.isTeacherLoggedIn()">
+        <td class="text-center" *ngIf="this.authService.isAdminLoggedIn()">
           <i class="fas fa-trash-alt asd" data-toggle="modal" data-target="#deleteStudent" (click)="selectStudentId(student.id)"></i>
         </td>
       </tr>

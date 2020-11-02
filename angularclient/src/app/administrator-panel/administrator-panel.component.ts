@@ -15,29 +15,12 @@ export class AdministratorPanelComponent implements OnInit {
   selectUserId: number = null;
   selectRole: string = null;
 
+  userIdToDelete: number = null;
+
   constructor(private userService: UserService, private router: Router) {
   }
 
   ngOnInit() {
-    this.refreshData();
-  }
-
-  makePrettyRoleName(name: string) {
-    return name.substr(5).toLowerCase();
-  }
-
-  checkIfContaintsRole(roles: Role[], role: string) {
-    return roles[0].name === role;
-  }
-
-  // TODO modal jakiś ładny z komunikatem o błędzie
-  delete(id: number) {
-    this.userService.deleteUser(id).subscribe(() => this.refreshData(), error => {
-      alert(error.error.message);
-    });
-  }
-
-  private refreshData() {
     this.userService.findAll().subscribe(data => {
       this.users = [];
       data.forEach(user => {
@@ -48,11 +31,31 @@ export class AdministratorPanelComponent implements OnInit {
     });
   }
 
+  makePrettyRoleName(name: string) {
+    return name.substr(5).toLowerCase();
+  }
+
+  checkIfContaintsRole(roles: Role[], role: string) {
+    return roles[0].name === role;
+  }
+
   changeRole(id: number, role: string) {
-    this.userService.changeRole(role, id).subscribe(() => this.refreshData());
+    this.userService.changeRole(role, id).subscribe(() => this.ngOnInit());
   }
 
   selectUserToChangeRole(id: number) {
     this.selectUserId = id;
+  }
+
+  selectUserIdToDelete(id: number) {
+    this.userIdToDelete = id;
+  }
+
+  // TODO modal jakiś ładny z komunikatem o błędzie
+
+  deleteUser() {
+    this.userService.deleteUser(this.userIdToDelete).subscribe(() => this.ngOnInit(), error => {
+      alert(error.error.message);
+    });
   }
 }

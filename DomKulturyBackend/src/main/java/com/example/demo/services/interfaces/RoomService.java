@@ -16,9 +16,11 @@ public interface RoomService {
 
     void deleteRoom(Long id);
 
-    Room updateRoom(RoomDTO roomDTO, Long id);
+    Room updateRoom(RoomDTO roomDTO, Long id, String imageId);
 
     Room save(Room room);
 
     Room addRoom(Room room, String id);
+
+    void deleteImage(Long id);
 }

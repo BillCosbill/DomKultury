@@ -7,6 +7,7 @@ import {SubjectService} from '../_services/subject.service';
 import {AuthService} from '../_services/auth.service';
 import {Room} from '../_model/room';
 import {RoomService} from '../_services/room.service';
+import {Subject} from '../_model/subject';
 
 @Component({
   selector: 'app-diary-today-lessons',
@@ -16,8 +17,10 @@ import {RoomService} from '../_services/room.service';
 export class DiaryTodayLessonsComponent implements OnInit {
 
   lessons: Lesson[] = [];
+  subjects: Subject[] = [];
   rooms: Room[] = [];
 
+  lessonIdToDelete: number;
   userId: number = null;
 
   constructor(private roomService: RoomService, private authService: AuthService, private lessonService: LessonService, private tokenStorageService: TokenStorageService, private subjectService: SubjectService) {
@@ -28,6 +31,10 @@ export class DiaryTodayLessonsComponent implements OnInit {
       const user = this.tokenStorageService.getUser();
       this.userId = user.id;
     }
+
+    this.subjectService.findAll().subscribe(subjects => {
+      this.subjects = subjects;
+    });
 
     this.lessons = [];
     const dateNow = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
@@ -67,5 +74,13 @@ export class DiaryTodayLessonsComponent implements OnInit {
     this.lessonService.deleteLesson(id).subscribe(() => {
       this.ngOnInit();
     });
+  }
+
+  selectLessonIdToDelete(id: number) {
+    this.lessonIdToDelete = id;
+  }
+
+  getSubjectFromLesson(id: number){
+    return this.subjects.find(subject => subject.id === id).name;
   }
 }

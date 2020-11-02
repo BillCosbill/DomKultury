@@ -1,48 +1,19 @@
-<!--<div class="container">-->
-<!--  <div class="container pt-5">-->
-<!--    <div class="room-details-photo">-->
-<!--      <img *ngIf="!gotImage()"-->
-<!--           src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712"-->
-<!--           alt="...">-->
-<!--      <img *ngIf="gotImage()" [src]="room.retrievedImage" alt="...">-->
-<!--    </div>-->
-
-<!--    <div class="room-details-info">-->
-<!--      <div class="room-details-title">-->
-<!--        <p>-->
-<!--          Numer: {{room.number}}-->
-<!--        </p>-->
-<!--      </div>-->
-
-<!--      <div class="room-details-description">-->
-<!--        <p>-->
-<!--          Przeznaczenie: {{room.destiny}}-->
-<!--        </p>-->
-<!--      </div>-->
-
-<!--      <div class="room-details-description">-->
-<!--        <p>-->
-<!--          Opis: {{room.description}}-->
-<!--        </p>-->
-<!--      </div>-->
-
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
 <div class="container">
 
   <h3 class="text-center">{{ room.destiny }} - {{ room.number }}</h3>
 
-  <div class="image mx-auto d-block pt-3">
-    <img *ngIf="!gotImage()"
-         src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712"
-         alt="...">
-    <img *ngIf="gotImage()" [src]="room.retrievedImage" alt="...">
+  <div *ngIf="gotImage()" class="image mx-auto d-block pt-3">
+    <img [src]="room.retrievedImage" alt="...">
   </div>
 
   <div class="pt-5 pb-5">
     {{ room.description }}
+  </div>
+
+  <div class="pt-3 pb-5">
+    <a *ngIf="authService.isTeacherLoggedIn()" type="button" data-toggle="modal" data-target="#editRoom" (click)="startEditing()">Edytuj</a>
+    <a *ngIf="authService.isTeacherLoggedIn()" type="button" data-toggle="modal" data-target="#deleteRoom">Usuń</a>
+    <a *ngIf="authService.isTeacherLoggedIn() && gotImage()" type="button" data-toggle="modal" data-target="#deleteImage">Usuń zdjęcie</a>
   </div>
 
   <div class="line container"></div>
@@ -64,3 +35,113 @@
   </div>
 </div>
 
+
+<!-- Modal deleteSubject -->
+<div class="modal fade bd-example-modal-lg" id="deleteRoom" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Uwaga</h5>
+      </div>
+
+      <div class="modal-body">
+        Czy na pewno chcesz usunąć ten pokój? Upewnij się że żadne lekcje nie są przypisane do wybranego pokoju!
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+        <button type="submit" class="btn btn-primary" data-dismiss="modal"
+                (click)="deleteRoom()">Usuń pokój
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal deleteImage -->
+<div class="modal fade bd-example-modal-lg" id="deleteImage" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Uwaga</h5>
+      </div>
+
+      <div class="modal-body">
+        Czy na pewno chcesz usunąć zdjęcie przypisane do tego pokoju?
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+        <button type="submit" class="btn btn-primary" data-dismiss="modal"
+                (click)="deleteImage()">Usuń zdjęcie
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Subject -->
+<div class="modal fade bd-example-modal-lg" id="editRoom" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edycja pokoju</h5>
+      </div>
+
+      <div class="modal-body">
+        <form (ngSubmit)="editRoom()" #roomForm="ngForm">
+          <div class="form-group">
+            <label for="number">Numer:</label>
+            <input type="text" [(ngModel)]="roomEdited.number"
+                   class="form-control"
+                   id="number"
+                   name="number"
+                   placeholder="Podaj numer sali . . ."
+                   required #number="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label for="destiny">Przeznaczenie:</label>
+            <input type="text" [(ngModel)]="roomEdited.destiny"
+                   class="form-control"
+                   id="destiny"
+                   name="destiny"
+                   placeholder="Podaj przeznaczenie sali . . ."
+                   required #destiny="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label for="description">Opis:</label>
+            <input type="text" [(ngModel)]="roomEdited.description"
+                   class="form-control"
+                   id="description"
+                   name="description"
+                   placeholder="Podaj opis sali . . ."
+                   required #description="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label>Zdjęcie:</label>
+            <div class="col-md-6">
+              <input type="file" (change)="onFileChanged($event)">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            <button type="submit" [disabled]="!roomForm.form.valid" class="btn btn-info" data-dismiss="modal"
+                    (click)="editRoom()">Zapisz zmiany
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

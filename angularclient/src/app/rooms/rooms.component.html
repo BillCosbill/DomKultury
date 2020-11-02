@@ -1,18 +1,17 @@
 <div class="container">
   <div *ngIf="this.authService.isAdminLoggedIn()" class="row">
-    <a type="button" [routerLink]="['/addRoom']">Dodaj pokój</a>
+    <a type="button" data-toggle="modal" data-target="#addRoomModal">Dodaj pokój</a>
   </div>
 
   <div class="row row-cols-1 row-cols-md-2 pt-5">
     <div [routerLink]="['/room', (item.id)]" class="col mb-4" *ngFor="let item of rooms">
       <div class="card">
-        <div class="my">
-          <img *ngIf="!gotImage(item)"
-               src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712"
-               class="card-img-top" alt="...">
-          <img *ngIf="gotImage(item)" [src]="item.retrievedImage" class="card-img-top" alt="...">
-        </div>
-
+        <!--        <div class="my">-->
+        <!--          <img *ngIf="!gotImage(item)"-->
+        <!--               src="https://media.istockphoto.com/photos/teacher-giving-an-it-class-at-school-to-a-group-of-students-picture-id669775712"-->
+        <!--               class="card-img-top" alt="...">-->
+        <!--          <img *ngIf="gotImage(item)" [src]="item.retrievedImage" class="card-img-top" alt="...">-->
+        <!--        </div>-->
         <div class="card-body">
           <h3 class="card-title text-center">{{item.destiny}}</h3>
         </div>
@@ -20,6 +19,67 @@
     </div>
   </div>
 </div>
-<div class="container">
 
 
+<!-- Modal room add -->
+<div class="modal fade bd-example-modal-lg" id="addRoomModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edycja lekcji</h5>
+      </div>
+
+      <div class="modal-body">
+        <form (ngSubmit)="onSubmit()" #roomForm="ngForm">
+          <div class="form-group">
+            <label for="number">Numer:</label>
+            <input type="text" [(ngModel)]="room.number"
+                   class="form-control"
+                   id="number"
+                   name="number"
+                   placeholder="Podaj numer pokoju . . ."
+                   required #number="ngModel">
+          </div>
+          <!--      <div [hidden]="!number.pristine" class="alert alert-danger">Numer jest wymagany</div>-->
+
+          <div class="form-group">
+            <label for="destiny">Przeznaczenie:</label>
+            <input type="text" [(ngModel)]="room.destiny"
+                   class="form-control"
+                   id="destiny"
+                   name="destiny"
+                   placeholder="Podaj przeznaczenie . . ."
+                   required #destiny="ngModel">
+
+            <!--        <div [hidden]="!destiny.pristine" class="alert alert-danger">Przeznaczenie jest wymagane</div>-->
+
+          </div>
+
+          <div class="form-group">
+            <label for="description">Opis:</label>
+            <input type="text" [(ngModel)]="room.description"
+                   class="form-control"
+                   id="description"
+                   name="description"
+                   placeholder="Podaj opis  . . ."
+                   required #description="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label>Zdjęcie:</label>
+            <div class="col-md-6">
+              <input type="file" (change)="onFileChanged($event)">
+            </div>
+          </div>
+
+          <button type="submit" [disabled]="!roomForm.form.valid"
+                  class="btn btn-info" data-dismiss="modal" (click)="onSubmit()">Dodaj
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

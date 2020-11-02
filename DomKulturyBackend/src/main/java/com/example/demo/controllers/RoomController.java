@@ -59,9 +59,16 @@ public class RoomController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RoomDTO> updateRoom(@RequestBody RoomDTO roomDTO, @PathVariable Long id) {
-        roomService.updateRoom(roomDTO, id);
+    public ResponseEntity<RoomDTO> updateRoom(@RequestBody RoomDTO roomDTO, @PathVariable Long id, @RequestParam String imageId) {
+        roomService.updateRoom(roomDTO, id, imageId);
         return ResponseEntity.status(HttpStatus.OK)
                              .body(roomDTO);
+    }
+
+    @PatchMapping("/{id}/deleteImage")
+    public ResponseEntity<MessageResponse> deleteImageFromRoom(@PathVariable Long id) {
+        roomService.deleteImage(id);
+
+        return ResponseEntity.ok(new MessageResponse("Image removed successfully from lesson"));
     }
 }

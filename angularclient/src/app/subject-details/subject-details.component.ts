@@ -27,6 +27,7 @@ export class SubjectDetailsComponent implements OnInit {
 
   subjectEdited: Subject = new Subject();
   newLesson: Lesson = new Lesson();
+  lessontIdToDelete: number = null;
 
   startDate: string = null;
   startTime: string = null;
@@ -121,5 +122,9 @@ export class SubjectDetailsComponent implements OnInit {
     this.lessonService.deleteLesson(id).subscribe(() => {
       this.refreshData();
     });
+  }
+
+  selectLessonIdToDelete(id: number) {
+    this.lessontIdToDelete = id;
   }
 }

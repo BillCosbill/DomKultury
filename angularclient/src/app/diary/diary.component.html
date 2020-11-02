@@ -24,9 +24,33 @@
         <td [routerLink]="['/subject', (subject.id)]">{{ subject.name }}</td>
         <td [routerLink]="['/subject', (subject.id)]">{{ subject.description }}</td>
         <td [routerLink]="['/subject', (subject.id)]">{{ subject.teacherId}}</td>
-        <td class="text-center" *ngIf="this.authService.isTeacherLoggedIn()"><i class="fas fa-trash-alt" (click)="delete(subject.id)"></i></td>
+        <td class="text-center" *ngIf="this.authService.isAdminLoggedIn()" data-toggle="modal" data-target="#deleteSubject" (click)="selectSubjectIdToDelete(subject.id)"><i class="fas fa-trash-alt" (click)="delete(subject.id)"></i></td>
       </tr>
       </tbody>
     </table>
+  </div>
+</div>
+
+<!-- Modal deleteStudent -->
+<div class="modal fade bd-example-modal-lg" id="deleteSubject" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Uwaga</h5>
+      </div>
+
+      <div class="modal-body">
+        Czy na pewno chcesz usunąć ten przedmiot? Razem z nim zostaną usunięte przystkie powiązane lekcje!
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+        <button type="submit" class="btn btn-primary" data-dismiss="modal"
+                (click)="deleteSubject()">Usuń ucznia
+        </button>
+      </div>
+    </div>
   </div>
 </div>

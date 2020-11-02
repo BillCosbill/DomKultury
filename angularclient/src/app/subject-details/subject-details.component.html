@@ -25,7 +25,8 @@
 
     <div class="overlap">
       <span class="font-weight-bold">Nauczyciel prowadzący:</span>
-      <p>{{teacher.firstName}} {{teacher.lastName}} (PESEL: {{teacher.pesel}}) </p>
+      <p *ngIf="this.authService.isTeacherLoggedIn()" [routerLink]="['/user', (teacher.id)]">{{teacher.firstName}} {{teacher.lastName}} (PESEL: {{teacher.pesel}}) </p>
+      <p *ngIf="!this.authService.isTeacherLoggedIn()">{{teacher.firstName}} {{teacher.lastName}} (PESEL: {{teacher.pesel}}) </p>
       <i *ngIf="this.authService.isAdminLoggedIn()" data-toggle="modal" data-target="#editTeacher"
          (click)="startEditing()" class="fas fa-user-edit"></i>
     </div>
@@ -50,8 +51,8 @@
             <td [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ lesson.topic }}</td>
             <td>{{ formatDateTime(lesson.startDate) }}</td>
             <td>{{ formatDateTime(lesson.finishDate) }}</td>
-            <td>{{ getRoomData(lesson.roomId) }}</td>
-            <td class="text-center"><i class="fas fa-trash-alt" (click)="deleteLesson(lesson.id)"></i></td>
+            <td [routerLink]="['/room', (lesson.roomId)]">{{ getRoomData(lesson.roomId) }}</td>
+            <td class="text-center"><i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteLesson" (click)="selectLessonIdToDelete(lesson.id)"></i></td>
           </tr>
           </tbody>
 
@@ -60,7 +61,7 @@
             <td>{{ lesson.topic }}</td>
             <td>{{ formatDateTime(lesson.startDate) }}</td>
             <td>{{ formatDateTime(lesson.finishDate) }}</td>
-            <td>{{ getRoomData(lesson.roomId) }}</td>
+            <td [routerLink]="['/room', (lesson.roomId)]">{{ getRoomData(lesson.roomId) }}</td>
           </tr>
           </tbody>
 
@@ -227,6 +228,32 @@
             </button>
           </div>
         </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal deleteLesson -->
+<div class="modal fade bd-example-modal-lg" id="deleteLesson" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Uwaga</h5>
+      </div>
+
+      <div class="modal-body">
+        Czy na pewno chcesz usunąć tę lekcję?
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+        <button type="submit" class="btn btn-primary" data-dismiss="modal"
+                (click)="deleteLesson(this.lessontIdToDelete)">Usuń lekcję
+        </button>
       </div>
     </div>
   </div>
