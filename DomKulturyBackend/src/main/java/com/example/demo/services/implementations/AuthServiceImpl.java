@@ -14,6 +14,7 @@ import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.jwt.JwtUtils;
 import com.example.demo.security.userDetails.UserDetailsImpl;
+import com.example.demo.services.PasswordGenerator;
 import com.example.demo.services.interfaces.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -39,16 +39,18 @@ public class AuthServiceImpl implements AuthService {
     PasswordEncoder encoder;
     JwtUtils jwtUtils;
     private final EmailService emailService;
+    private final PasswordGenerator passwordGenerator;
 
     @Autowired
     public AuthServiceImpl(AuthenticationManager authenticationManager, UserRepository userRepository,
-                           RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils, EmailService emailService) {
+                           RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils, EmailService emailService, PasswordGenerator passwordGenerator) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.encoder = encoder;
         this.jwtUtils = jwtUtils;
         this.emailService = emailService;
+        this.passwordGenerator = passwordGenerator;
     }
 
     @Override
@@ -82,7 +84,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         // TODO generate password
-        signUpRequest.setPassword("testpassword123");
+        signUpRequest.setPassword(passwordGenerator.generatePassword(10));
 
         // Create new user's account
         User user = new User(signUpRequest.getUsername(), signUpRequest.getFirstName(), signUpRequest

@@ -18,7 +18,7 @@
         <th scope="col">PESEL</th>
         <th scope="col">Email</th>
         <th scope="col">Data urodzenia</th>
-        <th scope="col">Opcje</th>
+        <th *ngIf="this.authService.isAdminLoggedIn()" scope="col">Opcje</th>
       </tr>
       </thead>
       <tbody>

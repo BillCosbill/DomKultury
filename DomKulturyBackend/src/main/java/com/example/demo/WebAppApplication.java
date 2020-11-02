@@ -14,13 +14,11 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @SpringBootApplication
 public class WebAppApplication {
@@ -47,7 +45,6 @@ public class WebAppApplication {
     public static void main(String[] args) {
         SpringApplication.run(WebAppApplication.class, args);
     }
-
 
     @EventListener(ApplicationReadyEvent.class)
     public void fillDB() throws MessagingException {
