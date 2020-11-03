@@ -10382,8 +10382,11 @@ a[type = "button"]:hover{
   color: rgba(255, 255, 255, 0.75);
 }
 
-
 /* to convert \n to </br> */
 p {
   white-space: pre-line;
+}
+
+.scheduler-fixer {
+  min-height: 101vh;
 }

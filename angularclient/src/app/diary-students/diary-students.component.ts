@@ -4,12 +4,15 @@ import {StudentService} from '../_services/student.service';
 import {AuthService} from '../_services/auth.service';
 import {ValidationService} from '../_services/validation/validation.service';
 
+declare var openErrorModal;
+
 @Component({
   selector: 'app-diary-students',
   templateUrl: './diary-students.component.html',
   styleUrls: ['./diary-students.component.css']
 })
 export class DiaryStudentsComponent implements OnInit {
+  errorMessage: string = null;
 
   students: Student [] = [];
   studentIdSelected: number = null;
@@ -26,7 +29,9 @@ export class DiaryStudentsComponent implements OnInit {
   }
 
   deleteStudent(id: number) {
-    this.studentService.deleteStudent(id).subscribe(() => this.ngOnInit());
+    this.studentService.deleteStudent(id).subscribe(() => this.ngOnInit(), error => {
+      this.createErrorModal(error.error.message);
+    });
   }
 
   selectStudentId(id: number) {
@@ -40,6 +45,13 @@ export class DiaryStudentsComponent implements OnInit {
   addStudent() {
     this.studentService.addStudent(this.studentModel).subscribe(() => {
       this.ngOnInit();
+    }, error => {
+      this.createErrorModal(error.error.message);
     });
+  }
+
+  createErrorModal(message: string) {
+    this.errorMessage = message;
+    openErrorModal();
   }
 }

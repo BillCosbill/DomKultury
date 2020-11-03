@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
 import {TokenStorageService} from './token-storage.service';
+import {catchError} from 'rxjs/operators';
 
 const AUTH_API = 'http://localhost:8081/api/auth/';
 
@@ -21,7 +22,9 @@ export class AuthService {
     return this.http.post(AUTH_API + 'signin', {
       username: credentials.username,
       password: credentials.password
-    }, httpOptions);
+    }, httpOptions).pipe(
+      catchError(this.handleError)
+    );
   }
 
   public register(user): Observable<any> {
@@ -32,7 +35,9 @@ export class AuthService {
       pesel: user.pesel,
       email: user.email,
       password: user.password
-    }, httpOptions);
+    }, httpOptions).pipe(
+      catchError(this.handleError)
+    );
   }
 
   public isAdminLoggedIn() {
@@ -57,5 +62,9 @@ export class AuthService {
       roles = this.tokenStorage.getUser().roles;
     }
     return roles.includes('ROLE_USER')  || roles.includes('ROLE_TEACHER') || roles.includes('ROLE_ADMIN');
+  }
+
+  handleError(error: HttpErrorResponse) {
+    return throwError(error);
   }
 }

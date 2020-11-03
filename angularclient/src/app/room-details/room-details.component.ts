@@ -8,12 +8,15 @@ import {EventSettingsModel, View} from '@syncfusion/ej2-angular-schedule';
 import {DataSource} from '../_model/data-source';
 import {AuthService} from '../_services/auth.service';
 
+declare var openErrorModal;
+
 @Component({
   selector: 'app-room-details',
   templateUrl: './room-details.component.html',
   styleUrls: ['./room-details.component.css']
 })
 export class RoomDetailsComponent implements OnInit {
+  errorMessage: string = null;
 
   public setView: View = 'Month';
   public weekFirstDay = 1;
@@ -74,7 +77,9 @@ export class RoomDetailsComponent implements OnInit {
   }
 
   deleteRoom() {
-    this.roomService.deleteRoom(this.roomId).subscribe(() => this.goToRoomsList());
+    this.roomService.deleteRoom(this.roomId).subscribe(() => this.goToRoomsList(), error => {
+      this.createErrorModal(error.error.message);
+    });
   }
 
   goToRoomsList() {
@@ -100,14 +105,16 @@ export class RoomDetailsComponent implements OnInit {
             let a = JSON.stringify(response.body);
             let b = JSON.parse(a);
             this.uploadedImageId = b.id;
-            this.roomService.updateRoom(this.roomEdited, this.room.id, this.uploadedImageId).subscribe(() => this.ngOnInit());
+            this.roomService.updateRoom(this.roomEdited, this.room.id, this.uploadedImageId).subscribe(() => this.ngOnInit(), error => {
+              this.createErrorModal(error.error.message);
+            });
           }
         );
     } else {
-      this.roomService.updateRoom(this.roomEdited, this.room.id, null).subscribe(() => this.ngOnInit());
+      this.roomService.updateRoom(this.roomEdited, this.room.id, null).subscribe(() => this.ngOnInit(), error => {
+        this.createErrorModal(error.error.message);
+      });
     }
-
-    // this.roomService.updateRoom(this.roomEdited, this.room.id).subscribe(() => this.ngOnInit());
   }
 
   onFileChanged(event) {
@@ -115,6 +122,13 @@ export class RoomDetailsComponent implements OnInit {
   }
 
   deleteImage() {
-    this.roomService.deleteImageFromRoom(this.roomId).subscribe(() => this.ngOnInit());
+    this.roomService.deleteImageFromRoom(this.roomId).subscribe(() => this.ngOnInit(), error => {
+      this.createErrorModal(error.error.message);
+    });
+  }
+
+  createErrorModal(message: string) {
+    this.errorMessage = message;
+    openErrorModal();
   }
 }

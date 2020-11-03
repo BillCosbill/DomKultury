@@ -7,7 +7,8 @@ import {SubjectService} from '../_services/subject.service';
 import {User} from '../_model/user';
 import {UserService} from '../_services/user.service';
 import {AuthService} from '../_services/auth.service';
-import {TokenStorageService} from '../_services/token-storage.service';
+
+declare var openErrorModal;
 
 @Component({
   selector: 'app-student-details',
@@ -15,6 +16,7 @@ import {TokenStorageService} from '../_services/token-storage.service';
   styleUrls: ['./student-details.component.css']
 })
 export class StudentDetailsComponent implements OnInit {
+  errorMessage: string = null;
 
   student: Student = new Student();
   studentId: number;
@@ -66,6 +68,8 @@ export class StudentDetailsComponent implements OnInit {
   editStudent() {
     this.studentService.updateStudent(this.studentEdited, this.studentId).subscribe(() => {
       this.ngOnInit();
+    }, error => {
+      this.createErrorModal(error.error.message);
     });
   }
 
@@ -77,5 +81,10 @@ export class StudentDetailsComponent implements OnInit {
     this.studentEdited.pesel = this.student.pesel;
     this.studentEdited.email = this.student.email;
     this.studentEdited.birthday = this.student.birthday;
+  }
+
+  createErrorModal(message: string) {
+    this.errorMessage = message;
+    openErrorModal();
   }
 }

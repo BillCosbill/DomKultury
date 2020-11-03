@@ -4,14 +4,13 @@ import {SubjectService} from '../_services/subject.service';
 import {Subject} from '../_model/subject';
 import {DataSource} from '../_model/data-source';
 import {LessonService} from '../_services/lesson.service';
-import {Lesson} from '../_model/lesson';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
   public setView: View = 'Month';
   public weekFirstDay = 1;
   public eventObject: EventSettingsModel = {

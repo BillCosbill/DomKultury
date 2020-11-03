@@ -12,6 +12,7 @@ import {
   AgendaService, ResizeService, DragAndDropService
 } from '@syncfusion/ej2-angular-schedule';
 
+
 declare let require: Function;
 loadCldr(
   require('cldr-data/supplemental/numberingSystems.json'),

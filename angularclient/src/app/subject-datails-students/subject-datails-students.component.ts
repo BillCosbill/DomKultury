@@ -7,12 +7,15 @@ import {SubjectService} from '../_services/subject.service';
 import {AuthService} from '../_services/auth.service';
 import {ValidationService} from '../_services/validation/validation.service';
 
+declare var openErrorModal;
+
 @Component({
   selector: 'app-subject-datails-students',
   templateUrl: './subject-datails-students.component.html',
   styleUrls: ['./subject-datails-students.component.css']
 })
 export class SubjectDatailsStudentsComponent implements OnInit {
+  errorMessage: string = null;
 
   subjectId: number;
   subject: Subject = new Subject();
@@ -58,6 +61,8 @@ export class SubjectDatailsStudentsComponent implements OnInit {
   deleteStudentFromSubject() {
     this.subjectService.deleteStudentFromSubject(this.subjectId, this.studentIdToDelete).subscribe(() => {
       this.refreshData();
+    }, error => {
+      this.createErrorModal(error.error.message);
     });
   }
 
@@ -68,12 +73,21 @@ export class SubjectDatailsStudentsComponent implements OnInit {
   addStudent() {
     this.subjectService.addStudentToSubject(this.studentToAdd, this.subjectId).subscribe(() => {
       this.refreshData();
+    }, error => {
+      this.createErrorModal(error.error.message);
     });
   }
 
   addStudentToSubject() {
     this.subjectService.addStudentFromDatabaseToSubject(this.subjectId, this.studentToAdd.id).subscribe(() => {
       this.refreshData();
+    }, error => {
+      this.createErrorModal(error.error.message);
     });
+  }
+
+  createErrorModal(message: string) {
+    this.errorMessage = message;
+    openErrorModal();
   }
 }

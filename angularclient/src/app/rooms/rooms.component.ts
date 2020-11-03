@@ -3,7 +3,8 @@ import {Room} from '../_model/room';
 import {RoomService} from '../_services/room.service';
 import {ImageService} from '../_services/image.service';
 import {AuthService} from '../_services/auth.service';
-import {Router} from '@angular/router';
+
+declare var openErrorModal;
 
 @Component({
   selector: 'app-rooms',
@@ -11,6 +12,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./rooms.component.css']
 })
 export class RoomsComponent implements OnInit {
+  errorMessage: string = null;
 
   rooms: Room[] = [];
 
@@ -62,11 +64,15 @@ export class RoomsComponent implements OnInit {
             let a = JSON.stringify(response.body);
             let b = JSON.parse(a);
             this.uploadedImageId = b.id;
-            this.roomService.addRoom(this.room, this.uploadedImageId).subscribe(() => this.ngOnInit());
+            this.roomService.addRoom(this.room, this.uploadedImageId).subscribe(() => this.ngOnInit(), error => {
+              this.createErrorModal(error.error.message);
+            });
           }
         );
     } else {
-      this.roomService.addRoom(this.room, null).subscribe(() => this.ngOnInit());
+      this.roomService.addRoom(this.room, null).subscribe(() => this.ngOnInit(), error => {
+        this.createErrorModal(error.error.message);
+      });
     }
   }
 
@@ -74,7 +80,8 @@ export class RoomsComponent implements OnInit {
     this.roomIdToDelete = id;
   }
 
-  deleteRoom() {
-    this.roomService.deleteRoom(this.roomIdToDelete).subscribe(() => this.ngOnInit());
+  createErrorModal(message: string) {
+    this.errorMessage = message;
+    openErrorModal();
   }
 }

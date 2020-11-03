@@ -10,12 +10,15 @@ import {Room} from '../_model/room';
 import {RoomService} from '../_services/room.service';
 import {AuthService} from '../_services/auth.service';
 
+declare var openErrorModal;
+
 @Component({
   selector: 'app-subject-details',
   templateUrl: './subject-details.component.html',
   styleUrls: ['./subject-details.component.css']
 })
 export class SubjectDetailsComponent implements OnInit {
+  errorMessage: string = null;
 
   subjectId: number;
   subject: Subject = new Subject();
@@ -70,7 +73,9 @@ export class SubjectDetailsComponent implements OnInit {
   }
 
   onSubmit() {
-    this.subjectService.updateSubject(this.subjectEdited, this.subject.id).subscribe(() => this.refreshData());
+    this.subjectService.updateSubject(this.subjectEdited, this.subject.id).subscribe(() => this.refreshData(), error => {
+      this.createErrorModal(error.error.message);
+    });
   }
 
   startEditing() {
@@ -95,6 +100,8 @@ export class SubjectDetailsComponent implements OnInit {
 
     this.lessonService.addLesson(this.newLesson).subscribe(() => {
       this.refreshData();
+    }, error => {
+      this.createErrorModal(error.error.message);
     });
   }
 
@@ -121,10 +128,17 @@ export class SubjectDetailsComponent implements OnInit {
   deleteLesson(id: number) {
     this.lessonService.deleteLesson(id).subscribe(() => {
       this.refreshData();
+    }, error => {
+      this.createErrorModal(error.error.message);
     });
   }
 
   selectLessonIdToDelete(id: number) {
     this.lessontIdToDelete = id;
+  }
+
+  createErrorModal(message: string) {
+    this.errorMessage = message;
+    openErrorModal();
   }
 }

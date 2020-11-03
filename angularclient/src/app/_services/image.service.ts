@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {catchError} from 'rxjs/operators';
+import {throwError} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +12,19 @@ export class ImageService {
   }
 
   public saveImage(uploadImageData) {
-    return this.http.post('http://localhost:8081/uploadFile', uploadImageData, {observe: 'response'});
+    return this.http.post('http://localhost:8081/uploadFile', uploadImageData, {observe: 'response'}).pipe(
+      catchError(this.handleError)
+    );
   }
 
   public getImage(imageId) {
-    return this.http.get('http://localhost:8081/downloadFile/' + imageId);
+    return this.http.get('http://localhost:8081/downloadFile/' + imageId).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  handleError(error: HttpErrorResponse) {
+    return throwError(error);
   }
 
 }

@@ -9,12 +9,15 @@ import {Room} from '../_model/room';
 import {RoomService} from '../_services/room.service';
 import {Subject} from '../_model/subject';
 
+declare var openErrorModal;
+
 @Component({
   selector: 'app-diary-today-lessons',
   templateUrl: './diary-today-lessons.component.html',
   styleUrls: ['./diary-today-lessons.component.css']
 })
 export class DiaryTodayLessonsComponent implements OnInit {
+  errorMessage: string = null;
 
   lessons: Lesson[] = [];
   subjects: Subject[] = [];
@@ -73,6 +76,8 @@ export class DiaryTodayLessonsComponent implements OnInit {
   deleteLesson(id: number) {
     this.lessonService.deleteLesson(id).subscribe(() => {
       this.ngOnInit();
+    }, error => {
+      this.createErrorModal(error.error.message);
     });
   }
 
@@ -82,5 +87,10 @@ export class DiaryTodayLessonsComponent implements OnInit {
 
   getSubjectFromLesson(id: number){
     return this.subjects.find(subject => subject.id === id).name;
+  }
+
+  createErrorModal(message: string) {
+    this.errorMessage = message;
+    openErrorModal();
   }
 }

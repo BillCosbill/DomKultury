@@ -3,12 +3,15 @@ import {TokenStorageService} from '../_services/token-storage.service';
 import {User} from '../_model/user';
 import {UserService} from '../_services/user.service';
 
+declare var openErrorModal;
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  errorMessage: string = null;
 
   user: User = new User();
   userEdited: User = new User();
@@ -43,6 +46,8 @@ export class ProfileComponent implements OnInit {
       this.tokenStorage.saveUser(form);
 
       this.ngOnInit();
+    }, error => {
+      this.createErrorModal(error.error.message);
     });
   }
 
@@ -50,7 +55,12 @@ export class ProfileComponent implements OnInit {
     this.userService.changePassword(this.form, this.user.id).subscribe(() => {
       this.ngOnInit();
     }, error => {
-      alert('Błędne hasło');
+      this.createErrorModal(error.error.message);
     });
+  }
+
+  createErrorModal(message: string) {
+    this.errorMessage = message;
+    openErrorModal();
   }
 }

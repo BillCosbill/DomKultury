@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../_services/user.service';
 import {User} from '../_model/user';
-import {Router} from '@angular/router';
 import {Role} from '../_model/role';
+
+declare var openErrorModal;
 
 @Component({
   selector: 'app-administrator-panel',
@@ -16,8 +17,9 @@ export class AdministratorPanelComponent implements OnInit {
   selectRole: string = null;
 
   userIdToDelete: number = null;
+  errorMessage: string = null;
 
-  constructor(private userService: UserService, private router: Router) {
+  constructor(private userService: UserService) {
   }
 
   ngOnInit() {
@@ -40,7 +42,9 @@ export class AdministratorPanelComponent implements OnInit {
   }
 
   changeRole(id: number, role: string) {
-    this.userService.changeRole(role, id).subscribe(() => this.ngOnInit());
+    this.userService.changeRole(role, id).subscribe(() => this.ngOnInit(), error => {
+      this.createErrorModal(error.error.message);
+    });
   }
 
   selectUserToChangeRole(id: number) {
@@ -55,7 +59,13 @@ export class AdministratorPanelComponent implements OnInit {
 
   deleteUser() {
     this.userService.deleteUser(this.userIdToDelete).subscribe(() => this.ngOnInit(), error => {
-      alert(error.error.message);
+      this.createErrorModal(error.error.message);
     });
   }
+
+  createErrorModal(message: string) {
+    this.errorMessage = message;
+    openErrorModal();
+  }
 }
+

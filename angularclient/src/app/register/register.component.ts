@@ -1,12 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../_services/auth.service';
 
+declare var openErrorModal;
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  errorMessage: string = null;
 
   dayArray: number[] = [31];
   monthArray: string[] = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Śierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'];
@@ -17,7 +20,7 @@ export class RegisterComponent implements OnInit {
   form: any = {};
   isSuccessful = false;
   isSignUpFailed = false;
-  errorMessage = '';
+  errorMessagee = '';
 
   constructor(private authService: AuthService) {
   }
@@ -40,10 +43,16 @@ export class RegisterComponent implements OnInit {
         this.isSignUpFailed = false;
       },
       err => {
-        this.errorMessage = err.error.message;
+        console.log(err);
+        this.errorMessagee = err.error.message;
         this.isSignUpFailed = true;
+        this.createErrorModal(err.error.message);
       }
     );
   }
 
+  createErrorModal(message: string) {
+    this.errorMessage = message;
+    openErrorModal();
+  }
 }

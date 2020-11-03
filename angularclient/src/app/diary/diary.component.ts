@@ -5,12 +5,15 @@ import {User} from '../_model/user';
 import {TokenStorageService} from '../_services/token-storage.service';
 import {AuthService} from '../_services/auth.service';
 
+declare var openErrorModal;
+
 @Component({
   selector: 'app-diary',
   templateUrl: './diary.component.html',
   styleUrls: ['./diary.component.css']
 })
 export class DiaryComponent implements OnInit {
+  errorMessage: string = null;
 
   subjects: Subject[] = [];
   currentUser: User;
@@ -34,9 +37,10 @@ export class DiaryComponent implements OnInit {
     });
   }
 
-  //TODO usuwanie jako wyskakujący modal
   delete(id: number) {
-    this.subjectService.deleteSubject(id).subscribe(() => this.ngOnInit());
+    this.subjectService.deleteSubject(id).subscribe(() => this.ngOnInit(), error => {
+      this.createErrorModal(error.error.message);
+    });
   }
 
   selectSubjectIdToDelete(id: number) {
@@ -44,6 +48,13 @@ export class DiaryComponent implements OnInit {
   }
 
   deleteSubject() {
-    this.subjectService.deleteSubject(this.subjectIdToDelete).subscribe(() => this.ngOnInit());
+    this.subjectService.deleteSubject(this.subjectIdToDelete).subscribe(() => this.ngOnInit(), error => {
+      this.createErrorModal(error.error.message);
+    });
+  }
+
+  createErrorModal(message: string) {
+    this.errorMessage = message;
+    openErrorModal();
   }
 }

@@ -4,12 +4,15 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {RoomService} from '../_services/room.service';
 import {ImageService} from '../_services/image.service';
 
+declare var openErrorModal;
+
 @Component({
   selector: 'app-add-room',
   templateUrl: './add-room.component.html',
   styleUrls: ['./add-room.component.css']
 })
 export class AddRoomComponent {
+  errorMessage: string = null;
 
   room: Room;
   selectedFile: File;
@@ -34,15 +37,24 @@ export class AddRoomComponent {
             let a = JSON.stringify(response.body);
             let b = JSON.parse(a);
             this.uploadedImageId = b.id;
-            this.roomService.addRoom(this.room, this.uploadedImageId).subscribe(() => this.goToRoomsList());
+            this.roomService.addRoom(this.room, this.uploadedImageId).subscribe(() => this.goToRoomsList(), error => {
+              this.createErrorModal(error.error.message);
+            });
           }
         );
     } else {
-      this.roomService.addRoom(this.room, null).subscribe(() => this.goToRoomsList());
+      this.roomService.addRoom(this.room, null).subscribe(() => this.goToRoomsList(), error => {
+        this.createErrorModal(error.error.message);
+      });
     }
   }
 
   goToRoomsList() {
     this.router.navigate(['/rooms']);
+  }
+
+  createErrorModal(message: string) {
+    this.errorMessage = message;
+    openErrorModal();
   }
 }

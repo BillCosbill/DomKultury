@@ -8,11 +8,10 @@ import {TokenStorageService} from '../_services/token-storage.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
   form: any = {};
   isLoggedIn = false;
   isLoginFailed = false;
-  errorMessage = '';
+  errorMessagee = '';
   roles: string[] = [];
 
   constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
@@ -36,7 +35,7 @@ export class LoginComponent implements OnInit {
         this.reloadPage();
       },
       err => {
-        this.errorMessage = err.error.message;
+        this.errorMessagee = err.error.message;
         this.isLoginFailed = true;
       }
     );
@@ -45,5 +44,4 @@ export class LoginComponent implements OnInit {
   reloadPage() {
     window.location.reload();
   }
-
 }

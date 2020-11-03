@@ -2,6 +2,7 @@ package com.example.demo.services.implementations;
 
 import com.example.demo.email.EmailService;
 import com.example.demo.exceptions.EmailInUseException;
+import com.example.demo.exceptions.PeselInUseException;
 import com.example.demo.exceptions.RoleNotFoundException;
 import com.example.demo.exceptions.UsernameTakenException;
 import com.example.demo.models.ERole;
@@ -81,6 +82,10 @@ public class AuthServiceImpl implements AuthService {
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             throw new EmailInUseException(signUpRequest.getEmail());
+        }
+
+        if (userRepository.existsByPesel(signUpRequest.getPesel())) {
+            throw new PeselInUseException(signUpRequest.getPesel());
         }
 
         // TODO generate password

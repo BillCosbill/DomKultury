@@ -49,7 +49,6 @@ export class SubjectService {
   //TODO zrobić jakieś popapy z errorami i z udanymi akcjami np addUserToEvent
   //TODO dodać obsługę błędów w innych serwisach !!!!!!!!!!!!!!!!
   handleError(error: HttpErrorResponse) {
-    console.log(error.error.message);
     return throwError(error);
   }
 

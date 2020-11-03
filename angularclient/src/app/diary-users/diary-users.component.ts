@@ -9,6 +9,7 @@ import {AuthService} from '../_services/auth.service';
   styleUrls: ['./diary-users.component.css']
 })
 export class DiaryUsersComponent implements OnInit {
+  errorMessage: string = null;
 
   users: User[] = [];
 

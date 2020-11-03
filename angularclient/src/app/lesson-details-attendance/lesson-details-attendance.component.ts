@@ -10,12 +10,15 @@ import {SubjectService} from '../_services/subject.service';
 import {StudentService} from '../_services/student.service';
 import {AttendanceService} from '../_services/attendance.service';
 
+declare var openErrorModal;
+
 @Component({
   selector: 'app-lesson-details-attendance',
   templateUrl: './lesson-details-attendance.component.html',
   styleUrls: ['./lesson-details-attendance.component.css']
 })
 export class LessonDetailsAttendanceComponent implements OnInit {
+  errorMessage: string = null;
 
   lessonId: number;
   subjectId: number;
@@ -83,14 +86,23 @@ export class LessonDetailsAttendanceComponent implements OnInit {
           attendance.present = studentAttendance.present;
         }
       });
+    }, error => {
+      this.createErrorModal(error.error.message);
     });
 
     this.lessonService.checkAttendance(this.attendances, this.lessonId).subscribe(() => {
       this.refreshData();
+    }, error => {
+      this.createErrorModal(error.error.message);
     });
   }
 
   changePresentValue(studentAttendance: StudentAttendance) {
     studentAttendance.present = !studentAttendance.present;
+  }
+
+  createErrorModal(message: string) {
+    this.errorMessage = message;
+    openErrorModal();
   }
 }

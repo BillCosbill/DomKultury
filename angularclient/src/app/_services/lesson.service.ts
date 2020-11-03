@@ -35,11 +35,15 @@ export class LessonService {
   }
 
   public addLesson(lesson: Lesson) {
-    return this.http.post<Lesson>(this.lessonUrl, lesson);
+    return this.http.post<Lesson>(this.lessonUrl, lesson).pipe(
+      catchError(this.handleError)
+    );
   }
 
   public updateLesson(lesson: Lesson, id: number) {
-    return this.http.put<Lesson>(this.lessonUrl + '/' + id, lesson);
+    return this.http.put<Lesson>(this.lessonUrl + '/' + id, lesson).pipe(
+      catchError(this.handleError)
+    );
   }
 
   public checkAttendance(attendances: Attendance[], id: number) {
@@ -51,7 +55,6 @@ export class LessonService {
   //TODO zrobić jakieś popapy z errorami i z udanymi akcjami np addUserToEvent
   //TODO dodać obsługę błędów w innych serwisach !!!!!!!!!!!!!!!!
   handleError(error: HttpErrorResponse) {
-    console.log(error.error.message);
     return throwError(error);
   }
 

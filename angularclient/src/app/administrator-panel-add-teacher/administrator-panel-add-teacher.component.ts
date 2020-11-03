@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../_services/auth.service';
 
+declare var openErrorModal;
+
 @Component({
   selector: 'app-administrator-panel-add-teacher',
   templateUrl: './administrator-panel-add-teacher.component.html',
   styleUrls: ['./administrator-panel-add-teacher.component.css']
 })
 export class AdministratorPanelAddTeacherComponent implements OnInit {
+  errorMessage: string = null;
 
   form: any = {};
   isSuccessful = false;
   isSignUpFailed = false;
-  errorMessage = '';
 
   constructor(private authService: AuthService) {
   }
@@ -27,9 +29,14 @@ export class AdministratorPanelAddTeacherComponent implements OnInit {
         this.isSignUpFailed = false;
       },
       err => {
-        this.errorMessage = err.error.message;
         this.isSignUpFailed = true;
+        this.createErrorModal(err.error.message);
       }
     );
+  }
+
+  createErrorModal(message: string) {
+    this.errorMessage = message;
+    openErrorModal();
   }
 }

@@ -6,12 +6,15 @@ import {Room} from '../_model/room';
 import {RoomService} from '../_services/room.service';
 import {AuthService} from '../_services/auth.service';
 
+declare var openErrorModal;
+
 @Component({
   selector: 'app-lesson-details',
   templateUrl: './lesson-details.component.html',
   styleUrls: ['./lesson-details.component.css']
 })
 export class LessonDetailsComponent implements OnInit {
+  errorMessage: string = null;
 
   lessonId: number;
   subjectId: number;
@@ -57,6 +60,8 @@ export class LessonDetailsComponent implements OnInit {
   onSubmit() {
     this.lessonService.updateLesson(this.editedLesson, this.lessonId).subscribe(() => {
       this.ngOnInit();
+    }, error => {
+      this.createErrorModal(error.error.message);
     });
   }
 
@@ -72,6 +77,8 @@ export class LessonDetailsComponent implements OnInit {
     this.editedLesson.finishDate = this.editedStartDate + 'T' + this.editedFinishTime;
     this.lessonService.updateLesson(this.editedLesson, this.lessonId).subscribe(() => {
       this.ngOnInit();
+    }, error => {
+      this.createErrorModal(error.error.message);
     });
   }
 
@@ -96,5 +103,10 @@ export class LessonDetailsComponent implements OnInit {
 
   timeIncorrect() {
     return this.editedFinishTime <= this.editedStartTime;
+  }
+
+  createErrorModal(message: string) {
+    this.errorMessage = message;
+    openErrorModal();
   }
 }

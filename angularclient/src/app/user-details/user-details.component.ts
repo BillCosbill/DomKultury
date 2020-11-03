@@ -10,12 +10,15 @@ import {DataSource} from '../_model/data-source';
 import {LessonService} from '../_services/lesson.service';
 import {TokenStorageService} from '../_services/token-storage.service';
 
+declare var openErrorModal;
+
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
   styleUrls: ['./user-details.component.css']
 })
 export class UserDetailsComponent implements OnInit {
+  errorMessage: string = null;
 
   public setView: View = 'Month';
   public weekFirstDay = 1;
@@ -102,11 +105,18 @@ export class UserDetailsComponent implements OnInit {
       }
 
       this.ngOnInit();
+    }, error => {
+      this.createErrorModal(error.error.message);
     });
   }
 
   dataImportedIntoScheduler() {
     // @ts-ignore
     return this.eventObject.dataSource.length > 0;
+  }
+
+  createErrorModal(message: string) {
+    this.errorMessage = message;
+    openErrorModal();
   }
 }
