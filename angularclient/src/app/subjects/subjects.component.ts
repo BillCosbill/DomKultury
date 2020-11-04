@@ -27,6 +27,7 @@ export class SubjectsComponent implements OnInit {
   ngOnInit() {
     this.subjectService.findAll().subscribe(subject => {
       this.subjects = subject;
+      this.subjects.sort((a, b) => (a.name.localeCompare(b.name)));
     });
 
     this.userService.findAll().subscribe(users => {

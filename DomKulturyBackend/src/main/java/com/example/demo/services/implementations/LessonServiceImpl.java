@@ -2,10 +2,7 @@ package com.example.demo.services.implementations;
 
 import com.example.demo.dto.AttendanceDTO;
 import com.example.demo.dto.LessonDTO;
-import com.example.demo.exceptions.LessonExistsException;
-import com.example.demo.exceptions.LessonNotFoundException;
-import com.example.demo.exceptions.RoomOccupiedAtTheTimeException;
-import com.example.demo.exceptions.SubjectNotFoundException;
+import com.example.demo.exceptions.*;
 import com.example.demo.mappers.AttendanceMapper;
 import com.example.demo.mappers.LessonMapper;
 import com.example.demo.models.Attendance;
@@ -19,6 +16,8 @@ import com.example.demo.services.interfaces.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -113,6 +112,11 @@ public class LessonServiceImpl implements LessonService {
         });
 
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new LessonNotFoundException(lessonId));
+
+        if (!LocalDate.now().equals(lesson.getStartDate().toLocalDate())) {
+            // TODO wyjątek o niezgodności dat
+            throw new AttendanceNotFoundException(999L);
+        }
 
         lesson.setAttendanceChecked(true);
         save(lesson);

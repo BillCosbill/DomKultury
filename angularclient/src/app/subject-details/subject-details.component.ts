@@ -59,6 +59,8 @@ export class SubjectDetailsComponent implements OnInit {
       this.subject.lessonsId.forEach(x => {
         this.lessonService.getLesson(x).subscribe(lesson => {
           this.lessons.push(lesson);
+          // TODO na pewno tu sortowanie??
+          this.lessons.sort((a, b) => (a.startDate.localeCompare(b.finishDate)));
         });
       });
     });

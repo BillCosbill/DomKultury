@@ -6,3 +6,11 @@ a[type = "button"]{
 .small-nav {
   width: 100%;
 }
+
+.checkbox {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+
+

@@ -87,4 +87,6 @@ export class StudentDetailsComponent implements OnInit {
     this.errorMessage = message;
     openErrorModal();
   }
+
+
 }

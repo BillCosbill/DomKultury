@@ -32,6 +32,7 @@ export class DiaryComponent implements OnInit {
       data.forEach(subject => {
         if (subject.teacherId === this.currentUser.id) {
           this.subjects.push(subject);
+          this.subjects.sort((a, b) => (a.name.localeCompare(b.name)));
         }
       });
     });

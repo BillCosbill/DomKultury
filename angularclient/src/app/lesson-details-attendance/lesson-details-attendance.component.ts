@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {LessonService} from '../_services/lesson.service';
 import {StudentAttendance} from '../_model/student-attendance';
@@ -9,6 +9,7 @@ import {Attendance} from '../_model/attendance';
 import {SubjectService} from '../_services/subject.service';
 import {StudentService} from '../_services/student.service';
 import {AttendanceService} from '../_services/attendance.service';
+import {formatDate} from '@angular/common';
 
 declare var openErrorModal;
 
@@ -41,11 +42,6 @@ export class LessonDetailsAttendanceComponent implements OnInit {
       this.subjectId = +params.id2;
     });
 
-    this.refreshData();
-  }
-
-
-  private refreshData() {
     this.students = [];
     this.attendances = [];
     this.studentsAttendance = [];
@@ -60,6 +56,8 @@ export class LessonDetailsAttendanceComponent implements OnInit {
           this.studentService.getStudent(studentId).subscribe(student => {
             this.students.push(student);
             this.studentsAttendance.push(student as StudentAttendance);
+            // TODO na pewno tu sortowanie??
+            this.studentsAttendance.sort((a, b) => (a.lastName.localeCompare(b.lastName)));
           });
         });
 
@@ -73,25 +71,21 @@ export class LessonDetailsAttendanceComponent implements OnInit {
               }
             });
           });
+
         });
 
       });
     });
   }
 
+
   save() {
     this.attendances.forEach(attendance => {
-      this.studentsAttendance.forEach(studentAttendance => {
-        if (attendance.studentId === studentAttendance.id) {
-          attendance.present = studentAttendance.present;
-        }
-      });
-    }, error => {
-      this.createErrorModal(error.error.message);
+      attendance.present = this.studentsAttendance.find(x => x.id === attendance.studentId).present;
     });
 
     this.lessonService.checkAttendance(this.attendances, this.lessonId).subscribe(() => {
-      this.refreshData();
+      this.ngOnInit();
     }, error => {
       this.createErrorModal(error.error.message);
     });
@@ -105,4 +99,21 @@ export class LessonDetailsAttendanceComponent implements OnInit {
     this.errorMessage = message;
     openErrorModal();
   }
+
+  enableToCheckAttendance() {
+    const todayDate = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+    let lessonDate = null;
+
+    if (this.lesson.startDate !== undefined) {
+      lessonDate = this.lesson.startDate.substr(0, 10);
+    }
+
+    return todayDate === lessonDate;
+  }
 }
+
+
+
+
+
+

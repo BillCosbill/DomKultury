@@ -46,6 +46,9 @@ export class SubjectDatailsStudentsComponent implements OnInit {
         this.studentService.getStudent(x).subscribe(student => {
           this.students.push(student);
         });
+
+        // TODO na pewno tu sortowanie??
+        this.students.sort((a, b) => (a.lastName.localeCompare(b.lastName)));
       });
     });
 

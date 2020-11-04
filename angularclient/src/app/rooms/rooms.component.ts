@@ -32,6 +32,9 @@ export class RoomsComponent implements OnInit {
   ngOnInit() {
     this.roomService.findAll().subscribe(data => {
       this.rooms = data;
+
+      this.rooms.sort((a, b) => (a.destiny.localeCompare(b.destiny)));
+
       data.forEach(x => {
         if (x.imageId != null){
           this.imageService.getImage(x.imageId)

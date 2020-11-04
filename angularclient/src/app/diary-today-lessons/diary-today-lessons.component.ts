@@ -47,6 +47,7 @@ export class DiaryTodayLessonsComponent implements OnInit {
         this.subjectService.getSubject(lesson.subjectId).subscribe(subject => {
           if (dateNow === lesson.startDate.substr(0, 10) && this.userId === subject.teacherId) {
             this.lessons.push(lesson);
+            this.lessons.sort((a, b) => (a.startDate.localeCompare(b.finishDate)));
           }
         });
       });

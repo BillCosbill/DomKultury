@@ -27,14 +27,19 @@
         <td>{{ studentAttendance.pesel }}</td>
         <td>{{ studentAttendance.email }}</td>
         <td>{{ studentAttendance.birthday }}</td>
-        <td class="text-center"><label><input [checked]="studentAttendance.present" (change)="changePresentValue(studentAttendance)"
-                          type="checkbox"></label></td>
+        <td class="text-center">
+          <label>
+            <input *ngIf="enableToCheckAttendance()" class="checkbox" [checked]="studentAttendance.present" (change)="changePresentValue(studentAttendance)" type="checkbox">
+            <input *ngIf="!enableToCheckAttendance()" class="checkbox" [checked]="studentAttendance.present" (change)="changePresentValue(studentAttendance)" disabled readonly type="checkbox">
+          </label>
+
+        </td>
       </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="pb-5">
+  <div *ngIf="enableToCheckAttendance()" class="pb-5">
     <a type="button" (click)="save()">Zapisz</a>
   </div>
 
