@@ -54,9 +54,6 @@ export class RoomService {
   }
 
   public updateRoom(room: Room, id: number, imageId: string) {
-    console.log(room);
-    console.log(id);
-    console.log(imageId);
     return this.http.put<Room>(this.roomUrl + '/' + id + '?imageId=' + imageId, room).pipe(
       catchError(this.handleError)
     );

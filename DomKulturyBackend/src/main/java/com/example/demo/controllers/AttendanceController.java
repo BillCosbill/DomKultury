@@ -36,24 +36,4 @@ public class AttendanceController {
     public AttendanceDTO getAttendance(@PathVariable Long id) {
         return attendanceMapper.toAttendanceDTO(attendanceService.findById(id));
     }
-
-    @PostMapping
-    public AttendanceDTO addAttendance(@RequestBody AttendanceDTO attendanceDTO) {
-        Attendance attendance = attendanceMapper.toAttendanceAdd(attendanceDTO);
-        attendanceService.addAttendance(attendance);
-        return getAttendance(attendance.getId());
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<MessageResponse> deleteAttendance(@PathVariable Long id) {
-        attendanceService.deleteAttendance(id);
-
-        return ResponseEntity.ok(new MessageResponse("Attendance deleted successfully!"));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<AttendanceDTO> updateAttendance(@RequestBody AttendanceDTO attendanceDTO, @PathVariable Long id) {
-        attendanceService.updateAttendance(attendanceDTO, id);
-        return ResponseEntity.status(HttpStatus.OK).body(attendanceDTO);
-    }
 }

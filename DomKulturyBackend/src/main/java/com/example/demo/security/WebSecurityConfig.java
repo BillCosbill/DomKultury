@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-            authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
@@ -55,14 +55,40 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/test/**").permitAll()
-                .antMatchers("/all", "/generateToken", "/events", "/events/*", "/subjects", "/subjects/*", "/users", "/users/*", "/lessons", "/lessons/*", "/rooms", "/rooms/*", "/rooms/*/lessons").permitAll() //TODO usunąć - metody testowe
-//                .antMatchers("/users").hasAnyRole("ADMIN","TEACHER")
-//                .antMatchers(HttpMethod.GET, "users/*").hasRole("USER") //TODO nie wiem czy potrzebne, dla użytkowników którzy chcą pobrać informacje o swoim koncie
-                .anyRequest().authenticated();
+            .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+            .authorizeRequests()
+            .antMatchers("/api/auth/signin").permitAll()
+            .antMatchers("/api/auth/signup").hasRole("ADMIN")
+
+            .antMatchers("/attendances", "/attendances/*").hasAnyRole("ADMIN","TEACHER")
+
+            .antMatchers(HttpMethod.GET,"/lessons", "/lessons/*").permitAll()
+            .antMatchers("/lessons", "/lessons/*").hasAnyRole("ADMIN","TEACHER")
+
+            .antMatchers("/downloadFile/*").permitAll()
+            .antMatchers("/uploadFile").hasRole("ADMIN")
+
+            .antMatchers(HttpMethod.GET,"/rooms", "/rooms/**").permitAll()
+            .antMatchers("/rooms", "/rooms/**").hasRole("ADMIN")
+
+            .antMatchers(HttpMethod.DELETE,"/students", "/students/**").hasRole("ADMIN")
+            .antMatchers(HttpMethod.PUT,"/students", "/students/**").hasRole("ADMIN")
+            .antMatchers("/students", "/students/**").hasAnyRole("ADMIN","TEACHER")
+
+            .antMatchers(HttpMethod.GET,"/subjects", "/subjects/**").permitAll()
+            .antMatchers(HttpMethod.POST,"/subjects").hasRole("ADMIN")
+            .antMatchers(HttpMethod.DELETE,"/subjects/*").hasRole("ADMIN")
+            .antMatchers("/subjects", "/subjects/**").hasAnyRole("ADMIN","TEACHER")
+
+            .antMatchers(HttpMethod.GET,"/users", "/users/*").permitAll()
+            .antMatchers(HttpMethod.DELETE,"/users/*").hasRole("ADMIN")
+            .antMatchers(HttpMethod.PATCH,"/users/changeRole/*").hasRole("ADMIN")
+            .antMatchers("/users/generateNewPassword/*").permitAll()
+            .antMatchers("/users", "/users/**").hasAnyRole("ADMIN","TEACHER")
+
+            .antMatchers("/generateToken").permitAll() //TODO usunąć - metody testowe
+            .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }

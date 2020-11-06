@@ -88,7 +88,6 @@ public class AuthServiceImpl implements AuthService {
             throw new PeselInUseException(signUpRequest.getPesel());
         }
 
-        // TODO generate password
         signUpRequest.setPassword(passwordGenerator.generatePassword(10));
 
         // Create new user's account

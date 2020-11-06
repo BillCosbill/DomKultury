@@ -11,9 +11,9 @@
   </div>
 
   <div class="pt-3 pb-5">
-    <a *ngIf="authService.isTeacherLoggedIn()" type="button" data-toggle="modal" data-target="#editRoom" (click)="startEditing()">Edytuj</a>
-    <a *ngIf="authService.isTeacherLoggedIn()" type="button" data-toggle="modal" data-target="#deleteRoom">Usuń</a>
-    <a *ngIf="authService.isTeacherLoggedIn() && gotImage()" type="button" data-toggle="modal" data-target="#deleteImage">Usuń zdjęcie</a>
+    <a *ngIf="authService.isAdminLoggedIn()" type="button" data-toggle="modal" data-target="#editRoom" (click)="startEditing()">Edytuj</a>
+    <a *ngIf="authService.isAdminLoggedIn()" type="button" data-toggle="modal" data-target="#deleteRoom">Usuń</a>
+    <a *ngIf="authService.isAdminLoggedIn() && gotImage()" type="button" data-toggle="modal" data-target="#deleteImage">Usuń zdjęcie</a>
   </div>
 
   <div class="line container"></div>
@@ -99,32 +99,20 @@
         <form (ngSubmit)="editRoom()" #roomForm="ngForm">
           <div class="form-group">
             <label for="number">Numer:</label>
-            <input type="text" [(ngModel)]="roomEdited.number"
-                   class="form-control"
-                   id="number"
-                   name="number"
-                   placeholder="Podaj numer sali . . ."
-                   required #number="ngModel">
+            <input type="text" [(ngModel)]="roomEdited.number" class="form-control" id="number" name="number"
+                   placeholder="Podaj numer sali . . ." required #number="ngModel">
           </div>
 
           <div class="form-group">
             <label for="destiny">Przeznaczenie:</label>
-            <input type="text" [(ngModel)]="roomEdited.destiny"
-                   class="form-control"
-                   id="destiny"
-                   name="destiny"
-                   placeholder="Podaj przeznaczenie sali . . ."
-                   required #destiny="ngModel">
+            <input type="text" [(ngModel)]="roomEdited.destiny" class="form-control" id="destiny" name="destiny"
+                   placeholder="Podaj przeznaczenie sali . . ." required #destiny="ngModel">
           </div>
 
           <div class="form-group">
             <label for="description">Opis:</label>
-            <input type="text" [(ngModel)]="roomEdited.description"
-                   class="form-control"
-                   id="description"
-                   name="description"
-                   placeholder="Podaj opis sali . . ."
-                   required #description="ngModel">
+            <input type="text" [(ngModel)]="roomEdited.description" class="form-control" id="description" name="description"
+                   placeholder="Podaj opis sali . . ." required #description="ngModel">
           </div>
 
           <div class="form-group">

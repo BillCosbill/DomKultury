@@ -17,8 +17,6 @@ export class ProfileComponent implements OnInit {
   userEdited: User = new User();
 
   form: any = {};
-  // password: string = null;
-  // newPassword: string = null;
 
   constructor(private token: TokenStorageService, private userService: UserService, private tokenStorage: TokenStorageService) {
   }

@@ -1,13 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
-import {RegisterComponent} from './register/register.component';
 import {HomeComponent} from './home/home.component';
 import {RoomsComponent} from './rooms/rooms.component';
 import {ContactComponent} from './contact/contact.component';
 import {AdministratorPanelComponent} from './administrator-panel/administrator-panel.component';
 import {AdminguardService} from './_guards/adminguard.service';
-import {AddRoomComponent} from './add-room/add-room.component';
 import {RoomDetailsComponent} from './room-details/room-details.component';
 import {SubjectsComponent} from './subjects/subjects.component';
 import {SubjectDetailsComponent} from './subject-details/subject-details.component';
@@ -42,8 +40,6 @@ const routes: Routes = [
   {path: 'rooms', component: RoomsComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent},
-  {path: 'addRoom', component: AddRoomComponent},
   {path: 'admin_panel', component: AdministratorPanelComponent, canActivate: [AdminguardService]},
   {path: 'admin_panel_add_teacher', component: AdministratorPanelAddTeacherComponent, canActivate: [AdminguardService]},
   {path: 'profile', component: ProfileComponent, canActivate: [TeacherguardService]},

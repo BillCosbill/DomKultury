@@ -1,6 +1,7 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.dto.UserDTO;
+import com.example.demo.email.EmailService;
 import com.example.demo.exceptions.*;
 import com.example.demo.mappers.UserMapper;
 import com.example.demo.models.ERole;
@@ -9,6 +10,7 @@ import com.example.demo.models.Subject;
 import com.example.demo.models.User;
 import com.example.demo.payload.request.PasswordChangeRequest;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.services.PasswordGenerator;
 import com.example.demo.services.interfaces.RoleService;
 import com.example.demo.services.interfaces.SubjectService;
 import com.example.demo.services.interfaces.UserService;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -32,15 +35,19 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder encoder;
     private final AuthenticationManager authenticationManager;
     private final SubjectService subjectService;
+    private final PasswordGenerator passwordGenerator;
+    private final EmailService emailService;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, RoleService roleService, PasswordEncoder encoder, AuthenticationManager authenticationManager, SubjectService subjectService) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, RoleService roleService, PasswordEncoder encoder, AuthenticationManager authenticationManager, SubjectService subjectService, PasswordGenerator passwordGenerator, EmailService emailService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.roleService = roleService;
         this.encoder = encoder;
         this.authenticationManager = authenticationManager;
         this.subjectService = subjectService;
+        this.passwordGenerator = passwordGenerator;
+        this.emailService = emailService;
     }
 
     @Override
@@ -118,14 +125,33 @@ public class UserServiceImpl implements UserService {
 
         Authentication authentication = null;
 
-        authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getUsername(), passwordChangeRequest.getPassword()));
-
-        if (authentication == null) {
+        try {
+            authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(user.getUsername(), passwordChangeRequest.getPassword()));
+        } catch (Exception e) {
             throw new WrongPasswordException();
         }
+
+
         user.setPassword(encoder.encode(passwordChangeRequest.getNewPassword()));
         save(user);
+    }
+
+    @Override
+    public void generateNewPassword(String email) {
+        Optional<User> userOpt = userRepository.findByEmail(email);
+
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+
+            String newPassword = passwordGenerator.generatePassword(10);
+            user.setPassword(encoder.encode(newPassword));
+
+            emailService.sendMail(user.getEmail(), "Twoje nowe dane do logowania w narzędziu naszego Domu Kultury",
+                    "<b>Login: </b> " + user.getUsername() + " <br><b>Hasło: </b> " + newPassword);
+
+            userRepository.save(user);
+        }
     }
 
 

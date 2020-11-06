@@ -19,23 +19,6 @@ public class TestController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @GetMapping("/all")
-    public String allAccess() {
-        return "Public Content.";
-    }
-
-    @GetMapping("/user")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public String userAccess() {
-        return "User Content.";
-    }
-
-    @GetMapping("/admin")
-    @PreAuthorize("hasRole('ADMIN')")
-    public String adminAccess() {
-        return "Admin Board.";
-    }
-
     @GetMapping("/generateToken")
     public String generateToken(@RequestParam String name, String pass) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(name, pass));

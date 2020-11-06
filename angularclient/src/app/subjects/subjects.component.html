@@ -66,23 +66,14 @@
         <form (ngSubmit)="addSubject()" #subjectForm="ngForm">
           <div class="form-group">
             <label for="name">Nazwa:</label>
-            <input type="text" [(ngModel)]="subjectToAdd.name"
-                   class="form-control"
-                   id="name"
-                   name="name"
-                   placeholder="Podaj nazwę przedmiotu . . ."
-                   required #name="ngModel">
+            <input type="text" [(ngModel)]="subjectToAdd.name" class="form-control" id="name" name="name"
+                   placeholder="Podaj nazwę przedmiotu . . ." required #name="ngModel">
           </div>
 
           <div class="form-group">
             <label for="description">Opis:</label>
-            <textarea [(ngModel)]="subjectToAdd.description"
-                      class="form-control"
-                      name="description"
-                      id="description"
-                      placeholder="Podaj opis . . ."
-                      required #description="ngModel"
-                      cols="30" rows="auto"></textarea>
+            <textarea [(ngModel)]="subjectToAdd.description" class="form-control" name="description" id="description"
+                      placeholder="Podaj opis . . ." required #description="ngModel" cols="30" rows="auto"></textarea>
           </div>
 
           <div class="form-group">

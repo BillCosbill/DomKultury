@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,9 +83,12 @@ public class LessonServiceImpl implements LessonService {
         Lesson lesson = lessonMapper.toLessonAdd(lessonDTO);
 
         Optional<Lesson> lessonOpt = findAll().stream().filter(anyLesson ->
-                (lesson.getStartDate().isAfter(anyLesson.getStartDate()) && lesson.getStartDate().isBefore(anyLesson.getFinishDate())) ||
-                        (lesson.getFinishDate().isAfter(anyLesson.getStartDate()) && lesson.getFinishDate().isBefore(anyLesson.getFinishDate())))
-                .findAny();
+                (lesson.getStartDate().isAfter(anyLesson.getStartDate()) && lesson.getStartDate().isBefore(anyLesson
+                        .getFinishDate())) ||
+                        (lesson.getFinishDate().isAfter(anyLesson.getStartDate()) && lesson.getFinishDate()
+                                                                                           .isBefore(anyLesson
+                                                                                                   .getFinishDate())))
+                                              .findAny();
 
         if (lessonOpt.isPresent()) {
             throw new RoomOccupiedAtTheTimeException(lesson.getRoom().getNumber());
@@ -94,7 +96,8 @@ public class LessonServiceImpl implements LessonService {
 
         save(lesson);
 
-        Subject subject = subjectRepository.findById(lessonDTO.getSubjectId()).orElseThrow(() -> new SubjectNotFoundException(lessonDTO.getSubjectId()));
+        Subject subject = subjectRepository.findById(lessonDTO.getSubjectId())
+                                           .orElseThrow(() -> new SubjectNotFoundException(lessonDTO.getSubjectId()));
 
         List<Student> students = subject.getStudents();
 
@@ -105,6 +108,7 @@ public class LessonServiceImpl implements LessonService {
         return lessonDTO;
     }
 
+    //TODO dobrze przetestować tę metodę!!!
     @Override
     public void checkAttendance(List<AttendanceDTO> attendanceDTOS, Long lessonId) {
         attendanceDTOS.forEach(x -> {
@@ -113,10 +117,14 @@ public class LessonServiceImpl implements LessonService {
 
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new LessonNotFoundException(lessonId));
 
-        if (!LocalDate.now().equals(lesson.getStartDate().toLocalDate())) {
-            // TODO wyjątek o niezgodności dat
+        if (!LocalDate.now().equals(lesson.getStartDate().toLocalDate()) ||
+                LocalDateTime.now().toLocalTime().isBefore(lesson.getStartDate().toLocalTime()) ||
+                LocalDateTime.now().toLocalTime().isAfter(lesson.getFinishDate().toLocalTime())) {
+
+            // TODO wyjątek o niezgodności dat i godzin zajęć
             throw new AttendanceNotFoundException(999L);
         }
+
 
         lesson.setAttendanceChecked(true);
         save(lesson);

@@ -102,13 +102,19 @@ export class LessonDetailsAttendanceComponent implements OnInit {
 
   enableToCheckAttendance() {
     const todayDate = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+    const currentTime = (new Date()).toLocaleString('en-US', {hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false});
+
     let lessonDate = null;
+    let lessonStartTime = null;
+    let lessonEndTime = null;
 
     if (this.lesson.startDate !== undefined) {
       lessonDate = this.lesson.startDate.substr(0, 10);
+      lessonStartTime = this.lesson.startDate.substr(11, 8);
+      lessonEndTime = this.lesson.finishDate.substr(11, 8);
     }
 
-    return todayDate === lessonDate;
+    return todayDate === lessonDate && currentTime >= lessonStartTime && currentTime <= lessonEndTime;
   }
 }
 

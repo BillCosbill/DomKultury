@@ -91,23 +91,14 @@
         <form (ngSubmit)="onSubmit()" #subjectForm="ngForm">
           <div class="form-group">
             <label for="name">Nazwa:</label>
-            <input type="text" [(ngModel)]="subjectEdited.name"
-                   class="form-control"
-                   id="name"
-                   name="name"
-                   placeholder="Podaj nazwę przedmiotu . . ."
-                   required #name="ngModel">
+            <input type="text" [(ngModel)]="subjectEdited.name" class="form-control" id="name" name="name"
+                   placeholder="Podaj nazwę przedmiotu . . ." required #name="ngModel">
           </div>
 
           <div class="form-group">
             <label for="description">Opis:</label>
-            <textarea [(ngModel)]="subjectEdited.description"
-                      class="form-control"
-                      name="description"
-                      id="description"
-                      placeholder="Podaj opis  . . ."
-                      required #description="ngModel"
-                      cols="30" rows="auto"></textarea>
+            <textarea [(ngModel)]="subjectEdited.description" class="form-control" name="description" id="description"
+                      placeholder="Podaj opis  . . ." required #description="ngModel" cols="30" rows="auto"></textarea>
           </div>
 
           <div class="modal-footer">
@@ -173,23 +164,14 @@
         <form (ngSubmit)="addLesson()" #lessonForm="ngForm">
           <div class="form-group">
             <label for="topic">Temat:</label>
-            <input type="text" [(ngModel)]="newLesson.topic"
-                   class="form-control"
-                   id="topic"
-                   name="topic"
-                   placeholder="Podaj temat lekcji . . ."
-                   required #topic="ngModel">
+            <input type="text" [(ngModel)]="newLesson.topic" class="form-control" id="topic" name="topic"
+                   placeholder="Podaj temat lekcji . . ." required #topic="ngModel">
           </div>
 
           <div class="form-group">
             <label for="description">Opis:</label>
-            <textarea [(ngModel)]="newLesson.description"
-                      class="form-control"
-                      name="description"
-                      id="description"
-                      placeholder="Podaj opis  . . ."
-                      required #description="ngModel"
-                      cols="30" rows="auto"></textarea>
+            <textarea [(ngModel)]="newLesson.description" class="form-control" name="description" id="description"
+                      placeholder="Podaj opis  . . ." required #description="ngModel" cols="30" rows="auto"></textarea>
           </div>
 
 

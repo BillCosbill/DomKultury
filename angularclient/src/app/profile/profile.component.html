@@ -50,29 +50,14 @@
         <form (ngSubmit)="changePassword()" #passwordForm="ngForm">
           <div class="form-group">
             <label for="password">Aktualne hasło:</label>
-            <input type="password" [(ngModel)]="form.password"
-                   class="form-control"
-                   id="password"
-                   name="password"
-                   placeholder="Podaj aktualne hasło . . ."
-                   required #password="ngModel">
+            <input type="password" [(ngModel)]="form.password" class="form-control" id="password" name="password"
+                   placeholder="Podaj aktualne hasło . . ." required #password="ngModel">
           </div>
 
           <div class="form-group">
             <label for="newPassword">Nowe hasło:</label>
-            <input type="password" [(ngModel)]="form.newPassword"
-                   class="form-control"
-                   id="newPassword"
-                   name="newPassword"
-                   placeholder="Podaj nowe hasło . . ."
-                   required minlength="6" #newPassword="ngModel">
-
-            <div *ngIf="!passwordForm.form.valid">
-              <div class="alert alert-danger container" role="alert" *ngIf="newPassword.errors.minlength">
-                Hasło musi mieć przynajmniej 6 znaków
-              </div>
-
-            </div>
+            <input type="password" [(ngModel)]="form.newPassword" class="form-control" id="newPassword" name="newPassword"
+                   placeholder="Podaj nowe hasło . . ." required #newPassword="ngModel">
           </div>
 
           <div class="modal-footer">
@@ -100,55 +85,29 @@
 
       <div class="modal-body">
         <form (ngSubmit)="editProfile()" #editForm="ngForm">
-          <!--          <div class="form-group">-->
-          <!--            <label for="username">Nazwa użytkownika:</label>-->
-          <!--            <input type="text" [(ngModel)]="userEdited.username"-->
-          <!--                   class="form-control"-->
-          <!--                   id="username"-->
-          <!--                   name="username"-->
-          <!--                   placeholder="Podaj nazwę użytkownika . . ."-->
-          <!--                   required #username="ngModel">-->
-          <!--          </div>-->
 
           <div class="form-group">
             <label for="firstName">Imię:</label>
-            <input type="text" [(ngModel)]="userEdited.firstName"
-                   class="form-control"
-                   id="firstName"
-                   name="firstName"
-                   placeholder="Podaj imię . . ."
-                   required #firstName="ngModel">
+            <input type="text" [(ngModel)]="userEdited.firstName" class="form-control" id="firstName" name="firstName"
+                   placeholder="Podaj imię . . ." required #firstName="ngModel">
           </div>
 
           <div class="form-group">
             <label for="lastName">Nazwisko:</label>
-            <input type="text" [(ngModel)]="userEdited.lastName"
-                   class="form-control"
-                   id="lastName"
-                   name="lastName"
-                   placeholder="Podaj nazwisko . . ."
-                   required #lastName="ngModel">
+            <input type="text" [(ngModel)]="userEdited.lastName" class="form-control" id="lastName" name="lastName"
+                   placeholder="Podaj nazwisko . . ." required #lastName="ngModel">
           </div>
 
           <div class="form-group">
             <label for="pesel">PESEL:</label>
-            <input type="text" [(ngModel)]="userEdited.pesel"
-                   class="form-control"
-                   id="pesel"
-                   name="pesel"
-                   placeholder="Podaj PESEL . . ."
-                   minlength="11" maxlength="11"
-                   required #pesel="ngModel">
+            <input type="text" [(ngModel)]="userEdited.pesel" class="form-control" id="pesel" name="pesel"
+                   placeholder="Podaj PESEL . . ." minlength="11" maxlength="11" required #pesel="ngModel">
           </div>
 
           <div class="form-group">
             <label for="email">Email:</label>
-            <input type="text" [(ngModel)]="userEdited.email"
-                   class="form-control"
-                   id="email"
-                   name="email"
-                   placeholder="Podaj Email . . ."
-                   email required #email="ngModel">
+            <input type="text" [(ngModel)]="userEdited.email" class="form-control" id="email" name="email"
+                   placeholder="Podaj Email . . ." email required #email="ngModel">
           </div>
 
           <div class="modal-footer">

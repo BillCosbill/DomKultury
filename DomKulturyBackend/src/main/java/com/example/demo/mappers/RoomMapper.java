@@ -60,7 +60,7 @@ public class RoomMapper {
             room.setId(roomDTO.getId());
         }
         if (roomDTO.getNumber() != null) {
-            room.setNumber(room.getNumber());
+            room.setNumber(roomDTO.getNumber());
         }
         if (roomDTO.getDestiny() != null) {
             room.setDestiny(roomDTO.getDestiny());

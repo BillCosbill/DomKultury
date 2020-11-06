@@ -28,20 +28,6 @@ export class AttendanceService {
     );
   }
 
-  public deleteAttendance(id: number) {
-    return this.http.delete<Attendance>(this.attendanceUrl + '/' + id).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  public updateAttendance(id: number, attendance: Attendance) {
-    return this.http.put<Attendance>(this.attendanceUrl + '/' + id, attendance).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  //TODO zrobić jakieś popapy z errorami i z udanymi akcjami np addUserToEvent
-  //TODO dodać obsługę błędów w innych serwisach !!!!!!!!!!!!!!!!
   handleError(error: HttpErrorResponse) {
     return throwError(error);
   }

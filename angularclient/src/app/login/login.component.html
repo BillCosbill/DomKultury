@@ -19,13 +19,10 @@
         <label for="password"></label>
 
         <input type="password" class="form-control" name="password" placeholder="Hasło"
-               [(ngModel)]="form.password" required minlength="6" #password="ngModel"/>
+               [(ngModel)]="form.password" required #password="ngModel"/>
 
         <div class="alert alert-danger container" role="alert" *ngIf="f.submitted && password.invalid">
           <div *ngIf="password.errors.required">Hasło jest wymagane</div>
-          <div *ngIf="password.errors.minlength">
-            Hasło musi mieć przynajmniej 6 znaków
-          </div>
         </div>
       </div>
 
@@ -33,6 +30,10 @@
       <div class="form-group">
         <input type="submit" name="" value="Zaloguj">
       </div>
+      <div class="forget-password">
+        <p data-toggle="modal" data-target="#forgetPassword">Nie pamiętam hasła</p>
+      </div>
+
 
       <div class="form-group">
         <div class="alert alert-danger container" role="alert" *ngIf="f.submitted && isLoginFailed">
@@ -43,6 +44,59 @@
 
     <div class="alert alert-success container" *ngIf="isLoggedIn">
       Zalogowany jako {{ roles }}.
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal password forget -->
+<div class="modal fade bd-example-modal-lg" id="forgetPassword" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nie pamiętam hasła</h5>
+      </div>
+
+      <div class="modal-body">
+        <form (ngSubmit)="sendNewPassword()" #passwordForm="ngForm">
+          <div class="form-group">
+            <label for="email">Adres email:</label>
+            <input type="email" [(ngModel)]="emailToSendNewPassword" class="form-control" id="email" name="email"
+                   placeholder="Podaj adres email . . ." required email #email="ngModel">
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            <button type="submit" [disabled]="!passwordForm.form.valid" class="btn btn-info" data-dismiss="modal"
+                    (click)="sendNewPassword()">Wyślij nowe hasło
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal error -->
+<div class="modal fade bd-example-modal-lg" id="error" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Uwaga</h5>
+      </div>
+
+      <div class="modal-body">
+        {{errorMessage}}
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal">Ok</button>
+      </div>
     </div>
   </div>
 </div>

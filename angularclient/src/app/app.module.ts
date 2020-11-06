@@ -6,7 +6,6 @@ import {AppComponent} from './app.component';
 import {LoginComponent} from './login/login.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {RegisterComponent} from './register/register.component';
 import {HomeComponent} from './home/home.component';
 import {RoomsComponent} from './rooms/rooms.component';
 import {ContactComponent} from './contact/contact.component';
@@ -22,7 +21,6 @@ import {
   WeekService,
   WorkWeekService
 } from '@syncfusion/ej2-angular-schedule';
-import {AddRoomComponent} from './add-room/add-room.component';
 import {RoomDetailsComponent} from './room-details/room-details.component';
 import {SubjectsComponent} from './subjects/subjects.component';
 import {SubjectDetailsComponent} from './subject-details/subject-details.component';
@@ -42,12 +40,10 @@ import { ProfileComponent } from './profile/profile.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent,
     HomeComponent,
     RoomsComponent,
     ContactComponent,
     AdministratorPanelComponent,
-    AddRoomComponent,
     RoomDetailsComponent,
     SubjectsComponent,
     SubjectDetailsComponent,

@@ -61,12 +61,6 @@ public class UserController {
         return ResponseEntity.ok(userMapper.toUserDTO(userService.findById(id)));
     }
 
-    //TODO usunąć - metoda testowa
-    @GetMapping("/roles")
-    public ResponseEntity<List<Role>> getRoles() {
-        return ResponseEntity.ok(roleService.findAll());
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
@@ -92,5 +86,12 @@ public class UserController {
         userService.changePassword(passwordChangeRequest, id);
 
         return ResponseEntity.ok(new MessageResponse("User password has been changed"));
+    }
+
+    @PatchMapping("/generateNewPassword/{email}")
+    public ResponseEntity<MessageResponse> generateNewPassword(@PathVariable String email) {
+        userService.generateNewPassword(email);
+
+        return ResponseEntity.ok(new MessageResponse("New password was generated and sent at email."));
     }
 }

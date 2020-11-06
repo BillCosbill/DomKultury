@@ -63,23 +63,14 @@
         <form (ngSubmit)="onSubmit()" #lessonForm="ngForm">
           <div class="form-group">
             <label for="topic">Temat:</label>
-            <input type="text" [(ngModel)]="editedLesson.topic"
-                   class="form-control"
-                   id="topic"
-                   name="topic"
-                   placeholder="Podaj temat lekcji . . ."
-                   required #topic="ngModel">
+            <input type="text" [(ngModel)]="editedLesson.topic" class="form-control" id="topic" name="topic"
+                   placeholder="Podaj temat lekcji . . ." required #topic="ngModel">
           </div>
 
           <div class="form-group">
             <label for="description">Opis:</label>
-            <textarea [(ngModel)]="editedLesson.description"
-                      class="form-control"
-                      name="description"
-                      id="description"
-                      placeholder="Podaj opis  . . ."
-                      required #description="ngModel"
-                      cols="30" rows="auto"></textarea>
+            <textarea [(ngModel)]="editedLesson.description" class="form-control" name="description" id="description"
+                      placeholder="Podaj opis  . . ." required #description="ngModel" cols="30" rows="auto"></textarea>
           </div>
 
           <div class="modal-footer">

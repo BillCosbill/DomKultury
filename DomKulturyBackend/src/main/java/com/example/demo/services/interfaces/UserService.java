@@ -24,4 +24,6 @@ public interface UserService {
     void changeRole(ERole newRole, Long id);
 
     void changePassword(PasswordChangeRequest passwordChangeRequest, Long id);
+
+    void generateNewPassword(String email);
 }

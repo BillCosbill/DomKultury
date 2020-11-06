@@ -69,6 +69,13 @@ export class UserService {
     );
   }
 
+  public generateNewPassword(email: string) {
+    return this.http.patch(this.usersUrl + '/generateNewPassword/' + email, null, httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+
   //TODO zrobić jakieś popapy z errorami i z udanymi akcjami np addUserToEvent
   //TODO dodać obsługę błędów w innych serwisach !!!!!!!!!!!!!!!!
   handleError(error: HttpErrorResponse) {
