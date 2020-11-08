@@ -34,6 +34,7 @@
   <div *ngIf="this.authService.isTeacherLoggedIn()" class="pt-5 row">
     <a class="col" type="button" data-toggle="modal" data-target="#addStudent" (click)="startAddingStudent()">Dodaj ucznia do bazy</a>
     <a class="col" type="button" data-toggle="modal" data-target="#addStudentFromDatabase" (click)="startAddingStudent()">Dodaj ucznia z bazy</a>
+    <a class="col" type="button" data-toggle="modal" data-target="#sendEmail" (click)="openEmailModal()">Wyślij wiadomość grupową</a>
   </div>
 </div>
 
@@ -162,6 +163,49 @@
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
             <button type="submit" [disabled]="!studentFromDatabaseForm.form.valid" class="btn btn-info" data-dismiss="modal"
                     (click)="addStudentToSubject()">Dodaj ucznia
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal email -->
+<div class="modal fade bd-example-modal-lg" id="sendEmail" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Wysyłanie wiadomości mailowej</h5>
+      </div>
+
+      <div class="modal-body">
+        <form (ngSubmit)="sendMultipleEmails()" #emailForm="ngForm">
+          <div class="form-group">
+            <label for="to">Odbiorca:</label>
+            <input type="text" class="form-control" id="to" name="to"
+                   placeholder="Uczniowie zapisani na przedmiot" readonly>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Temat:</label>
+            <input type="text" [(ngModel)]="emailMessage.subject" class="form-control" id="subject" name="subject"
+                   placeholder="Podaj temat . . ." required #subject="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label for="text">Treść:</label>
+            <textarea [(ngModel)]="emailMessage.text" class="form-control" name="text" id="text"
+                      placeholder="Podaj treść  . . ." required #text="ngModel" cols="30" rows="auto"></textarea>
+          </div>
+
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            <button type="submit" [disabled]="!emailForm.form.valid" class="btn btn-info" data-dismiss="modal"
+                    (click)="sendMultipleEmails()">Wyślij
             </button>
           </div>
         </form>

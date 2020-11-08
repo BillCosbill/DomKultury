@@ -27,8 +27,9 @@
     <p>{{student.birthday}}</p>
   </div>
 
-  <div *ngIf="this.authService.isAdminLoggedIn()" class="pt-3 pb-5">
-    <a type="button" data-toggle="modal" data-target="#editStudent" (click)="startEditing()">Edytuj</a>
+  <div class="pt-3 pb-5">
+    <a *ngIf="this.authService.isAdminLoggedIn()" type="button" data-toggle="modal" data-target="#editStudent" (click)="startEditing()">Edytuj</a>
+    <a *ngIf="this.authService.isTeacherLoggedIn()" type="button" data-toggle="modal" data-target="#sendEmail" (click)="openEmailModal()">Wyślij wiadomość</a>
   </div>
 
   <div class="line container"></div>
@@ -57,7 +58,7 @@
 </div>
 
 
-<!-- Modal Subject -->
+<!-- Modal Student -->
 <div class="modal fade bd-example-modal-lg" id="editStudent" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -111,6 +112,51 @@
     </div>
   </div>
 </div>
+
+
+<!-- Modal email -->
+<div class="modal fade bd-example-modal-lg" id="sendEmail" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Wysyłanie wiadomości mailowej</h5>
+      </div>
+
+      <div class="modal-body">
+        <form (ngSubmit)="sendEmail()" #emailForm="ngForm">
+          <div class="form-group">
+            <label for="to">Odbiorca:</label>
+            <input type="text" [(ngModel)]="student.email" class="form-control" id="to" name="to"
+                   readonly #to="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Temat:</label>
+            <input type="text" [(ngModel)]="emailMessage.subject" class="form-control" id="subject" name="subject"
+                   placeholder="Podaj temat . . ." required #subject="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label for="text">Treść:</label>
+            <textarea [(ngModel)]="emailMessage.text" class="form-control" name="text" id="text"
+                      placeholder="Podaj treść  . . ." required #text="ngModel" cols="30" rows="auto"></textarea>
+          </div>
+
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            <button type="submit" [disabled]="!emailForm.form.valid" class="btn btn-info" data-dismiss="modal"
+                    (click)="sendEmail()">Wyślij
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- Modal error -->
 <div class="modal fade bd-example-modal-lg" id="error" tabindex="-1" role="dialog"

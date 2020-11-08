@@ -12,6 +12,7 @@ import com.example.demo.payload.request.LoginRequest;
 import com.example.demo.payload.request.SignupRequest;
 import com.example.demo.payload.response.JwtResponse;
 import com.example.demo.repository.RoleRepository;
+import com.example.demo.repository.StudentRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.jwt.JwtUtils;
 import com.example.demo.security.userDetails.UserDetailsImpl;
@@ -34,17 +35,18 @@ import java.util.stream.Collectors;
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    AuthenticationManager authenticationManager;
-    UserRepository userRepository;
-    RoleRepository roleRepository;
-    PasswordEncoder encoder;
-    JwtUtils jwtUtils;
+    private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder encoder;
+    private final  JwtUtils jwtUtils;
     private final EmailService emailService;
     private final PasswordGenerator passwordGenerator;
+    private final StudentRepository studentRepository;
 
     @Autowired
     public AuthServiceImpl(AuthenticationManager authenticationManager, UserRepository userRepository,
-                           RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils, EmailService emailService, PasswordGenerator passwordGenerator) {
+                           RoleRepository roleRepository, PasswordEncoder encoder, JwtUtils jwtUtils, EmailService emailService, PasswordGenerator passwordGenerator, StudentRepository studentRepository) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -52,6 +54,7 @@ public class AuthServiceImpl implements AuthService {
         this.jwtUtils = jwtUtils;
         this.emailService = emailService;
         this.passwordGenerator = passwordGenerator;
+        this.studentRepository = studentRepository;
     }
 
     @Override
@@ -88,6 +91,14 @@ public class AuthServiceImpl implements AuthService {
             throw new PeselInUseException(signUpRequest.getPesel());
         }
 
+        if (studentRepository.existsByEmail(signUpRequest.getEmail())) {
+            throw new EmailInUseException(signUpRequest.getEmail());
+        }
+
+        if (studentRepository.existsByPesel(signUpRequest.getPesel())) {
+            throw new PeselInUseException(signUpRequest.getPesel());
+        }
+
         signUpRequest.setPassword(passwordGenerator.generatePassword(10));
 
         // Create new user's account
@@ -115,74 +126,16 @@ public class AuthServiceImpl implements AuthService {
                         Role teacherRole = roleRepository.findByName(ERole.ROLE_TEACHER)
                                                          .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_TEACHER));
                         roles.add(teacherRole);
-
-
-//                    case "teacher":
-//                        Role teacherRole = roleRepository.findByName(ERole.ROLE_TEACHER)
-//                                .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_TEACHER));
-//                        roles.add(teacherRole);
-//
-//                        break;
-//                    default:
-//                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-//                                .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_USER));
-//                        roles.add(userRole);
                 }
             });
         }
 
         user.setRoles(roles);
 
-        emailService.sendMail(user.getEmail(), "Dane do logowanie w serwisie Domu Kultury",
+        // TODO fromid uzupełnić
+        emailService.registerMailMessage(user.getEmail(), "Dane do logowanie w serwisie Domu Kultury",
                 "<b>Login: </b> " + signUpRequest.getUsername() + " <br><b>Hasło: </b> " + signUpRequest.getPassword());
 
         userRepository.save(user);
     }
-
-//    @Override
-//    public void registerUser(SignupRequest signUpRequest) {
-//        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-//            throw new UsernameTakenException(signUpRequest.getUsername());
-//        }
-//
-//        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-//            throw new EmailInUseException(signUpRequest.getEmail());
-//        }
-//
-//        // Create new user's account
-//        User user = new User(signUpRequest.getUsername(), signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getPesel(), signUpRequest.getEmail(), encoder.encode(signUpRequest.getPassword()), false);
-//
-//        Set<String> strRoles = signUpRequest.getRole();
-//        Set<Role> roles = new HashSet<>();
-//
-//        if (strRoles == null) {
-//            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-//                    .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_USER));
-//            roles.add(userRole);
-//        } else {
-//            strRoles.forEach(role -> {
-//                switch (role) {
-//                    case "admin":
-//                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-//                                .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_ADMIN));
-//                        roles.add(adminRole);
-//
-//                        break;
-//                    case "teacher":
-//                        Role teacherRole = roleRepository.findByName(ERole.ROLE_TEACHER)
-//                                .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_TEACHER));
-//                        roles.add(teacherRole);
-//
-//                        break;
-//                    default:
-//                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-//                                .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_USER));
-//                        roles.add(userRole);
-//                }
-//            });
-//        }
-//
-//        user.setRoles(roles);
-//        userRepository.save(user);
-//    }
 }

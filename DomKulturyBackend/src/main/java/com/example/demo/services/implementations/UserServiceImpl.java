@@ -147,7 +147,8 @@ public class UserServiceImpl implements UserService {
             String newPassword = passwordGenerator.generatePassword(10);
             user.setPassword(encoder.encode(newPassword));
 
-            emailService.sendMail(user.getEmail(), "Twoje nowe dane do logowania w narzędziu naszego Domu Kultury",
+            // TODO fromid uzupełnić
+            emailService.sendMail(null, user.getEmail(), "Twoje nowe dane do logowania w narzędziu naszego Domu Kultury",
                     "<b>Login: </b> " + user.getUsername() + " <br><b>Hasło: </b> " + newPassword);
 
             userRepository.save(user);

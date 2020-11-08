@@ -6,6 +6,9 @@ import {Subject} from '../_model/subject';
 import {SubjectService} from '../_services/subject.service';
 import {AuthService} from '../_services/auth.service';
 import {ValidationService} from '../_services/validation/validation.service';
+import {EmailMessage} from '../_model/email-message';
+import {TokenStorageService} from '../_services/token-storage.service';
+import {EmailService} from '../_services/email.service';
 
 declare var openErrorModal;
 
@@ -26,7 +29,10 @@ export class SubjectDatailsStudentsComponent implements OnInit {
   studentIdToDelete: number = null;
   studentToAdd: Student = new Student();
 
-  constructor(private route: ActivatedRoute, private studentService: StudentService, private subjectService: SubjectService, private authService: AuthService, private validationService: ValidationService) { }
+  emailMessage: EmailMessage = new EmailMessage();
+
+  constructor(private token: TokenStorageService, private route: ActivatedRoute, private studentService: StudentService, private subjectService: SubjectService,
+              public authService: AuthService, public validationService: ValidationService, private emailService: EmailService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -76,6 +82,7 @@ export class SubjectDatailsStudentsComponent implements OnInit {
   addStudent() {
     this.subjectService.addStudentToSubject(this.studentToAdd, this.subjectId).subscribe(() => {
       this.refreshData();
+      this.validationService.refreshData();
     }, error => {
       this.createErrorModal(error.error.message);
     });
@@ -87,6 +94,20 @@ export class SubjectDatailsStudentsComponent implements OnInit {
     }, error => {
       this.createErrorModal(error.error.message);
     });
+  }
+
+  openEmailModal() {
+    this.emailMessage = new EmailMessage();
+  }
+
+  sendMultipleEmails() {
+    this.emailMessage.studentList = this.students;
+    this.emailMessage.fromId = this.token.getUser().id;
+
+    this.emailService.sendMultipleMails(this.emailMessage).subscribe(() => this.ngOnInit(),
+      error => {
+        this.createErrorModal(error.error.message);
+      });
   }
 
   createErrorModal(message: string) {

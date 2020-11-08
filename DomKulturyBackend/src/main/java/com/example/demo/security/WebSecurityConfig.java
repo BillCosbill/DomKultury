@@ -87,6 +87,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/users/generateNewPassword/*").permitAll()
             .antMatchers("/users", "/users/**").hasAnyRole("ADMIN","TEACHER")
 
+            .antMatchers("/email/**").hasAnyRole("ADMIN","TEACHER")
+
             .antMatchers("/generateToken").permitAll() //TODO usunąć - metody testowe
             .anyRequest().authenticated();
 

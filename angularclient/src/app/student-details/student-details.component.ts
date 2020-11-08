@@ -7,6 +7,9 @@ import {SubjectService} from '../_services/subject.service';
 import {User} from '../_model/user';
 import {UserService} from '../_services/user.service';
 import {AuthService} from '../_services/auth.service';
+import {EmailMessage} from '../_model/email-message';
+import {EmailService} from '../_services/email.service';
+import {TokenStorageService} from '../_services/token-storage.service';
 
 declare var openErrorModal;
 
@@ -25,8 +28,10 @@ export class StudentDetailsComponent implements OnInit {
   users: User[] = [];
 
   studentEdited: Student = new Student();
+  emailMessage: EmailMessage = new EmailMessage();
 
-  constructor(private authService: AuthService, private studentService: StudentService, private route: ActivatedRoute, private subjectService: SubjectService, private userService: UserService) {
+  constructor(public authService: AuthService, private studentService: StudentService, private route: ActivatedRoute,
+              private subjectService: SubjectService, private userService: UserService, private  emailService: EmailService, private token: TokenStorageService,) {
   }
 
   ngOnInit() {
@@ -57,7 +62,7 @@ export class StudentDetailsComponent implements OnInit {
     let user: User = new User();
 
     this.users.forEach(x => {
-      if (x.id === teacherId){
+      if (x.id === teacherId) {
         user = x;
       }
     });
@@ -83,10 +88,23 @@ export class StudentDetailsComponent implements OnInit {
     this.studentEdited.birthday = this.student.birthday;
   }
 
+  openEmailModal() {
+    this.emailMessage = new EmailMessage();
+  }
+
+  sendEmail() {
+    this.emailMessage.to = this.student.email;
+    this.emailMessage.fromId = this.token.getUser().id;
+
+    this.emailService.sendEmail(this.emailMessage).subscribe(() => this.ngOnInit(),
+      error => {
+        this.createErrorModal(error.error.message);
+      });
+  }
+
   createErrorModal(message: string) {
     this.errorMessage = message;
     openErrorModal();
   }
-
 
 }

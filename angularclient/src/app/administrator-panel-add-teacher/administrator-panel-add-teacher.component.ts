@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../_services/auth.service';
+import {ValidationService} from '../_services/validation/validation.service';
 
 declare var openErrorModal;
 
@@ -15,24 +16,26 @@ export class AdministratorPanelAddTeacherComponent implements OnInit {
   isSuccessful = false;
   isSignUpFailed = false;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private validationService: ValidationService) {
   }
 
   ngOnInit() {
   }
 
   onSubmit() {
-    this.authService.register(this.form).subscribe(
-      data => {
-        console.log(data);
-        this.isSuccessful = true;
-        this.isSignUpFailed = false;
-      },
-      err => {
-        this.isSignUpFailed = true;
-        this.createErrorModal(err.error.message);
-      }
-    );
+    if (!this.validationService.studentExistsWithGivenEmail(this.form.email) && !this.validationService.studentExistsWithGivenPesel(this.form.pesel)) {
+      this.authService.register(this.form).subscribe(
+        data => {
+          console.log(data);
+          this.isSuccessful = true;
+          this.isSignUpFailed = false;
+        },
+        err => {
+          this.isSignUpFailed = true;
+          this.createErrorModal(err.error.message);
+        }
+      );
+    }
   }
 
   createErrorModal(message: string) {

@@ -98,7 +98,7 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-            <button type="submit" [disabled]="!studentForm.form.valid || validationService.validateBirthdayIfCorrect(this.studentModel.birthday)
+            <button type="submit" [disabled]="!studentForm.form.valid || !validationService.validateBirthdayIfCorrect(this.studentModel.birthday)
              || validationService.studentExistsWithGivenEmail(studentModel.email) || validationService.studentExistsWithGivenPesel(studentModel.pesel)" class="btn btn-info" data-dismiss="modal"
                     (click)="addStudent()">Dodaj studenta
             </button>

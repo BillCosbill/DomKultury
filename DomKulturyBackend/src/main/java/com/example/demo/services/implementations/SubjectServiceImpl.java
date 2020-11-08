@@ -1,6 +1,5 @@
 package com.example.demo.services.implementations;
 
-import com.example.demo.dto.AttendanceDTO;
 import com.example.demo.dto.SubjectDTO;
 import com.example.demo.exceptions.StudentExistsException;
 import com.example.demo.exceptions.SubjectExistsException;
@@ -9,11 +8,9 @@ import com.example.demo.mappers.SubjectMapper;
 import com.example.demo.models.Attendance;
 import com.example.demo.models.Student;
 import com.example.demo.models.Subject;
+import com.example.demo.models.User;
 import com.example.demo.repository.SubjectRepository;
-import com.example.demo.services.interfaces.AttendanceService;
-import com.example.demo.services.interfaces.LessonService;
-import com.example.demo.services.interfaces.StudentService;
-import com.example.demo.services.interfaces.SubjectService;
+import com.example.demo.services.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

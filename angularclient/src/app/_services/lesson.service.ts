@@ -52,8 +52,6 @@ export class LessonService {
     );
   }
 
-  //TODO zrobić jakieś popapy z errorami i z udanymi akcjami np addUserToEvent
-  //TODO dodać obsługę błędów w innych serwisach !!!!!!!!!!!!!!!!
   handleError(error: HttpErrorResponse) {
     return throwError(error);
   }

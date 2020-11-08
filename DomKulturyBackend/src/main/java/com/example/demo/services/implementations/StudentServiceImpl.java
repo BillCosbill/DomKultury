@@ -1,6 +1,8 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.dto.StudentDTO;
+import com.example.demo.exceptions.EmailInUseException;
+import com.example.demo.exceptions.PeselInUseException;
 import com.example.demo.exceptions.StudentExistsException;
 import com.example.demo.exceptions.StudentNotFoundException;
 import com.example.demo.mappers.StudentMapper;
@@ -8,6 +10,7 @@ import com.example.demo.models.Student;
 import com.example.demo.repository.AttendanceRepository;
 import com.example.demo.repository.StudentRepository;
 import com.example.demo.repository.SubjectRepository;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.services.interfaces.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,17 +20,19 @@ import java.util.List;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    StudentRepository studentRepository;
-    StudentMapper studentMapper;
-    SubjectRepository subjectRepository;
-    AttendanceRepository attendanceRepository;
+    private final  StudentRepository studentRepository;
+    private final StudentMapper studentMapper;
+    private final  SubjectRepository subjectRepository;
+    private final AttendanceRepository attendanceRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository, StudentMapper studentMapper,  SubjectRepository subjectRepository, AttendanceRepository attendanceRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository, StudentMapper studentMapper, SubjectRepository subjectRepository, AttendanceRepository attendanceRepository, UserRepository userRepository) {
         this.studentRepository = studentRepository;
         this.studentMapper = studentMapper;
         this.subjectRepository = subjectRepository;
         this.attendanceRepository = attendanceRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -77,7 +82,19 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student addStudent(Student student) {
         if(studentRepository.existsByPesel(student.getPesel())) {
-            throw new StudentExistsException(student.getPesel());
+            throw new PeselInUseException(student.getPesel());
+        }
+
+        if(studentRepository.existsByEmail(student.getEmail())) {
+            throw new EmailInUseException(student.getEmail());
+        }
+
+        if(userRepository.existsByPesel(student.getPesel())) {
+            throw new PeselInUseException(student.getPesel());
+        }
+
+        if(userRepository.existsByEmail(student.getEmail())) {
+            throw new EmailInUseException(student.getEmail());
         }
 
         return save(student);

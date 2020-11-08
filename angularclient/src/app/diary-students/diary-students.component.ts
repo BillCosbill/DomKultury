@@ -19,7 +19,7 @@ export class DiaryStudentsComponent implements OnInit {
 
   studentModel: Student = new Student();
 
-  constructor(private studentService: StudentService, private authService: AuthService, private validationService: ValidationService) {
+  constructor(private studentService: StudentService, private authService: AuthService, public validationService: ValidationService) {
   }
 
   ngOnInit() {
@@ -31,7 +31,10 @@ export class DiaryStudentsComponent implements OnInit {
   }
 
   deleteStudent(id: number) {
-    this.studentService.deleteStudent(id).subscribe(() => this.ngOnInit(), error => {
+    this.studentService.deleteStudent(id).subscribe(() => {
+      this.ngOnInit();
+      this.validationService.refreshData();
+    }, error => {
       this.createErrorModal(error.error.message);
     });
   }
@@ -47,6 +50,7 @@ export class DiaryStudentsComponent implements OnInit {
   addStudent() {
     this.studentService.addStudent(this.studentModel).subscribe(() => {
       this.ngOnInit();
+      this.validationService.refreshData();
     }, error => {
       this.createErrorModal(error.error.message);
     });
