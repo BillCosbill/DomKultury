@@ -25,16 +25,18 @@ import {RoomDetailsComponent} from './room-details/room-details.component';
 import {SubjectsComponent} from './subjects/subjects.component';
 import {SubjectDetailsComponent} from './subject-details/subject-details.component';
 import {LessonDetailsComponent} from './lesson-details/lesson-details.component';
-import { SubjectDatailsStudentsComponent } from './subject-datails-students/subject-datails-students.component';
-import { LessonDetailsAttendanceComponent } from './lesson-details-attendance/lesson-details-attendance.component';
-import { DiaryComponent } from './diary/diary.component';
-import { DiaryStudentsComponent } from './diary-students/diary-students.component';
-import { DiaryUsersComponent } from './diary-users/diary-users.component';
-import { StudentDetailsComponent } from './student-details/student-details.component';
-import { UserDetailsComponent } from './user-details/user-details.component';
-import { DiaryTodayLessonsComponent } from './diary-today-lessons/diary-today-lessons.component';
-import { AdministratorPanelAddTeacherComponent } from './administrator-panel-add-teacher/administrator-panel-add-teacher.component';
-import { ProfileComponent } from './profile/profile.component';
+import {SubjectDatailsStudentsComponent} from './subject-datails-students/subject-datails-students.component';
+import {LessonDetailsAttendanceComponent} from './lesson-details-attendance/lesson-details-attendance.component';
+import {DiaryComponent} from './diary/diary.component';
+import {DiaryStudentsComponent} from './diary-students/diary-students.component';
+import {DiaryUsersComponent} from './diary-users/diary-users.component';
+import {StudentDetailsComponent} from './student-details/student-details.component';
+import {UserDetailsComponent} from './user-details/user-details.component';
+import {DiaryTodayLessonsComponent} from './diary-today-lessons/diary-today-lessons.component';
+import {AdministratorPanelAddTeacherComponent} from './administrator-panel-add-teacher/administrator-panel-add-teacher.component';
+import {ProfileComponent} from './profile/profile.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {Ng2SearchPipeModule} from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -67,9 +69,12 @@ import { ProfileComponent } from './profile/profile.component';
     NgxPaginationModule,
     RecurrenceEditorAllModule,
     ScheduleAllModule,
+    BrowserAnimationsModule,
+    Ng2SearchPipeModule,
   ],
   providers: [authInterceptorProviders, DayService, WeekService, WorkWeekService, MonthService, MonthAgendaService],
   bootstrap: [AppComponent]
+
 })
 export class AppModule {
 }

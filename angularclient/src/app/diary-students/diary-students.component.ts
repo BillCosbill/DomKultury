@@ -12,6 +12,8 @@ declare var openErrorModal;
   styleUrls: ['./diary-students.component.css']
 })
 export class DiaryStudentsComponent implements OnInit {
+  searchText;
+
   errorMessage: string = null;
 
   students: Student [] = [];
@@ -19,7 +21,14 @@ export class DiaryStudentsComponent implements OnInit {
 
   studentModel: Student = new Student();
 
-  constructor(private studentService: StudentService, private authService: AuthService, public validationService: ValidationService) {
+  config = {
+    id: 'custom',
+    itemsPerPage: 20,
+    currentPage: 1,
+    totalItems: this.students.length
+  };
+
+  constructor(private studentService: StudentService, public authService: AuthService, public validationService: ValidationService) {
   }
 
   ngOnInit() {

@@ -36,7 +36,7 @@ export class UserDetailsComponent implements OnInit {
 
   userEdited: User = new User();
 
-  constructor(private tokenStorage: TokenStorageService, private lessonService: LessonService, private userService: UserService, private authService: AuthService, private subjectService: SubjectService, private route: ActivatedRoute) {
+  constructor(private tokenStorage: TokenStorageService, private lessonService: LessonService, private userService: UserService, public authService: AuthService, private subjectService: SubjectService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {

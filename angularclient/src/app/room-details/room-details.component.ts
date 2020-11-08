@@ -36,7 +36,7 @@ export class RoomDetailsComponent implements OnInit {
   selectedFile: File;
   uploadedImageId: any;
 
-  constructor(private roomService: RoomService, private route: ActivatedRoute, private userService: UserService, private imageService: ImageService, private router: Router, private authService: AuthService) {
+  constructor(private roomService: RoomService, private route: ActivatedRoute, private userService: UserService, private imageService: ImageService, private router: Router, public authService: AuthService) {
   }
 
   ngOnInit() {

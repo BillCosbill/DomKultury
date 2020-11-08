@@ -11,6 +11,7 @@ declare var openErrorModal;
   styleUrls: ['./administrator-panel.component.css']
 })
 export class AdministratorPanelComponent implements OnInit {
+  searchText;
 
   users: User[] = [];
   selectUserId: number = null;
@@ -18,6 +19,13 @@ export class AdministratorPanelComponent implements OnInit {
 
   userIdToDelete: number = null;
   errorMessage: string = null;
+
+  config = {
+    id: 'custom',
+    itemsPerPage: 20,
+    currentPage: 1,
+    totalItems: this.users.length
+  };
 
   constructor(private userService: UserService) {
   }

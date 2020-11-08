@@ -30,7 +30,7 @@ export class LessonDetailsComponent implements OnInit {
   editedStartTime: string;
   editedFinishTime: string;
 
-  constructor(private lessonService: LessonService, private roomService: RoomService, private route: ActivatedRoute, private authService: AuthService) {
+  constructor(private lessonService: LessonService, private roomService: RoomService, private route: ActivatedRoute, public authService: AuthService) {
   }
 
   ngOnInit() {

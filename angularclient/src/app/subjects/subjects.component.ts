@@ -21,7 +21,7 @@ export class SubjectsComponent implements OnInit {
   subjectIdToDelete: number = null;
   subjectToAdd: Subject = new Subject();
 
-  constructor(private subjectService: SubjectService, private userService: UserService, private authService: AuthService) {
+  constructor(private subjectService: SubjectService, private userService: UserService, public authService: AuthService) {
   }
 
   ngOnInit() {

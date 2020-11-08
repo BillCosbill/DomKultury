@@ -26,7 +26,7 @@ export class DiaryTodayLessonsComponent implements OnInit {
   lessonIdToDelete: number;
   userId: number = null;
 
-  constructor(private roomService: RoomService, private authService: AuthService, private lessonService: LessonService, private tokenStorageService: TokenStorageService, private subjectService: SubjectService) {
+  constructor(private roomService: RoomService, public authService: AuthService, private lessonService: LessonService, private tokenStorageService: TokenStorageService, private subjectService: SubjectService) {
   }
 
   ngOnInit() {

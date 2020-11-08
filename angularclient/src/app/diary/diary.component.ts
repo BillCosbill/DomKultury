@@ -20,7 +20,7 @@ export class DiaryComponent implements OnInit {
 
   subjectIdToDelete: number = null;
 
-  constructor(private subjectService: SubjectService, private token: TokenStorageService, private authService: AuthService) {
+  constructor(private subjectService: SubjectService, private token: TokenStorageService, public authService: AuthService) {
   }
 
   ngOnInit() {

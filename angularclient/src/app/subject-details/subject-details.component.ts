@@ -36,7 +36,7 @@ export class SubjectDetailsComponent implements OnInit {
   startTime: string = null;
   finishTime: string = null;
 
-  constructor(private authService: AuthService, private subjectService: SubjectService, private roomService: RoomService, private route: ActivatedRoute, private userService: UserService, private lessonService: LessonService) {
+  constructor(public authService: AuthService, private subjectService: SubjectService, private roomService: RoomService, private route: ActivatedRoute, private userService: UserService, private lessonService: LessonService) {
   }
 
   ngOnInit() {

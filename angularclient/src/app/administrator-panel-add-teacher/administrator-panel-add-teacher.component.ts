@@ -16,7 +16,7 @@ export class AdministratorPanelAddTeacherComponent implements OnInit {
   isSuccessful = false;
   isSignUpFailed = false;
 
-  constructor(private authService: AuthService, private validationService: ValidationService) {
+  constructor(private authService: AuthService, public validationService: ValidationService) {
   }
 
   ngOnInit() {

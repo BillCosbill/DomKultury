@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../_model/user';
 import {UserService} from '../_services/user.service';
-import {AuthService} from '../_services/auth.service';
 
 @Component({
   selector: 'app-diary-users',
@@ -9,9 +8,17 @@ import {AuthService} from '../_services/auth.service';
   styleUrls: ['./diary-users.component.css']
 })
 export class DiaryUsersComponent implements OnInit {
+  searchText;
   errorMessage: string = null;
 
   users: User[] = [];
+
+  config = {
+    id: 'custom',
+    itemsPerPage: 20,
+    currentPage: 1,
+    totalItems: this.users.length
+  };
 
   constructor(private userService: UserService) {
   }

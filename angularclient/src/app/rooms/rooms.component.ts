@@ -26,7 +26,7 @@ export class RoomsComponent implements OnInit {
 
   roomIdToDelete: number = null;
 
-  constructor(private roomService: RoomService, private imageService: ImageService, private authService: AuthService) {
+  constructor(private roomService: RoomService, private imageService: ImageService, public authService: AuthService) {
   }
 
   ngOnInit() {
