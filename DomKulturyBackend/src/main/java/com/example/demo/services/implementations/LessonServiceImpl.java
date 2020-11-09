@@ -78,16 +78,13 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public LessonDTO addLesson(LessonDTO lessonDTO) {
+    public Lesson addLesson(LessonDTO lessonDTO) {
 
         Lesson lesson = lessonMapper.toLessonAdd(lessonDTO);
 
         Optional<Lesson> lessonOpt = findAll().stream().filter(anyLesson ->
-                (lesson.getStartDate().isAfter(anyLesson.getStartDate()) && lesson.getStartDate().isBefore(anyLesson
-                        .getFinishDate())) ||
-                        (lesson.getFinishDate().isAfter(anyLesson.getStartDate()) && lesson.getFinishDate()
-                                                                                           .isBefore(anyLesson
-                                                                                                   .getFinishDate())))
+                (lesson.getStartDate().isAfter(anyLesson.getStartDate()) && lesson.getStartDate().isBefore(anyLesson.getFinishDate())) ||
+                (lesson.getFinishDate().isAfter(anyLesson.getStartDate()) && lesson.getFinishDate().isBefore(anyLesson.getFinishDate())))
                                               .findAny();
 
         if (lessonOpt.isPresent()) {
@@ -96,8 +93,7 @@ public class LessonServiceImpl implements LessonService {
 
         save(lesson);
 
-        Subject subject = subjectRepository.findById(lessonDTO.getSubjectId())
-                                           .orElseThrow(() -> new SubjectNotFoundException(lessonDTO.getSubjectId()));
+        Subject subject = subjectRepository.findById(lessonDTO.getSubjectId()).orElseThrow(() -> new SubjectNotFoundException(lessonDTO.getSubjectId()));
 
         List<Student> students = subject.getStudents();
 
@@ -105,7 +101,7 @@ public class LessonServiceImpl implements LessonService {
             attendanceRepository.save(new Attendance(lesson, student));
         });
 
-        return lessonDTO;
+        return lesson;
     }
 
     //TODO dobrze przetestować tę metodę!!!
@@ -125,8 +121,6 @@ public class LessonServiceImpl implements LessonService {
             throw new AttendanceNotFoundException(999L);
         }
 
-
-        lesson.setAttendanceChecked(true);
         save(lesson);
     }
 

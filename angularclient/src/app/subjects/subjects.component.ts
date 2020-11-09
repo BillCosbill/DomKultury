@@ -47,6 +47,7 @@ export class SubjectsComponent implements OnInit {
     this.users.forEach(x => {
       if (x.id === teacherId){
         user = x;
+        return false;
       }
     });
 

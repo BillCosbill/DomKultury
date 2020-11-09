@@ -7,6 +7,7 @@ import com.example.demo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,7 @@ public class StudentMapper {
         studentDTO.setLastName(student.getLastName());
         studentDTO.setPesel(student.getPesel());
         studentDTO.setEmail(student.getEmail());
-        studentDTO.setBirthday(student.getBirthday());
+        studentDTO.setBirthday(student.getBirthday().toString());
 
         return studentDTO;
     }
@@ -57,7 +58,29 @@ public class StudentMapper {
             student.setEmail(studentDTO.getEmail());
         }
         if (studentDTO.getBirthday() != null) {
-            student.setBirthday(studentDTO.getBirthday());
+            student.setBirthday(LocalDate.parse(studentDTO.getBirthday()));
+        }
+
+        return student;
+    }
+
+    public Student toStudentAdd(StudentDTO studentDTO) {
+        Student student = new Student();
+
+        if (studentDTO.getFirstName() != null) {
+            student.setFirstName(studentDTO.getFirstName());
+        }
+        if (studentDTO.getLastName() != null) {
+            student.setLastName(studentDTO.getLastName());
+        }
+        if (studentDTO.getPesel() != null) {
+            student.setPesel(studentDTO.getPesel());
+        }
+        if (studentDTO.getEmail() != null) {
+            student.setEmail(studentDTO.getEmail());
+        }
+        if (studentDTO.getBirthday() != null) {
+            student.setBirthday(LocalDate.parse(studentDTO.getBirthday()));
         }
 
         return student;

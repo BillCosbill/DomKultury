@@ -21,11 +21,11 @@
       </thead>
       <tbody>
       <tr *ngFor="let student of students">
-        <td>{{ student.firstName }}</td>
-        <td>{{ student.lastName }}</td>
-        <td>{{ student.pesel }}</td>
-        <td>{{ student.email }}</td>
-        <td>{{ student.birthday }}</td>
+        <td [routerLink]="['/student', (student.id)]">{{ student.firstName }}</td>
+        <td [routerLink]="['/student', (student.id)]">{{ student.lastName }}</td>
+        <td [routerLink]="['/student', (student.id)]">{{ student.pesel }}</td>
+        <td [routerLink]="['/student', (student.id)]">{{ student.email }}</td>
+        <td [routerLink]="['/student', (student.id)]">{{ student.birthday }}</td>
         <td class="text-center" *ngIf="this.authService.isTeacherLoggedIn()"><i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteStudent" (click)="selectStudentIdToDelete(student.id)"></i></td>
       </tr>
       </tbody>

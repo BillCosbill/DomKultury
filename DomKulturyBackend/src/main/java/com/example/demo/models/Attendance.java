@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -18,7 +19,7 @@ public class Attendance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotNull
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(	name = "attendance_lesson",
@@ -26,7 +27,7 @@ public class Attendance {
             inverseJoinColumns = @JoinColumn(name = "lesson_id"))
     private Lesson lesson;
 
-    @NotBlank
+    @NotNull
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(	name = "attendance_student",

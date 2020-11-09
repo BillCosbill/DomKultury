@@ -51,8 +51,6 @@ public class LessonMapper {
             lessonDTO.setAttendancesId(attendancesId);
         }
 
-        lessonDTO.setAttendanceChecked(lesson.isAttendanceChecked());
-
         lessonDTO.setSubjectId(lesson.getSubject().getId());
 
         return lessonDTO;
@@ -85,8 +83,6 @@ public class LessonMapper {
                     .add(attendanceRepository.findById(x).orElseThrow(() -> new AttendanceNotFoundException(x))));
             lesson.setAttendances(attendances);
         }
-
-        lesson.setAttendanceChecked(lessonDTO.isAttendanceChecked());
 
         if (lessonDTO.getSubjectId() != null) {
             lesson.setSubject(subjectRepository.findById(lessonDTO.getSubjectId()).orElseThrow(() -> new SubjectNotFoundException(lessonDTO.getSubjectId())));
@@ -122,8 +118,6 @@ public class LessonMapper {
                     .add(attendanceRepository.findById(x).orElseThrow(() -> new AttendanceNotFoundException(x))));
             lesson.setAttendances(attendances);
         }
-
-        lesson.setAttendanceChecked(lessonDTO.isAttendanceChecked());
 
         if (lessonDTO.getSubjectId() != null) {
             lesson.setSubject(subjectRepository.findById(lessonDTO.getSubjectId()).orElseThrow(() -> new SubjectNotFoundException(lessonDTO.getSubjectId())));

@@ -32,13 +32,13 @@
 
     <div class="overlap">
       <span class="font-weight-bold">Data zakończenia:</span>
-      <p>{{startDate}} {{finishTime}}</p>
+      <p >{{startDate}} {{finishTime}}</p>
       <i *ngIf="this.authService.isTeacherLoggedIn()" data-toggle="modal" data-target="#editFinishDate" (click)="startEditingDatetime()" class="fas fa-edit"></i>
     </div>
 
     <div class="overlap">
       <span class="font-weight-bold">Sala:</span>
-      <p>{{room.number}} - {{room.destiny}}</p>
+      <p [routerLink]="['/room', (room.id)]">{{room.number}} - {{room.destiny}}</p>
       <i *ngIf="this.authService.isTeacherLoggedIn()" data-toggle="modal" data-target="#editRoom" (click)="startEditing()" class="fas fa-edit"></i>
     </div>
 

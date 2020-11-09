@@ -15,7 +15,7 @@
       <tr>
         <th scope="col">Nazwa</th>
         <th scope="col">Opis</th>
-        <th scope="col">Id nauczyciela</th>
+        <th scope="col">Nauczyciel</th>
         <th scope="col">Opcje</th>
       </tr>
       </thead>
@@ -23,7 +23,7 @@
       <tr *ngFor="let subject of subjects">
         <td [routerLink]="['/subject', (subject.id)]">{{ subject.name }}</td>
         <td [routerLink]="['/subject', (subject.id)]">{{ subject.description }}</td>
-        <td [routerLink]="['/subject', (subject.id)]">{{ subject.teacherId}}</td>
+        <td [routerLink]="['/user', (subject.teacherId)]">{{ getTeacher(subject.teacherId)}}</td>
         <td class="text-center" *ngIf="this.authService.isAdminLoggedIn()" data-toggle="modal" data-target="#deleteSubject" (click)="selectSubjectIdToDelete(subject.id)"><i class="fas fa-trash-alt" (click)="delete(subject.id)"></i></td>
       </tr>
       </tbody>

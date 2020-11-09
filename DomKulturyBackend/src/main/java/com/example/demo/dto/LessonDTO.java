@@ -18,6 +18,5 @@ public class LessonDTO {
     private LocalDateTime finishDate;
     private Long roomId;
     private List<Long> attendancesId;
-    private boolean attendanceChecked;
     private Long subjectId;
 }

@@ -4,6 +4,7 @@ import {SubjectService} from '../_services/subject.service';
 import {User} from '../_model/user';
 import {TokenStorageService} from '../_services/token-storage.service';
 import {AuthService} from '../_services/auth.service';
+import {UserService} from '../_services/user.service';
 
 declare var openErrorModal;
 
@@ -17,14 +18,19 @@ export class DiaryComponent implements OnInit {
 
   subjects: Subject[] = [];
   currentUser: User;
+  users: User[] = [];
 
   subjectIdToDelete: number = null;
 
-  constructor(private subjectService: SubjectService, private token: TokenStorageService, public authService: AuthService) {
+  constructor(private subjectService: SubjectService, private token: TokenStorageService, public authService: AuthService, private userService: UserService) {
   }
 
   ngOnInit() {
     this.currentUser = this.token.getUser();
+
+    this.userService.findAll().subscribe(users => {
+      this.users = users;
+    });
 
     this.subjects = [];
 
@@ -52,6 +58,19 @@ export class DiaryComponent implements OnInit {
     this.subjectService.deleteSubject(this.subjectIdToDelete).subscribe(() => this.ngOnInit(), error => {
       this.createErrorModal(error.error.message);
     });
+  }
+
+  getTeacher(teacherId: number) {
+    let user: User = new User();
+
+    this.users.forEach(x => {
+      if (x.id === teacherId){
+        user = x;
+        return false;
+      }
+    });
+
+    return user.firstName + ' ' + user.lastName;
   }
 
   createErrorModal(message: string) {

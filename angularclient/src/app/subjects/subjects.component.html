@@ -12,7 +12,8 @@
       <tbody>
       <tr *ngFor="let subject of subjects">
         <td [routerLink]="['/subject', (subject.id)]">{{ subject.name }}</td>
-        <td>{{getTeacher(subject.teacherId)}}</td>
+        <td *ngIf="authService.isTeacherLoggedIn()" [routerLink]="['/user', (subject.teacherId)]">{{getTeacher(subject.teacherId)}}</td>
+        <td *ngIf="!authService.isTeacherLoggedIn()">{{getTeacher(subject.teacherId)}}</td>
         <td class="text-center" *ngIf="this.authService.isAdminLoggedIn()"><i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteSubject" (click)="selectSubjectIdToDelete(subject.id)"></i></td>
       </tr>
       </tbody>

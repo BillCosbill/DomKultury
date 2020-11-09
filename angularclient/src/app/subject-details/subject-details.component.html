@@ -49,8 +49,8 @@
           <tbody *ngIf="this.authService.isTeacherLoggedIn()">
           <tr *ngFor="let lesson of lessons">
             <td [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ lesson.topic }}</td>
-            <td>{{ formatDateTime(lesson.startDate) }}</td>
-            <td>{{ formatDateTime(lesson.finishDate) }}</td>
+            <td [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ formatDateTime(lesson.startDate) }}</td>
+            <td [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ formatDateTime(lesson.finishDate) }}</td>
             <td [routerLink]="['/room', (lesson.roomId)]">{{ getRoomData(lesson.roomId) }}</td>
             <td class="text-center"><i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteLesson" (click)="selectLessonIdToDelete(lesson.id)"></i></td>
           </tr>

@@ -27,12 +27,12 @@
         </thead>
         <tbody>
         <tr *ngFor="let user of users | filter:searchText | paginate: config">
-          <td>{{ user.username }}</td>
-          <td>{{ user.firstName }}</td>
-          <td>{{ user.lastName }}</td>
-          <td>{{ user.pesel }}</td>
-          <td>{{ user.email }}</td>
-          <td>
+          <td [routerLink]="['/user', (user.id)]">{{ user.username }}</td>
+          <td [routerLink]="['/user', (user.id)]">{{ user.firstName }}</td>
+          <td [routerLink]="['/user', (user.id)]">{{ user.lastName }}</td>
+          <td [routerLink]="['/user', (user.id)]">{{ user.pesel }}</td>
+          <td [routerLink]="['/user', (user.id)]">{{ user.email }}</td>
+          <td [routerLink]="['/user', (user.id)]">
             <ng-container *ngFor="let role of user.roles">
               {{makePrettyRoleName(role.name)}}<br>
             </ng-container>

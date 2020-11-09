@@ -13,8 +13,8 @@
     <table class="table-table">
       <thead>
       <tr>
-        <th scope="col">Temat</th>
         <th scope="col">Przedmiot</th>
+        <th scope="col">Temat</th>
         <th scope="col">Data rozpoczęcia</th>
         <th scope="col">Data zakończenia</th>
         <th scope="col">Sala</th>
@@ -24,11 +24,11 @@
 
       <tbody>
       <tr *ngFor="let lesson of lessons">
+        <td [routerLink]="['/subject', (lesson.subjectId)]">{{ getSubjectFromLesson(lesson.subjectId) }}</td>
         <td [routerLink]="['/subject', (lesson.subjectId), 'lesson', (lesson.id)]">{{ lesson.topic }}</td>
-        <td>{{ getSubjectFromLesson(lesson.subjectId) }}</td>
-        <td>{{ formatDateTime(lesson.startDate) }}</td>
-        <td>{{ formatDateTime(lesson.finishDate) }}</td>
-        <td>{{ getRoomData(lesson.roomId) }}</td>
+        <td [routerLink]="['/subject', (lesson.subjectId), 'lesson', (lesson.id)]">{{ formatDateTime(lesson.startDate) }}</td>
+        <td [routerLink]="['/subject', (lesson.subjectId), 'lesson', (lesson.id)]">{{ formatDateTime(lesson.finishDate) }}</td>
+        <td [routerLink]="['/room', (lesson.roomId)]">{{ getRoomData(lesson.roomId) }}</td>
         <td class="text-center"><i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteLesson"
                                    (click)="selectLessonIdToDelete(lesson.id)"></i></td>
       </tr>

@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,13 +27,13 @@ public class Lesson {
     @NotBlank
     private String description;
 
-    @NotBlank
+    @NotNull
     private LocalDateTime startDate;
 
-    @NotBlank
+    @NotNull
     private LocalDateTime finishDate;
 
-    @NotBlank
+    @NotNull
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(	name = "lesson_room",
@@ -43,10 +44,7 @@ public class Lesson {
     @OneToMany(mappedBy = "lesson")
     private List<Attendance> attendances;
 
-    @NotBlank
-    private boolean attendanceChecked;
-
-    @NotBlank
+    @NotNull
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(	name = "lesson_subject",
@@ -61,6 +59,5 @@ public class Lesson {
         this.finishDate = finishDate;
         this.room = room;
         this.subject = subject;
-        this.attendanceChecked = false;
     }
 }

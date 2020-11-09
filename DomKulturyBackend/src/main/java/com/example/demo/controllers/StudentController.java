@@ -8,8 +8,10 @@ import com.example.demo.services.interfaces.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -38,8 +40,8 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student addStudent(@RequestBody Student student) {
-        return studentService.addStudent(student);
+    public Student addStudent(@Valid @RequestBody StudentDTO studentDTO) {
+        return studentService.addStudent(studentMapper.toStudentAdd(studentDTO));
     }
 
     @DeleteMapping("/{id}")
@@ -50,7 +52,7 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StudentDTO> updateStudent(@RequestBody StudentDTO studentDTO, @PathVariable Long id) {
+    public ResponseEntity<StudentDTO> updateStudent(@Valid @RequestBody StudentDTO studentDTO, @PathVariable Long id) {
         studentService.updateStudent(studentDTO, id);
         return ResponseEntity.status(HttpStatus.OK)
                              .body(studentDTO);

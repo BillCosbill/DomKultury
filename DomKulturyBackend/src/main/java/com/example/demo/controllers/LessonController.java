@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.dto.AttendanceDTO;
 import com.example.demo.dto.LessonDTO;
 import com.example.demo.mappers.LessonMapper;
+import com.example.demo.models.Lesson;
 import com.example.demo.payload.response.MessageResponse;
 import com.example.demo.services.interfaces.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class LessonController {
     }
 
     @PostMapping
-    public LessonDTO addLesson(@RequestBody LessonDTO lessonDTO) {
+    public Lesson addLesson(@RequestBody LessonDTO lessonDTO) {
         return lessonService.addLesson(lessonDTO);
     }
 
