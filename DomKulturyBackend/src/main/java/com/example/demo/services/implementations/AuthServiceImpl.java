@@ -1,10 +1,8 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.email.EmailService;
-import com.example.demo.exceptions.EmailInUseException;
-import com.example.demo.exceptions.PeselInUseException;
-import com.example.demo.exceptions.RoleNotFoundException;
-import com.example.demo.exceptions.UsernameTakenException;
+import com.example.demo.exceptions.ConflictGlobalException;
+import com.example.demo.exceptions.NotFoundGlobalException;
 import com.example.demo.models.ERole;
 import com.example.demo.models.Role;
 import com.example.demo.models.User;
@@ -80,23 +78,24 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void registerUser(SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            throw new UsernameTakenException(signUpRequest.getUsername());
+            throw new ConflictGlobalException("Użytkownik z nazwą " + signUpRequest.getUsername() + " już istnieje!");
         }
 
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            throw new EmailInUseException(signUpRequest.getEmail());
+            throw new ConflictGlobalException("Użytkownik z adresem email " + signUpRequest.getEmail() + " już istnieje!");
         }
 
         if (userRepository.existsByPesel(signUpRequest.getPesel())) {
-            throw new PeselInUseException(signUpRequest.getPesel());
+            throw new ConflictGlobalException("Użytkownik z peselem " + signUpRequest.getPesel() + " już istnieje!");
         }
 
         if (studentRepository.existsByEmail(signUpRequest.getEmail())) {
-            throw new EmailInUseException(signUpRequest.getEmail());
+            throw new ConflictGlobalException("Uczeń z adresem email " + signUpRequest.getEmail() + " już istnieje!");
         }
 
         if (studentRepository.existsByPesel(signUpRequest.getPesel())) {
-            throw new PeselInUseException(signUpRequest.getPesel());
+            throw new ConflictGlobalException("Uczeń z peselem  " + signUpRequest.getPesel() + " już istnieje!");
+
         }
 
         signUpRequest.setPassword(passwordGenerator.generatePassword(10));
@@ -111,20 +110,20 @@ public class AuthServiceImpl implements AuthService {
 
         if (strRoles == null) {
             Role userRole = roleRepository.findByName(ERole.ROLE_TEACHER)
-                                          .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_TEACHER));
+                                          .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono roli " + ERole.ROLE_TEACHER));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
                     case "admin":
                         Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                                       .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_ADMIN));
+                                                       .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono roli " + ERole.ROLE_ADMIN));
                         roles.add(adminRole);
 
                         break;
                     default:
                         Role teacherRole = roleRepository.findByName(ERole.ROLE_TEACHER)
-                                                         .orElseThrow(() -> new RoleNotFoundException(ERole.ROLE_TEACHER));
+                                                         .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono roli " + ERole.ROLE_TEACHER));
                         roles.add(teacherRole);
                 }
             });

@@ -57,7 +57,7 @@ public class LessonMapper {
     }
 
     public Lesson toLesson(LessonDTO lessonDTO, Long id) {
-        Lesson lesson = lessonRepository.findById(id).orElseThrow(() -> new LessonNotFoundException(id));
+        Lesson lesson = lessonRepository.findById(id).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono lekcji o id " + id));
 
         if (lessonDTO.getId() != null) {
             lesson.setId(lessonDTO.getId());
@@ -75,17 +75,17 @@ public class LessonMapper {
             lesson.setFinishDate(lessonDTO.getFinishDate());
         }
         if (lessonDTO.getRoomId() != null) {
-            lesson.setRoom(roomRepository.findById(lessonDTO.getRoomId()).orElseThrow(() -> new RoomNotFoundException(lessonDTO.getRoomId())));
+            lesson.setRoom(roomRepository.findById(lessonDTO.getRoomId()).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono sali o id " + lessonDTO.getRoomId())));
         }
         if (lessonDTO.getAttendancesId() != null) {
             List<Attendance> attendances = new ArrayList<>();
-            lessonDTO.getAttendancesId().forEach(x -> attendances
-                    .add(attendanceRepository.findById(x).orElseThrow(() -> new AttendanceNotFoundException(x))));
+            lessonDTO.getAttendancesId().forEach(attendanceId -> attendances
+                    .add(attendanceRepository.findById(attendanceId).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono obiektu frekwencji o id " + attendanceId))));
             lesson.setAttendances(attendances);
         }
 
         if (lessonDTO.getSubjectId() != null) {
-            lesson.setSubject(subjectRepository.findById(lessonDTO.getSubjectId()).orElseThrow(() -> new SubjectNotFoundException(lessonDTO.getSubjectId())));
+            lesson.setSubject(subjectRepository.findById(lessonDTO.getSubjectId()).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono przedmiotu o id " + lessonDTO.getSubjectId())));
         }
 
         return lesson;
@@ -110,17 +110,17 @@ public class LessonMapper {
             lesson.setFinishDate(lessonDTO.getFinishDate());
         }
         if (lessonDTO.getRoomId() != null) {
-            lesson.setRoom(roomRepository.findById(lessonDTO.getRoomId()).orElseThrow(() -> new RoomNotFoundException(lessonDTO.getRoomId())));
+            lesson.setRoom(roomRepository.findById(lessonDTO.getRoomId()).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono sali o id " + lessonDTO.getRoomId())));
         }
         if (lessonDTO.getAttendancesId() != null) {
             List<Attendance> attendances = new ArrayList<>();
-            lessonDTO.getAttendancesId().forEach(x -> attendances
-                    .add(attendanceRepository.findById(x).orElseThrow(() -> new AttendanceNotFoundException(x))));
+            lessonDTO.getAttendancesId().forEach(attendanceId -> attendances
+                    .add(attendanceRepository.findById(attendanceId).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono obiektu frekwencji o id " + attendanceId))));
             lesson.setAttendances(attendances);
         }
 
         if (lessonDTO.getSubjectId() != null) {
-            lesson.setSubject(subjectRepository.findById(lessonDTO.getSubjectId()).orElseThrow(() -> new SubjectNotFoundException(lessonDTO.getSubjectId())));
+            lesson.setSubject(subjectRepository.findById(lessonDTO.getSubjectId()).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono przedmiotu o id " + lessonDTO.getSubjectId())));
         }
 
         return lesson;

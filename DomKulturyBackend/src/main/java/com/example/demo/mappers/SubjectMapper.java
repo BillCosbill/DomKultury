@@ -63,7 +63,7 @@ public class SubjectMapper {
     }
 
     public Subject toSubject(SubjectDTO subjectDTO, Long id) {
-        Subject subject = subjectRepository.findById(id).orElseThrow(() -> new SubjectNotFoundException(id));
+        Subject subject = subjectRepository.findById(id).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono przedmiotu z id " + id));
 
         if (subjectDTO.getName() != null) {
             subject.setName(subjectDTO.getName());
@@ -73,18 +73,18 @@ public class SubjectMapper {
         }
         if (subjectDTO.getTeacherId() != null) {
             subject.setTeacher(userRepository.findById(subjectDTO.getTeacherId())
-                                             .orElseThrow(() -> new UserNotFoundException(subject.getTeacher().getId())));
+                                             .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono użytkownika z id " + subject.getTeacher().getId())));
         }
         if (subjectDTO.getStudentsId() != null) {
             List<Student> students = new ArrayList<>();
             subjectDTO.getStudentsId()
-                      .forEach(x -> students.add(studentRepository.findById(x).orElseThrow(() -> new StudentNotFoundException(x))));
+                      .forEach(studentId -> students.add(studentRepository.findById(studentId).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono ucznia z id " + studentId))));
             subject.setStudents(students);
         }
         if (subjectDTO.getLessonsId() != null) {
             List<Lesson> lessons = new ArrayList<>();
             subjectDTO.getLessonsId()
-                      .forEach(x -> lessons.add(lessonRepository.findById(x).orElseThrow(() -> new LessonNotFoundException(x))));
+                      .forEach(lessonId -> lessons.add(lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono lekcji z id " + lessonId))));
             subject.setLessons(lessons);
         }
 
@@ -102,18 +102,18 @@ public class SubjectMapper {
         }
         if (subjectDTO.getTeacherId() != null) {
             subject.setTeacher(userRepository.findById(subjectDTO.getTeacherId())
-                                             .orElseThrow(() -> new UserNotFoundException(subject.getTeacher().getId())));
+                                             .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono użytkownika z id " + subject.getTeacher().getId())));
         }
         if (subjectDTO.getStudentsId() != null) {
             List<Student> students = new ArrayList<>();
             subjectDTO.getStudentsId()
-                      .forEach(x -> students.add(studentRepository.findById(x).orElseThrow(() -> new StudentNotFoundException(x))));
+                      .forEach(studentId -> students.add(studentRepository.findById(studentId).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono użytkownika z id " + studentId))));
             subject.setStudents(students);
         }
         if (subjectDTO.getLessonsId() != null) {
             List<Lesson> lessons = new ArrayList<>();
             subjectDTO.getLessonsId()
-                      .forEach(x -> lessons.add(lessonRepository.findById(x).orElseThrow(() -> new LessonNotFoundException(x))));
+                      .forEach(lessonId -> lessons.add(lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono lekcji z id " + lessonId))));
             subject.setLessons(lessons);
         }
 

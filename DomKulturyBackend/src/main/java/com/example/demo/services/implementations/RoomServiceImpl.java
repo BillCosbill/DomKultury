@@ -1,8 +1,8 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.dto.RoomDTO;
-import com.example.demo.exceptions.RoomExistsException;
-import com.example.demo.exceptions.RoomNotFoundException;
+import com.example.demo.exceptions.ConflictGlobalException;
+import com.example.demo.exceptions.NotFoundGlobalException;
 import com.example.demo.file.DBFile;
 import com.example.demo.file.DBFileRepository;
 import com.example.demo.mappers.RoomMapper;
@@ -14,7 +14,6 @@ import com.example.demo.services.interfaces.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +40,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public Room findById(Long id) {
-        return roomRepository.findById(id).orElseThrow(() -> new RoomNotFoundException(id));
+        return roomRepository.findById(id).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono sali z id " + id));
     }
 
     @Override
@@ -57,10 +56,8 @@ public class RoomServiceImpl implements RoomService {
     public void deleteRoom(Long id) {
         Room room = findById(id);
 
-        //TODO usuwanie wszystkich lekcji (zły pomysł) albo ustawienie w każdej lekcji domyślnie innego pokoju lub pokoju jako null
         if (lessonService.findAll().stream().filter(lesson -> lesson.getRoom() == room).findAny().isPresent()) {
-            //TODO zrobić wyjątek inny odpowiedni
-            throw new RoomExistsException(room.getNumber());
+            throw new ConflictGlobalException("W sali z id " + id + " są zaplanowana lekcje. Przed usunięciem sali należy usunąć lekcje odbywające się w tej sali!");
         }
 
         roomRepository.delete(room);
@@ -68,15 +65,14 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public Room updateRoom(RoomDTO roomDTO, Long id, String imageId) {
-        //TODO inny wyjątek, żeby się zgadzało
         if (!roomDTO.getId().equals(id)) {
-            throw new RoomNotFoundException(id);
+            throw new NotFoundGlobalException("Wystąpił błąd. Identyfikator sali nie został rozpoznany!");
         }
 
         Room roomOpt = findById(id);
 
         if (!roomOpt.getNumber().equals(roomDTO.getNumber()) && roomRepository.existsByNumber(roomDTO.getNumber())) {
-            throw new RoomExistsException(roomDTO.getNumber());
+            throw new ConflictGlobalException("Sala z numerem " + roomDTO.getNumber() + " już istnieje");
         }
 
         if (imageId != null) {
@@ -95,7 +91,7 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public Room addRoom(Room room, String id) {
         if (roomRepository.existsByNumber(room.getNumber())) {
-            throw new RoomExistsException(room.getNumber());
+            throw new ConflictGlobalException("Sala z numerem " + room.getNumber() + " już istnieje");
         }
 
         if (id != null) {

@@ -1,8 +1,7 @@
 package com.example.demo.mappers;
 
 import com.example.demo.dto.UserDTO;
-import com.example.demo.exceptions.SubjectNotFoundException;
-import com.example.demo.exceptions.UserNotFoundException;
+import com.example.demo.exceptions.NotFoundGlobalException;
 import com.example.demo.models.Subject;
 import com.example.demo.models.User;
 import com.example.demo.repository.SubjectRepository;
@@ -50,7 +49,7 @@ public class UserMapper {
     }
 
     public User toUser(UserDTO userDTO, Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono użytkownika z id " + id));
 
         if (userDTO.getId() != null) {
             user.setId(userDTO.getId());
@@ -72,7 +71,7 @@ public class UserMapper {
         }
         if (userDTO.getSubjectsId() != null) {
             List<Subject> subjects = new ArrayList<>();
-            userDTO.getSubjectsId().forEach(subjectId -> subjects.add(subjectRepository.findById(subjectId).orElseThrow(() -> new SubjectNotFoundException(subjectId))));
+            userDTO.getSubjectsId().forEach(subjectId -> subjects.add(subjectRepository.findById(subjectId).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono przedmiotu z id " + subjectId))));
             user.setSubjects(subjects);
         }
 

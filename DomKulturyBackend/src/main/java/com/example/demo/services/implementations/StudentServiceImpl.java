@@ -1,10 +1,7 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.dto.StudentDTO;
-import com.example.demo.exceptions.EmailInUseException;
-import com.example.demo.exceptions.PeselInUseException;
-import com.example.demo.exceptions.StudentExistsException;
-import com.example.demo.exceptions.StudentNotFoundException;
+import com.example.demo.exceptions.*;
 import com.example.demo.mappers.StudentMapper;
 import com.example.demo.models.Student;
 import com.example.demo.repository.AttendanceRepository;
@@ -15,7 +12,6 @@ import com.example.demo.services.interfaces.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -43,7 +39,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student findById(Long id) {
-        return studentRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
+        return studentRepository.findById(id).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono ucznia o idendyfikatorze " + id));
     }
 
     @Override
@@ -66,8 +62,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student updateStudent(StudentDTO studentDTO, Long id) {
         if(!studentDTO.getId().equals(id)) {
-            //TODO exception
-            throw new StudentExistsException(id);
+            throw new ConflictGlobalException("Wystąpił błąd. Identyfikator ucznia nie został rozpoznany!");
         }
 
         Student student = studentMapper.toStudent(studentDTO, id);
@@ -83,19 +78,20 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student addStudent(Student student) {
         if(studentRepository.existsByPesel(student.getPesel())) {
-            throw new PeselInUseException(student.getPesel());
+            throw new ConflictGlobalException("Uczeń z peselem " + student.getPesel() + " już istnieje!");
         }
 
         if(studentRepository.existsByEmail(student.getEmail())) {
-            throw new EmailInUseException(student.getEmail());
+            throw new ConflictGlobalException("Uczeń z adresem email  " + student.getEmail() + " już istnieje!");
         }
 
         if(userRepository.existsByPesel(student.getPesel())) {
-            throw new PeselInUseException(student.getPesel());
+            throw new ConflictGlobalException("Użytkownik z peselem " + student.getPesel() + " już istnieje!");
         }
 
         if(userRepository.existsByEmail(student.getEmail())) {
-            throw new EmailInUseException(student.getEmail());
+            throw new ConflictGlobalException("Użytkownik z adresem email  " + student.getEmail() + " już istnieje!");
+
         }
 
         return save(student);

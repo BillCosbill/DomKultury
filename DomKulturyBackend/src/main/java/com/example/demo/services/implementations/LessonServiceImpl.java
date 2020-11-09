@@ -47,7 +47,7 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public Lesson findById(Long id) {
-        return lessonRepository.findById(id).orElseThrow(() -> new LessonNotFoundException(id));
+        return lessonRepository.findById(id).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono lekcji z id " + id));
     }
 
     @Override
@@ -64,7 +64,7 @@ public class LessonServiceImpl implements LessonService {
     @Override
     public Lesson updateLesson(LessonDTO lessonDTO, Long id) {
         if (!lessonDTO.getId().equals(id)) {
-            throw new LessonExistsException(id);
+            throw new ConflictGlobalException("Lekcja z id " + id + " już istnieje");
         }
 
         Lesson lesson = lessonMapper.toLesson(lessonDTO, id);
@@ -88,12 +88,12 @@ public class LessonServiceImpl implements LessonService {
                                               .findAny();
 
         if (lessonOpt.isPresent()) {
-            throw new RoomOccupiedAtTheTimeException(lesson.getRoom().getNumber());
+            throw new ConflictGlobalException("Pokój o numerze " + lesson.getRoom().getNumber() + " jest zajęty od " + lesson.getStartDate() + " do " + lesson.getFinishDate());
         }
 
         save(lesson);
 
-        Subject subject = subjectRepository.findById(lessonDTO.getSubjectId()).orElseThrow(() -> new SubjectNotFoundException(lessonDTO.getSubjectId()));
+        Subject subject = subjectRepository.findById(lessonDTO.getSubjectId()).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono przedmiotu o id " + lessonDTO.getSubjectId()));
 
         List<Student> students = subject.getStudents();
 
@@ -111,14 +111,14 @@ public class LessonServiceImpl implements LessonService {
             attendanceRepository.save(attendanceMapper.toAttendanceAdd(x));
         });
 
-        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new LessonNotFoundException(lessonId));
+        Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono lekcji o id " + lessonId));
 
         if (!LocalDate.now().equals(lesson.getStartDate().toLocalDate()) ||
                 LocalDateTime.now().toLocalTime().isBefore(lesson.getStartDate().toLocalTime()) ||
                 LocalDateTime.now().toLocalTime().isAfter(lesson.getFinishDate().toLocalTime())) {
 
             // TODO wyjątek o niezgodności dat i godzin zajęć
-            throw new AttendanceNotFoundException(999L);
+            throw new ConflictGlobalException("Obecność można sprawdzić tylko w czasie trwania zajęć!");
         }
 
         save(lesson);

@@ -1,7 +1,7 @@
 package com.example.demo.mappers;
 
 import com.example.demo.dto.RoomDTO;
-import com.example.demo.exceptions.EventNotFoundException;
+import com.example.demo.exceptions.NotFoundGlobalException;
 import com.example.demo.file.DBFileRepository;
 import com.example.demo.models.Lesson;
 import com.example.demo.models.Room;
@@ -54,7 +54,7 @@ public class RoomMapper {
 
     public Room toRoom(RoomDTO roomDTO, Long id) {
         Room room = roomRepository.findById(id)
-                                  .orElseThrow(() -> new EventNotFoundException(id));
+                                  .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono sali z id " + id));
 
         if (roomDTO.getId() != null) {
             room.setId(roomDTO.getId());
@@ -74,8 +74,8 @@ public class RoomMapper {
         if (roomDTO.getLessonsId() != null) {
             List<Lesson> lessons = new ArrayList<>();
             roomDTO.getLessonsId()
-                   .forEach(x -> lessons.add(lessonRepository.findById(x)
-                                                           .orElseThrow(() -> new EventNotFoundException(x))));
+                   .forEach(lessonId -> lessons.add(lessonRepository.findById(lessonId)
+                                                           .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono lekcji z id " + lessonId))));
             room.setLessons(lessons);
         }
 

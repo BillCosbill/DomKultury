@@ -1,14 +1,12 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.dto.SubjectDTO;
-import com.example.demo.exceptions.StudentExistsException;
-import com.example.demo.exceptions.SubjectExistsException;
-import com.example.demo.exceptions.SubjectNotFoundException;
+import com.example.demo.exceptions.ConflictGlobalException;
+import com.example.demo.exceptions.NotFoundGlobalException;
 import com.example.demo.mappers.SubjectMapper;
 import com.example.demo.models.Attendance;
 import com.example.demo.models.Student;
 import com.example.demo.models.Subject;
-import com.example.demo.models.User;
 import com.example.demo.repository.SubjectRepository;
 import com.example.demo.services.interfaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +39,7 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public Subject findById(Long id) {
-        return subjectRepository.findById(id).orElseThrow(() -> new SubjectNotFoundException(id));
+        return subjectRepository.findById(id).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono przedmiotu o id " + id));
     }
 
     @Override
@@ -58,7 +56,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public Subject updateSubject(SubjectDTO subjectDTO, Long id) {
         if (!subjectDTO.getId().equals(id)) {
-            throw new SubjectExistsException(id);
+            throw new ConflictGlobalException("Wystąpił błąd. Identyfikator przedmiotu nie został rozpoznany!");
         }
 
         Subject subject = subjectMapper.toSubject(subjectDTO, id);
@@ -109,8 +107,7 @@ public class SubjectServiceImpl implements SubjectService {
         Student student = studentService.findById(studentId);
 
         if(subject.getStudents().contains(student)) {
-            //TODO inny wyjątek stworzyć
-            throw new StudentExistsException(studentId);
+            throw new ConflictGlobalException("Uczeń o id " + studentId + " jest już zapisany na przedmiot o id " + subjectId);
         }
 
         subject.getLessons().forEach(lesson -> {

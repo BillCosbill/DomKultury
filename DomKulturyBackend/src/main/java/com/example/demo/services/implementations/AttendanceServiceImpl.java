@@ -1,8 +1,7 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.dto.AttendanceDTO;
-import com.example.demo.exceptions.AttendanceExistsException;
-import com.example.demo.exceptions.AttendanceNotFoundException;
+import com.example.demo.exceptions.NotFoundGlobalException;
 import com.example.demo.mappers.AttendanceMapper;
 import com.example.demo.models.Attendance;
 import com.example.demo.repository.AttendanceRepository;
@@ -31,7 +30,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     @Override
     public Attendance findById(Long id) {
-        return attendanceRepository.findById(id).orElseThrow(() -> new AttendanceNotFoundException(id));
+        return attendanceRepository.findById(id).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono obiektu frekwencji o id " + id));
     }
 
     @Override
@@ -43,7 +42,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     @Override
     public Attendance updateAttendance(AttendanceDTO attendanceDTO, Long id) {
         if (!attendanceDTO.getId().equals(id)) {
-            throw new AttendanceExistsException(id);
+            throw new NotFoundGlobalException("Wystąpił błąd. Identyfikator obiektu frekwencji nie został rozpoznany!");
         }
 
         Attendance attendance = attendanceMapper.toAttendance(attendanceDTO, id);

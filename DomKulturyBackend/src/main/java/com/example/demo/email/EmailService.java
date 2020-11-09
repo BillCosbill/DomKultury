@@ -1,12 +1,11 @@
 package com.example.demo.email;
 
 import com.example.demo.dto.StudentDTO;
-import com.example.demo.exceptions.UserNotFoundException;
+import com.example.demo.exceptions.NotFoundGlobalException;
 import com.example.demo.mappers.StudentMapper;
 import com.example.demo.models.Student;
 import com.example.demo.models.User;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.services.interfaces.UserService;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -53,7 +52,7 @@ public class EmailService {
         Optional<User> userOpt = userRepository.findById(fromId);
 
         if (!userOpt.isPresent()) {
-            throw  new UserNotFoundException(fromId);
+            throw new NotFoundGlobalException("Nie znaleziono użytkownika o id " + fromId);
         }
 
         User user = userOpt.get();
@@ -82,7 +81,7 @@ public class EmailService {
         Optional<User> userOpt = userRepository.findById(fromId);
 
         if (!userOpt.isPresent()) {
-            throw  new UserNotFoundException(fromId);
+            throw new NotFoundGlobalException("Nie znaleziono użytkownika o id " + fromId);
         }
 
         User user = userOpt.get();

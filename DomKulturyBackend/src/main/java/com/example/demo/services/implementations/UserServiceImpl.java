@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono użytkownika o id " + id));
     }
 
     @Override
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
         User user = findById(id);
 
         if (subjectService.findAll().stream().filter(subject -> subject.getTeacher().getId() == id).findAny().isPresent()) {
-            throw new UserAssignedToSubjectException();
+            throw new ConflictGlobalException("Użytkownik o id " + id + " jest przypisany do co najmniej jednego przedmiotu!");
         }
 
         userRepository.delete(user);
@@ -82,19 +82,19 @@ public class UserServiceImpl implements UserService {
         User user = findById(id);
 
         if(!userDTO.getId().equals(id)) {
-            throw new UserNotFoundException(id);
+            throw new NotFoundGlobalException("Nie znaleziono użytkownika o id " + id);
         }
 
         if(!user.getEmail().equals(userDTO.getEmail()) && userRepository.existsByEmail(userDTO.getEmail())) {
-            throw new EmailInUseException(userDTO.getEmail());
+            throw new ConflictGlobalException("Użytkownik z adresm email " + userDTO.getEmail() + " już istnieje!");
         }
 
         if(!user.getUsername().equals(userDTO.getUsername()) && userRepository.existsByUsername(userDTO.getUsername())) {
-            throw new UsernameTakenException(userDTO.getUsername());
+            throw new ConflictGlobalException("Użytkownik z nazwą " + userDTO.getUsername() + " już istnieje!");
         }
 
         if(!user.getPesel().equals(userDTO.getPesel()) && userRepository.existsByPesel(userDTO.getPesel())) {
-            throw new EmailInUseException(userDTO.getPesel());
+            throw new ConflictGlobalException("Użytkownik z peselem " + userDTO.getPesel() + " już istnieje!");
         }
 
         user = userMapper.toUser(userDTO, id);
@@ -129,7 +129,7 @@ public class UserServiceImpl implements UserService {
             authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(user.getUsername(), passwordChangeRequest.getPassword()));
         } catch (Exception e) {
-            throw new WrongPasswordException();
+            throw new ConflictGlobalException("Wprowadzono błędne hasło!");
         }
 
 
