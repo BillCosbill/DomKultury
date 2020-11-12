@@ -10,6 +10,7 @@ import {AuthService} from '../_services/auth.service';
 import {EmailMessage} from '../_model/email-message';
 import {EmailService} from '../_services/email.service';
 import {TokenStorageService} from '../_services/token-storage.service';
+import {ValidationService} from '../_services/validation/validation.service';
 
 declare var openErrorModal;
 
@@ -31,7 +32,8 @@ export class StudentDetailsComponent implements OnInit {
   emailMessage: EmailMessage = new EmailMessage();
 
   constructor(public authService: AuthService, private studentService: StudentService, private route: ActivatedRoute,
-              private subjectService: SubjectService, private userService: UserService, private  emailService: EmailService, private token: TokenStorageService,) {
+              private subjectService: SubjectService, private userService: UserService, private  emailService: EmailService,
+              private token: TokenStorageService, private validationService: ValidationService) {
   }
 
   ngOnInit() {
@@ -73,6 +75,7 @@ export class StudentDetailsComponent implements OnInit {
   editStudent() {
     this.studentService.updateStudent(this.studentEdited, this.studentId).subscribe(() => {
       this.ngOnInit();
+      this.validationService.refreshData();
     }, error => {
       this.createErrorModal(error.error.message);
     });

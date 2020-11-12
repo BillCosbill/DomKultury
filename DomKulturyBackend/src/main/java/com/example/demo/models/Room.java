@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Getter
@@ -18,13 +19,14 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotNull
     private String number;
 
-    @NotBlank
+    @NotNull
     private String destiny;
 
-    @NotBlank
+    @NotNull
+    @Column(columnDefinition="LONGTEXT")
     private String description;
 
     private String image;

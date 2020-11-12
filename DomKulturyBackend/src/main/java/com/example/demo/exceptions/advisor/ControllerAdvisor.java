@@ -3,20 +3,51 @@ package com.example.demo.exceptions.advisor;
 import com.example.demo.annotations.HttpErrorCode;
 import com.example.demo.exceptions.*;
 import lombok.var;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.management.relation.RoleNotFoundException;
 import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
+
+//    @ExceptionHandler(BadRequestValidationException.class)
+//    public final ResponseEntity<Object> handleUserNotFoundException(BadRequestValidationException ex, WebRequest request) {
+//        List<String> details = new ArrayList<>();
+//
+//        Map<String, Object> body = new LinkedHashMap<>();
+//        body.put("timestamp", ex.getLocalizedMessage());
+//        body.put("message", ex.getMessage());
+//
+//        return new ResponseEntity(body, HttpStatus.NOT_FOUND);
+//    }
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+
+        StringBuilder message = new StringBuilder();
+
+        for(ObjectError error : ex.getBindingResult().getAllErrors()) {
+            message.append(error.getDefaultMessage() + ". ");
+        }
+
+        body.put("message", message);
+
+        return new ResponseEntity(body, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<Object> handle(Exception e) {

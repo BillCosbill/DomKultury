@@ -31,6 +31,5 @@ public class SignupRequest {
 
     private Set<String> role;
 
-    @NotBlank
     private String password;
 }

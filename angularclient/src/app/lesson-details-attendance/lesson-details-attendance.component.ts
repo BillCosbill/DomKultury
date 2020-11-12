@@ -10,6 +10,8 @@ import {SubjectService} from '../_services/subject.service';
 import {StudentService} from '../_services/student.service';
 import {AttendanceService} from '../_services/attendance.service';
 import {formatDate} from '@angular/common';
+import {AuthService} from '../_services/auth.service';
+import {TokenStorageService} from '../_services/token-storage.service';
 
 declare var openErrorModal;
 
@@ -33,7 +35,7 @@ export class LessonDetailsAttendanceComponent implements OnInit {
 
   studentsAttendance: StudentAttendance[] = [];
 
-  constructor(private lessonService: LessonService, private subjectService: SubjectService, private route: ActivatedRoute, private studentService: StudentService, private attendanceService: AttendanceService) {
+  constructor(public authService: AuthService, private token: TokenStorageService, private lessonService: LessonService, private subjectService: SubjectService, private route: ActivatedRoute, private studentService: StudentService, private attendanceService: AttendanceService) {
   }
 
   ngOnInit() {
@@ -95,9 +97,8 @@ export class LessonDetailsAttendanceComponent implements OnInit {
     studentAttendance.present = !studentAttendance.present;
   }
 
-  createErrorModal(message: string) {
-    this.errorMessage = message;
-    openErrorModal();
+  userIsOwner() {
+    return this.token.getUser().id === this.subject.teacherId || this.authService.isAdminLoggedIn();
   }
 
   enableToCheckAttendance() {
@@ -115,6 +116,11 @@ export class LessonDetailsAttendanceComponent implements OnInit {
     }
 
     return todayDate === lessonDate && currentTime >= lessonStartTime && currentTime <= lessonEndTime;
+  }
+
+  createErrorModal(message: string) {
+    this.errorMessage = message;
+    openErrorModal();
   }
 }
 

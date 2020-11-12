@@ -110,6 +110,10 @@ export class SubjectDatailsStudentsComponent implements OnInit {
       });
   }
 
+  userIsOwner() {
+    return this.token.getUser().id === this.subject.teacherId || this.authService.isAdminLoggedIn();
+  }
+
   createErrorModal(message: string) {
     this.errorMessage = message;
     openErrorModal();

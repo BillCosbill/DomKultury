@@ -19,14 +19,17 @@
       <p>{{subject.description}}</p>
     </div>
 
-    <div *ngIf="this.authService.isTeacherLoggedIn()" class="pt-3">
+    <div *ngIf="this.authService.isTeacherLoggedIn() && userIsOwner()" class="pt-3">
       <a type="button" data-toggle="modal" data-target="#editSubject" (click)="startEditing()">Edytuj</a>
     </div>
 
     <div class="overlap">
       <span class="font-weight-bold">Nauczyciel prowadzący:</span>
-      <p *ngIf="this.authService.isTeacherLoggedIn()" [routerLink]="['/user', (teacher.id)]">{{teacher.firstName}} {{teacher.lastName}} (PESEL: {{teacher.pesel}}) </p>
-      <p *ngIf="!this.authService.isTeacherLoggedIn()">{{teacher.firstName}} {{teacher.lastName}} (PESEL: {{teacher.pesel}}) </p>
+      <p *ngIf="this.authService.isTeacherLoggedIn()"
+         [routerLink]="['/user', (teacher.id)]">{{teacher.firstName}} {{teacher.lastName}} (PESEL: {{teacher.pesel}}
+        ) </p>
+      <p *ngIf="!this.authService.isTeacherLoggedIn()">{{teacher.firstName}} {{teacher.lastName}}
+        (PESEL: {{teacher.pesel}}) </p>
       <i *ngIf="this.authService.isAdminLoggedIn()" data-toggle="modal" data-target="#editTeacher"
          (click)="startEditing()" class="fas fa-user-edit"></i>
     </div>
@@ -47,12 +50,19 @@
           </thead>
 
           <tbody *ngIf="this.authService.isTeacherLoggedIn()">
+
           <tr *ngFor="let lesson of lessons">
-            <td [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ lesson.topic }}</td>
-            <td [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ formatDateTime(lesson.startDate) }}</td>
-            <td [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ formatDateTime(lesson.finishDate) }}</td>
-            <td [routerLink]="['/room', (lesson.roomId)]">{{ getRoomData(lesson.roomId) }}</td>
-            <td class="text-center"><i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteLesson" (click)="selectLessonIdToDelete(lesson.id)"></i></td>
+            <td *ngIf="validationService.lessonTookPlace(lesson.startDate)" class="past-lesson" [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ lesson.topic }}</td>
+            <td *ngIf="validationService.lessonTookPlace(lesson.startDate)" class="past-lesson" [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ formatDateTime(lesson.startDate) }}</td>
+            <td *ngIf="validationService.lessonTookPlace(lesson.startDate)" class="past-lesson" [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ formatDateTime(lesson.finishDate) }}</td>
+            <td *ngIf="validationService.lessonTookPlace(lesson.startDate)" class="past-lesson" [routerLink]="['/room', (lesson.roomId)]">{{ getRoomData(lesson.roomId) }}</td>
+            <td *ngIf="validationService.lessonTookPlace(lesson.startDate)" class="past-lesson text-center"><i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteLesson" (click)="selectLessonIdToDelete(lesson.id)"></i></td>
+
+            <td *ngIf="!validationService.lessonTookPlace(lesson.startDate)" [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ lesson.topic }}</td>
+            <td *ngIf="!validationService.lessonTookPlace(lesson.startDate)" [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ formatDateTime(lesson.startDate) }}</td>
+            <td *ngIf="!validationService.lessonTookPlace(lesson.startDate)" [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ formatDateTime(lesson.finishDate) }}</td>
+            <td *ngIf="!validationService.lessonTookPlace(lesson.startDate)" [routerLink]="['/room', (lesson.roomId)]">{{ getRoomData(lesson.roomId) }}</td>
+            <td *ngIf="!validationService.lessonTookPlace(lesson.startDate)" class="text-center"><i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteLesson" (click)="selectLessonIdToDelete(lesson.id)"></i></td>
           </tr>
           </tbody>
 
@@ -69,7 +79,7 @@
       </div>
     </div>
 
-    <div *ngIf="this.authService.isTeacherLoggedIn()" class="pt-5">
+    <div *ngIf="this.authService.isTeacherLoggedIn() && userIsOwner()" class="pt-5">
       <a type="button" data-toggle="modal" data-target="#addLesson" (click)="startAddingLesson()">Dodaj lekcję</a>
     </div>
 
@@ -214,7 +224,6 @@
     </div>
   </div>
 </div>
-
 
 
 <!-- Modal deleteLesson -->

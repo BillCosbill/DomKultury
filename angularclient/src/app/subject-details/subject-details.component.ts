@@ -9,6 +9,8 @@ import {LessonService} from '../_services/lesson.service';
 import {Room} from '../_model/room';
 import {RoomService} from '../_services/room.service';
 import {AuthService} from '../_services/auth.service';
+import {ValidationService} from '../_services/validation/validation.service';
+import {TokenStorageService} from '../_services/token-storage.service';
 
 declare var openErrorModal;
 
@@ -36,7 +38,9 @@ export class SubjectDetailsComponent implements OnInit {
   startTime: string = null;
   finishTime: string = null;
 
-  constructor(public authService: AuthService, private subjectService: SubjectService, private roomService: RoomService, private route: ActivatedRoute, private userService: UserService, private lessonService: LessonService) {
+  constructor(public validationService: ValidationService, public authService: AuthService, private subjectService: SubjectService,
+              private roomService: RoomService, private route: ActivatedRoute, private userService: UserService,
+              private lessonService: LessonService, private token: TokenStorageService) {
   }
 
   ngOnInit() {
@@ -137,6 +141,10 @@ export class SubjectDetailsComponent implements OnInit {
 
   selectLessonIdToDelete(id: number) {
     this.lessontIdToDelete = id;
+  }
+
+  userIsOwner() {
+    return this.token.getUser().id === this.subject.teacherId || this.authService.isAdminLoggedIn()
   }
 
   createErrorModal(message: string) {

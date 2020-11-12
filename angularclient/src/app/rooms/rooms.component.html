@@ -1,6 +1,6 @@
 <div class="container">
   <div *ngIf="this.authService.isAdminLoggedIn()" class="row">
-    <a type="button" data-toggle="modal" data-target="#addRoomModal">Dodaj pokój</a>
+    <a type="button" data-toggle="modal" data-target="#addRoomModal">Dodaj salę</a>
   </div>
 
   <div class="row row-cols-1 row-cols-md-2 pt-5">
@@ -30,7 +30,7 @@
           <div class="form-group">
             <label for="number">Numer:</label>
             <input type="text" [(ngModel)]="room.number" class="form-control" id="number" name="number"
-                   placeholder="Podaj numer pokoju . . ." required #number="ngModel">
+                   placeholder="Podaj numer sali . . ." required #number="ngModel">
           </div>
 
           <div class="form-group">
@@ -41,8 +41,8 @@
 
           <div class="form-group">
             <label for="description">Opis:</label>
-            <input type="text" [(ngModel)]="room.description" class="form-control" id="description" name="description"
-                   placeholder="Podaj opis  . . ." required #description="ngModel">
+            <textarea [(ngModel)]="room.description" class="form-control" id="description" name="description"
+                      placeholder="Podaj opis  . . ." required cols="30" rows="auto" #description="ngModel"></textarea>
           </div>
 
           <div class="form-group">

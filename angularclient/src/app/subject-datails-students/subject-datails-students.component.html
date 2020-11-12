@@ -31,7 +31,7 @@
       </tbody>
     </table>
   </div>
-  <div *ngIf="this.authService.isTeacherLoggedIn()" class="pt-5 row">
+  <div *ngIf="this.authService.isTeacherLoggedIn() && userIsOwner()" class="pt-5 row">
     <a class="col" type="button" data-toggle="modal" data-target="#addStudent" (click)="startAddingStudent()">Dodaj ucznia do bazy</a>
     <a class="col" type="button" data-toggle="modal" data-target="#addStudentFromDatabase" (click)="startAddingStudent()">Dodaj ucznia z bazy</a>
     <a class="col" type="button" data-toggle="modal" data-target="#sendEmail" (click)="openEmailModal()">Wyślij wiadomość grupową</a>

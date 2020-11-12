@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from '../_services/token-storage.service';
 import {User} from '../_model/user';
 import {UserService} from '../_services/user.service';
+import {ValidationService} from '../_services/validation/validation.service';
 
 declare var openErrorModal;
 
@@ -18,7 +19,7 @@ export class ProfileComponent implements OnInit {
 
   form: any = {};
 
-  constructor(private token: TokenStorageService, private userService: UserService, private tokenStorage: TokenStorageService) {
+  constructor(private token: TokenStorageService, private userService: UserService, private tokenStorage: TokenStorageService, private validationService: ValidationService) {
   }
 
   ngOnInit() {
@@ -43,6 +44,7 @@ export class ProfileComponent implements OnInit {
       form.email = user.email;
       this.tokenStorage.saveUser(form);
 
+      this.validationService.refreshData();
       this.ngOnInit();
     }, error => {
       this.createErrorModal(error.error.message);

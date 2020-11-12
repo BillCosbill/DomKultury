@@ -21,10 +21,11 @@ public class Lesson {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotNull
     private String topic;
 
-    @NotBlank
+    @NotNull
+    @Column(columnDefinition="LONGTEXT")
     private String description;
 
     @NotNull

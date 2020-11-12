@@ -142,6 +142,30 @@ class StudentControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "TEACHER")
+    void addStudentWithInvalidArguments() throws Exception {
+        StudentDTO studentDTO = new StudentDTO();
+
+        studentDTO.setFirstName(null);
+        studentDTO.setLastName("");
+        studentDTO.setPesel("333333333333");
+        studentDTO.setEmail("test3mail.pl");
+        studentDTO.setBirthday("1990-01-01");
+
+        when(studentService.addStudent(any(Student.class))).thenReturn(studentMapper.toStudentAdd(studentDTO));
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        mockMvc.perform(post("/students")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(studentDTO))
+        )
+               .andExpect(status().isBadRequest())
+               .andDo(print());
+    }
+
+    @Test
     @WithMockUser(roles = "ADMIN")
     void deleteStudent() throws Exception {
         mockMvc.perform(delete("/students/{id}", 2))

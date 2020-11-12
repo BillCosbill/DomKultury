@@ -43,4 +43,22 @@ export class ValidationService {
     const dateToday = Date.now();
     return !isNaN(date) && (date < dateToday);
   }
+
+  lessonTookPlace(lessonDate: string) {
+    if (lessonDate !== undefined) {
+      const nowTime = new Date().toLocaleString('en-Us', {hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false});
+      const lessonTime = lessonDate.substr(11, 8);
+      const date = Date.parse(lessonDate);
+      const dateToday = Date.now();
+
+      if (date < dateToday) {
+        // return true;
+        return nowTime > lessonTime;
+      } else {
+        return false;
+      }
+    }
+
+
+  }
 }

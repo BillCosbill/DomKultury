@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class AttendanceDTO {
+
     private Long id;
     private Long lessonId;
     private Long studentId;

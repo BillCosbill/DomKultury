@@ -29,8 +29,8 @@
         <td [routerLink]="['/student', (studentAttendance.id)]">{{ studentAttendance.birthday }}</td>
         <td class="text-center">
           <label>
-            <input *ngIf="enableToCheckAttendance()" class="checkbox" [checked]="studentAttendance.present" (change)="changePresentValue(studentAttendance)" type="checkbox">
-            <input *ngIf="!enableToCheckAttendance()" class="checkbox" [checked]="studentAttendance.present" (change)="changePresentValue(studentAttendance)" disabled readonly type="checkbox">
+            <input *ngIf="enableToCheckAttendance() && userIsOwner()" class="checkbox" [checked]="studentAttendance.present " (change)="changePresentValue(studentAttendance)" type="checkbox">
+            <input *ngIf="!enableToCheckAttendance() || !userIsOwner()" class="checkbox" [checked]="studentAttendance.present" (change)="changePresentValue(studentAttendance)" disabled readonly type="checkbox">
           </label>
 
         </td>
@@ -39,7 +39,7 @@
     </table>
   </div>
 
-  <div *ngIf="enableToCheckAttendance()" class="pb-5">
+  <div *ngIf="enableToCheckAttendance() && userIsOwner()" class="pb-5">
     <a type="button" (click)="save()">Zapisz</a>
   </div>
 

@@ -41,4 +41,10 @@ public class Attendance {
         this.lesson = lesson;
         this.student = student;
     }
+
+    public Attendance(Lesson lesson, Student student, boolean present) {
+        this.lesson = lesson;
+        this.student = student;
+        this.present = present;
+    }
 }

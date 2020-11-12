@@ -26,7 +26,6 @@ export class AdministratorPanelAddTeacherComponent implements OnInit {
     if (!this.validationService.studentExistsWithGivenEmail(this.form.email) && !this.validationService.studentExistsWithGivenPesel(this.form.pesel)) {
       this.authService.register(this.form).subscribe(
         data => {
-          console.log(data);
           this.isSuccessful = true;
           this.isSignUpFailed = false;
         },

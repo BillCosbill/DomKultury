@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from '../_services/user.service';
 import {User} from '../_model/user';
 import {Role} from '../_model/role';
+import {ValidationService} from '../_services/validation/validation.service';
 
 declare var openErrorModal;
 
@@ -27,7 +28,7 @@ export class AdministratorPanelComponent implements OnInit {
     totalItems: this.users.length
   };
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private validationService: ValidationService) {
   }
 
   ngOnInit() {
@@ -68,7 +69,10 @@ export class AdministratorPanelComponent implements OnInit {
   // TODO modal jakiś ładny z komunikatem o błędzie
 
   deleteUser() {
-    this.userService.deleteUser(this.userIdToDelete).subscribe(() => this.ngOnInit(), error => {
+    this.userService.deleteUser(this.userIdToDelete).subscribe(() => {
+      this.ngOnInit();
+      this.validationService.refreshData();
+    }, error => {
       this.createErrorModal(error.error.message);
     });
   }

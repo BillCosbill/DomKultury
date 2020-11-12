@@ -5,6 +5,10 @@ import {ActivatedRoute} from '@angular/router';
 import {Room} from '../_model/room';
 import {RoomService} from '../_services/room.service';
 import {AuthService} from '../_services/auth.service';
+import {ValidationService} from '../_services/validation/validation.service';
+import {TokenStorageService} from '../_services/token-storage.service';
+import {Subject} from '../_model/subject';
+import {SubjectService} from '../_services/subject.service';
 
 declare var openErrorModal;
 
@@ -19,6 +23,7 @@ export class LessonDetailsComponent implements OnInit {
   lessonId: number;
   subjectId: number;
   lesson: Lesson = new Lesson();
+  subject: Subject = new Subject();
   room: Room = new Room();
   rooms: Room[] = [];
   startDate: string;
@@ -30,7 +35,7 @@ export class LessonDetailsComponent implements OnInit {
   editedStartTime: string;
   editedFinishTime: string;
 
-  constructor(private lessonService: LessonService, private roomService: RoomService, private route: ActivatedRoute, public authService: AuthService) {
+  constructor(private token: TokenStorageService, public validationService: ValidationService, private subjectService: SubjectService, private lessonService: LessonService, private roomService: RoomService, private route: ActivatedRoute, public authService: AuthService) {
   }
 
   ngOnInit() {
@@ -48,6 +53,10 @@ export class LessonDetailsComponent implements OnInit {
 
       this.roomService.getRoom(this.lesson.roomId).subscribe(room => {
         this.room = room;
+      });
+
+      this.subjectService.getSubject(lesson.id).subscribe(subject => {
+        this.subject = subject;
       });
     });
 
@@ -103,6 +112,10 @@ export class LessonDetailsComponent implements OnInit {
 
   timeIncorrect() {
     return this.editedFinishTime <= this.editedStartTime;
+  }
+
+  userIsOwner() {
+    return this.token.getUser().id === this.subject.teacherId || this.authService.isAdminLoggedIn();
   }
 
   createErrorModal(message: string) {

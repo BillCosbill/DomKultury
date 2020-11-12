@@ -20,20 +20,21 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Imie nie moze byc puste")
     private String firstName;
 
-    @NotBlank
+    @NotBlank(message = "Nazwisko nie moze byc puste")
     private String lastName;
 
-    @NotBlank
+    @NotBlank(message = "Pesel nie moze byc pusty")
+    @Size(min = 11, max = 11, message = "Pesel musi skladac sie z 11 znakow")
     private String pesel;
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "Email nie moze byc pusty")
+    @Email(message = "Email musi byc poprawny")
     private String email;
 
-    @NotNull
+    @NotNull(message = "Data urodzin nie moze byc pusta")
     private LocalDate birthday;
 
     public Student(String firstName, String lastName, String pesel, String email, LocalDate birthday) {

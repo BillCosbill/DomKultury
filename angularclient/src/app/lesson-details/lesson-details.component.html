@@ -19,27 +19,29 @@
       <p>{{lesson.description}}</p>
     </div>
 
-    <div *ngIf="this.authService.isTeacherLoggedIn()" class="pt-3">
+    <div *ngIf="this.authService.isTeacherLoggedIn() && userIsOwner()" class="pt-3">
       <a type="button" data-toggle="modal" data-target="#editLesson" (click)="startEditing()">Edytuj</a>
     </div>
 
     <div class="overlap">
       <span class="font-weight-bold">Data rozpoczęcia:</span>
       <p>{{startDate}} {{startTime}}</p>
-      <i *ngIf="this.authService.isTeacherLoggedIn()" data-toggle="modal" data-target="#editStartDate" (click)="startEditingDatetime()" class="fas fa-edit"></i>
+      <i *ngIf="this.authService.isTeacherLoggedIn() && userIsOwner()" data-toggle="modal" data-target="#editStartDate" (click)="startEditingDatetime()" class="fas fa-edit"></i>
+<!--      <i *ngIf="this.authService.isTeacherLoggedIn() && !this.validationService.lessonTookPlace(this.lesson.startDate)" data-toggle="modal" data-target="#editStartDate" (click)="startEditingDatetime()" class="fas fa-edit"></i>-->
     </div>
 
 
     <div class="overlap">
       <span class="font-weight-bold">Data zakończenia:</span>
       <p >{{startDate}} {{finishTime}}</p>
-      <i *ngIf="this.authService.isTeacherLoggedIn()" data-toggle="modal" data-target="#editFinishDate" (click)="startEditingDatetime()" class="fas fa-edit"></i>
+      <i *ngIf="this.authService.isTeacherLoggedIn() && userIsOwner()" data-toggle="modal" data-target="#editFinishDate" (click)="startEditingDatetime()" class="fas fa-edit"></i>
+<!--      <i *ngIf="this.authService.isTeacherLoggedIn() && !this.validationService.lessonTookPlace(this.lesson.startDate)" data-toggle="modal" data-target="#editFinishDate" (click)="startEditingDatetime()" class="fas fa-edit"></i>-->
     </div>
 
     <div class="overlap">
       <span class="font-weight-bold">Sala:</span>
       <p [routerLink]="['/room', (room.id)]">{{room.number}} - {{room.destiny}}</p>
-      <i *ngIf="this.authService.isTeacherLoggedIn()" data-toggle="modal" data-target="#editRoom" (click)="startEditing()" class="fas fa-edit"></i>
+      <i *ngIf="this.authService.isTeacherLoggedIn() && userIsOwner()" data-toggle="modal" data-target="#editRoom" (click)="startEditing()" class="fas fa-edit"></i>
     </div>
 
 

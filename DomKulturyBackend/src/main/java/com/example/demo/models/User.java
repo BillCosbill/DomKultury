@@ -27,23 +27,23 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotNull
     private String username;
 
-    @NotBlank
+    @NotNull
     private String firstName;
 
-    @NotBlank
+    @NotNull
     private String lastName;
 
-    @NotBlank
+    @NotNull
     private String pesel;
 
-    @NotBlank
+    @NotNull
     @Email
     private String email;
 
-    @NotBlank
+    @NotNull
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)

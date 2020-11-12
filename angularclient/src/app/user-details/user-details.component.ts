@@ -9,6 +9,7 @@ import {EventSettingsModel, View} from '@syncfusion/ej2-angular-schedule';
 import {DataSource} from '../_model/data-source';
 import {LessonService} from '../_services/lesson.service';
 import {TokenStorageService} from '../_services/token-storage.service';
+import {ValidationService} from '../_services/validation/validation.service';
 
 declare var openErrorModal;
 
@@ -36,7 +37,7 @@ export class UserDetailsComponent implements OnInit {
 
   userEdited: User = new User();
 
-  constructor(private tokenStorage: TokenStorageService, private lessonService: LessonService, private userService: UserService, public authService: AuthService, private subjectService: SubjectService, private route: ActivatedRoute) {
+  constructor(private validationService: ValidationService, private tokenStorage: TokenStorageService, private lessonService: LessonService, private userService: UserService, public authService: AuthService, private subjectService: SubjectService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -87,7 +88,6 @@ export class UserDetailsComponent implements OnInit {
   startEditing() {
     this.userEdited = new User();
     this.userEdited.id = this.user.id;
-    // this.userEdited.username = this.user.username;
     this.userEdited.firstName = this.user.firstName;
     this.userEdited.lastName = this.user.lastName;
     this.userEdited.pesel = this.user.pesel;
@@ -104,6 +104,7 @@ export class UserDetailsComponent implements OnInit {
         this.tokenStorage.saveUser(form);
       }
 
+      this.validationService.refreshData();
       this.ngOnInit();
     }, error => {
       this.createErrorModal(error.error.message);
