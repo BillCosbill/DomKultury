@@ -21,7 +21,7 @@
         <th scope="col">Nazwa użytkownika</th>
         <th scope="col">Imię</th>
         <th scope="col">Nazwisko</th>
-        <th scope="col">PESEL</th>
+        <th scope="col">Identyfikator</th>
         <th scope="col">Email</th>
       </tr>
       </thead>
@@ -30,7 +30,7 @@
         <td [routerLink]="['/user', (user.id)]">{{ user.username }}</td>
         <td [routerLink]="['/user', (user.id)]">{{ user.firstName }}</td>
         <td [routerLink]="['/user', (user.id)]">{{ user.lastName }}</td>
-        <td [routerLink]="['/user', (user.id)]">{{ user.pesel}}</td>
+        <td [routerLink]="['/user', (user.id)]">{{ user.id}}</td>
         <td [routerLink]="['/user', (user.id)]">{{ user.email}}</td>
       </tr>
       </tbody>

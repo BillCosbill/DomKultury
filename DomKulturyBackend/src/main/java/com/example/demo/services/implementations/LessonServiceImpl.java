@@ -2,6 +2,7 @@ package com.example.demo.services.implementations;
 
 import com.example.demo.dto.AttendanceDTO;
 import com.example.demo.dto.LessonDTO;
+import com.example.demo.dto.StudentAttendanceDTO;
 import com.example.demo.exceptions.*;
 import com.example.demo.mappers.AttendanceMapper;
 import com.example.demo.mappers.LessonMapper;
@@ -13,11 +14,11 @@ import com.example.demo.repository.AttendanceRepository;
 import com.example.demo.repository.LessonRepository;
 import com.example.demo.repository.SubjectRepository;
 import com.example.demo.services.interfaces.LessonService;
+import com.example.demo.services.interfaces.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,14 +31,16 @@ public class LessonServiceImpl implements LessonService {
     AttendanceRepository attendanceRepository;
     AttendanceMapper attendanceMapper;
     SubjectRepository subjectRepository;
+    private final StudentService studentService;
 
     @Autowired
-    public LessonServiceImpl(LessonRepository lessonRepository, LessonMapper lessonMapper, AttendanceRepository attendanceRepository, AttendanceMapper attendanceMapper, SubjectRepository subjectRepository) {
+    public LessonServiceImpl(LessonRepository lessonRepository, LessonMapper lessonMapper, AttendanceRepository attendanceRepository, AttendanceMapper attendanceMapper, SubjectRepository subjectRepository, StudentService studentService) {
         this.lessonRepository = lessonRepository;
         this.lessonMapper = lessonMapper;
         this.attendanceRepository = attendanceRepository;
         this.attendanceMapper = attendanceMapper;
         this.subjectRepository = subjectRepository;
+        this.studentService = studentService;
     }
 
     @Override
@@ -104,7 +107,6 @@ public class LessonServiceImpl implements LessonService {
         return lesson;
     }
 
-    //TODO dobrze przetestować tę metodę!!!
     @Override
     public void checkAttendance(List<AttendanceDTO> attendanceDTOS, Long lessonId) {
         attendanceDTOS.forEach(x -> {
@@ -113,15 +115,29 @@ public class LessonServiceImpl implements LessonService {
 
         Lesson lesson = lessonRepository.findById(lessonId).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono lekcji o id " + lessonId));
 
-        if (!LocalDate.now().equals(lesson.getStartDate().toLocalDate()) ||
-                LocalDateTime.now().toLocalTime().isBefore(lesson.getStartDate().toLocalTime()) ||
-                LocalDateTime.now().toLocalTime().isAfter(lesson.getFinishDate().toLocalTime())) {
-
-            // TODO wyjątek o niezgodności dat i godzin zajęć
-            throw new ConflictGlobalException("Obecność można sprawdzić tylko w czasie trwania zajęć!");
-        }
-
         save(lesson);
+    }
+
+    @Override
+    public List<StudentAttendanceDTO> getStudentAttendance(Long lessonId) {
+        Lesson lesson = findById(lessonId);
+
+        List<StudentAttendanceDTO> studentAttendanceDTOs = new ArrayList<>();
+
+        lesson.getAttendances().forEach(attendance -> {
+            StudentAttendanceDTO toAdd = new StudentAttendanceDTO();
+            Student student = studentService.findById(attendance.getStudent().getId());
+            toAdd.setId(student.getId());
+            toAdd.setFirstName(student.getFirstName());
+            toAdd.setLastName(student.getLastName());
+            toAdd.setEmail(student.getEmail());
+            toAdd.setBirthday(student.getBirthday().toString());
+            toAdd.setPresent(attendance.isPresent());
+
+            studentAttendanceDTOs.add(toAdd);
+        });
+
+        return studentAttendanceDTOs;
     }
 
 }

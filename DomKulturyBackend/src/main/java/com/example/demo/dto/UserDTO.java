@@ -18,7 +18,6 @@ public class UserDTO {
     private String username;
     private String firstName;
     private String lastName;
-    private String pesel;
     private String email;
     private Set<Role> roles = new HashSet<>();
     private boolean isEnable;

@@ -90,7 +90,6 @@ export class UserDetailsComponent implements OnInit {
     this.userEdited.id = this.user.id;
     this.userEdited.firstName = this.user.firstName;
     this.userEdited.lastName = this.user.lastName;
-    this.userEdited.pesel = this.user.pesel;
     this.userEdited.email = this.user.email;
   }
 

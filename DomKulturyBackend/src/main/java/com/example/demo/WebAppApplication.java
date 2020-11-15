@@ -82,15 +82,15 @@ public class WebAppApplication {
         roleRepository.save(teacher);
         roleRepository.save(admin);
 
-        Student student1 = new Student("Mieczysław", "Boczek", "97092606913", "m.boczek@onet.pl", LocalDate
+        Student student1 = new Student("Mieczysław", "Boczek", "m.boczek@onet.pl", LocalDate
                 .of(1997, 9, 26));
-        Student student2 = new Student("Katarzyna", "Pączek", "99062713215", "k.paczek@onet.pl", LocalDate
+        Student student2 = new Student("Katarzyna", "Pączek", "k.paczek@onet.pl", LocalDate
                 .of(1999, 6, 27));
-        Student student3 = new Student("Andrzej", "Wielki", "98022224156", "a.wielki@onet.pl", LocalDate
+        Student student3 = new Student("Andrzej", "Wielki", "a.wielki@onet.pl", LocalDate
                 .of(1998, 2, 22));
-        Student student4 = new Student("Agnieszka", "Niemieszkalska", "97101023162", "a.niemieszkalska@onet.pl", LocalDate
+        Student student4 = new Student("Agnieszka", "Niemieszkalska", "a.niemieszkalska@onet.pl", LocalDate
                 .of(1997, 10, 10));
-        Student student5 = new Student("Tomasz", "Mleczak", "97090912682", "t.szeligowski26@gmail.com", LocalDate
+        Student student5 = new Student("Tomasz", "Mleczak", "t.szeligowski26@gmail.com", LocalDate
                 .of(1997, 10, 10));
 
         studentRepository.save(student1);
@@ -106,13 +106,13 @@ public class WebAppApplication {
         students.add(student4);
         students.add(student5);
 
-        User adminUser = new User("admin", "Tomasz", "Szeligowski", "97092606913", "t.szeligowski@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
+        User adminUser = new User("admin", "Tomasz", "Szeligowski", "t.szeligowski@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         Set<Role> adminRole = new HashSet<>();
         adminRole.add(admin);
         adminUser.setRoles(adminRole);
         userRepository.save(adminUser);
 
-        User teacherUser = new User("teacher", "Jan", "Kowalski", "97092506913", "teacher@gmail.com", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
+        User teacherUser = new User("teacher", "Jan", "Kowalski", "teacher@gmail.com", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         Set<Role> teacherRole = new HashSet<>();
         teacherRole.add(teacher);
         teacherUser.setRoles(teacherRole);

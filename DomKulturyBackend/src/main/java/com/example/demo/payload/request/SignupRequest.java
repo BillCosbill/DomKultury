@@ -23,9 +23,6 @@ public class SignupRequest {
     private String lastName;
 
     @NotBlank
-    private String pesel;
-
-    @NotBlank
     @Email
     private String email;
 

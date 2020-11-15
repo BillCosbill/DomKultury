@@ -86,7 +86,6 @@ export class StudentDetailsComponent implements OnInit {
     this.studentEdited.id = this.student.id;
     this.studentEdited.firstName = this.student.firstName;
     this.studentEdited.lastName = this.student.lastName;
-    this.studentEdited.pesel = this.student.pesel;
     this.studentEdited.email = this.student.email;
     this.studentEdited.birthday = this.student.birthday;
   }

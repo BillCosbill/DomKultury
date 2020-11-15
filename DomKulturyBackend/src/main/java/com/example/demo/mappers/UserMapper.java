@@ -36,7 +36,6 @@ public class UserMapper {
         userDTO.setUsername(user.getUsername());
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
-        userDTO.setPesel(user.getPesel());
         userDTO.setEmail(user.getEmail());
         userDTO.setRoles(user.getRoles());
         userDTO.setEnable(user.isEnable());
@@ -62,9 +61,6 @@ public class UserMapper {
         }
         if (userDTO.getLastName() != null) {
             user.setLastName(userDTO.getLastName());
-        }
-        if (userDTO.getPesel() != null) {
-            user.setPesel(userDTO.getPesel());
         }
         if (userDTO.getEmail() != null) {
             user.setEmail(userDTO.getEmail());

@@ -82,7 +82,7 @@
             <select [(ngModel)]="subjectToAdd.teacherId" class="form-control" id="teacherId" name="teacherId" required
                     #teacherId="ngModel">
               <option *ngFor="let user of users" [value]="user.id">{{user.id}}. {{user.firstName}} {{user.lastName}}
-                (PESEL: {{user.pesel}})
+                (Identyfikator: {{user.id}})
               </option>
             </select>
           </div>

@@ -77,16 +77,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student addStudent(Student student) {
-        if(studentRepository.existsByPesel(student.getPesel())) {
-            throw new ConflictGlobalException("Uczeń z peselem " + student.getPesel() + " już istnieje!");
-        }
-
         if(studentRepository.existsByEmail(student.getEmail())) {
             throw new ConflictGlobalException("Uczeń z adresem email  " + student.getEmail() + " już istnieje!");
-        }
-
-        if(userRepository.existsByPesel(student.getPesel())) {
-            throw new ConflictGlobalException("Użytkownik z peselem " + student.getPesel() + " już istnieje!");
         }
 
         if(userRepository.existsByEmail(student.getEmail())) {

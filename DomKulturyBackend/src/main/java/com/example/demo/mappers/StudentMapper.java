@@ -33,7 +33,6 @@ public class StudentMapper {
         studentDTO.setId(student.getId());
         studentDTO.setFirstName(student.getFirstName());
         studentDTO.setLastName(student.getLastName());
-        studentDTO.setPesel(student.getPesel());
         studentDTO.setEmail(student.getEmail());
         studentDTO.setBirthday(student.getBirthday().toString());
 
@@ -50,9 +49,6 @@ public class StudentMapper {
         }
         if (studentDTO.getLastName() != null) {
             student.setLastName(studentDTO.getLastName());
-        }
-        if (studentDTO.getPesel() != null) {
-            student.setPesel(studentDTO.getPesel());
         }
         if (studentDTO.getEmail() != null) {
             student.setEmail(studentDTO.getEmail());
@@ -72,9 +68,6 @@ public class StudentMapper {
         }
         if (studentDTO.getLastName() != null) {
             student.setLastName(studentDTO.getLastName());
-        }
-        if (studentDTO.getPesel() != null) {
-            student.setPesel(studentDTO.getPesel());
         }
         if (studentDTO.getEmail() != null) {
             student.setEmail(studentDTO.getEmail());

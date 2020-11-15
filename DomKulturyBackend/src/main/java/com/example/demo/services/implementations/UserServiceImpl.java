@@ -93,10 +93,6 @@ public class UserServiceImpl implements UserService {
             throw new ConflictGlobalException("Użytkownik z nazwą " + userDTO.getUsername() + " już istnieje!");
         }
 
-        if(!user.getPesel().equals(userDTO.getPesel()) && userRepository.existsByPesel(userDTO.getPesel())) {
-            throw new ConflictGlobalException("Użytkownik z peselem " + userDTO.getPesel() + " już istnieje!");
-        }
-
         user = userMapper.toUser(userDTO, id);
 
         return save(user);

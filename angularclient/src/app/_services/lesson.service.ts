@@ -4,6 +4,7 @@ import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {Lesson} from '../_model/lesson';
 import {Attendance} from '../_model/attendance';
+import {StudentAttendance} from '../_model/student-attendance';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,12 @@ export class LessonService {
 
   public findAll(): Observable<Lesson[]> {
     return this.http.get<Lesson[]>(this.lessonUrl).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  public getStudentAttendances(id: number) {
+    return this.http.get<StudentAttendance[]>(this.lessonUrl + '/' + id + '/studentAttendances').pipe(
       catchError(this.handleError)
     );
   }

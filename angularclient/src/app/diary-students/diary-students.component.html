@@ -21,7 +21,7 @@
       <tr>
         <th scope="col">Imię</th>
         <th scope="col">Nazwisko</th>
-        <th scope="col">PESEL</th>
+        <th scope="col">Indeks</th>
         <th scope="col">Email</th>
         <th scope="col">Data urodzenia</th>
         <th *ngIf="this.authService.isAdminLoggedIn()" scope="col">Opcje</th>
@@ -31,7 +31,7 @@
       <tr *ngFor="let student of students | filter:searchText | paginate: config">
         <td [routerLink]="['/student', (student.id)]">{{ student.firstName }}</td>
         <td [routerLink]="['/student', (student.id)]">{{ student.lastName }}</td>
-        <td [routerLink]="['/student', (student.id)]">{{ student.pesel}}</td>
+        <td [routerLink]="['/student', (student.id)]">{{ student.id}}</td>
         <td [routerLink]="['/student', (student.id)]">{{ student.email}}</td>
         <td [routerLink]="['/student', (student.id)]">{{ student.birthday}}</td>
         <td class="text-center" *ngIf="this.authService.isAdminLoggedIn()">
@@ -101,17 +101,6 @@
           </div>
 
           <div class="form-group">
-            <label for="pesel">PESEL:</label>
-            <input type="text" [(ngModel)]="studentModel.pesel" class="form-control" id="pesel" name="pesel"
-                   placeholder="Podaj PESEL . . ." minlength="11" maxlength="11" required #pesel="ngModel">
-          </div>
-
-          <div class="alert alert-danger container" role="alert"
-               *ngIf="validationService.studentExistsWithGivenPesel(studentModel.pesel)">
-            Podany pesel jest już zajęty
-          </div>
-
-          <div class="form-group">
             <label for="email">Email:</label>
             <input type="email" [(ngModel)]="studentModel.email" class="form-control" id="email" name="email"
                    placeholder="Podaj email . . ." required email #email="ngModel">
@@ -136,7 +125,7 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
             <button type="submit" [disabled]="!studentForm.form.valid || !validationService.validateBirthdayIfCorrect(this.studentModel.birthday)
-             || validationService.studentExistsWithGivenEmail(studentModel.email) || validationService.studentExistsWithGivenPesel(studentModel.pesel)"
+             || validationService.studentExistsWithGivenEmail(studentModel.email)"
                     class="btn btn-info" data-dismiss="modal"
                     (click)="addStudent()">Dodaj studenta
             </button>

@@ -40,8 +40,8 @@ export class LessonDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.lessonId = +params.id;
-      this.subjectId = +params.id2;
+      this.subjectId = +params.id;
+      this.lessonId = +params.id2;
     });
 
     this.lessonService.getLesson(this.lessonId).subscribe(lesson => {
@@ -55,7 +55,7 @@ export class LessonDetailsComponent implements OnInit {
         this.room = room;
       });
 
-      this.subjectService.getSubject(lesson.id).subscribe(subject => {
+      this.subjectService.getSubject(lesson.subjectId).subscribe(subject => {
         this.subject = subject;
       });
     });

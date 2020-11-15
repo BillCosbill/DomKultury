@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.dto.AttendanceDTO;
 import com.example.demo.dto.LessonDTO;
+import com.example.demo.dto.StudentAttendanceDTO;
 import com.example.demo.mappers.LessonMapper;
 import com.example.demo.models.Lesson;
 import com.example.demo.payload.response.MessageResponse;
@@ -31,6 +32,11 @@ public class LessonController {
     @GetMapping
     public ResponseEntity<List<LessonDTO>> getLessons() {
         return ResponseEntity.ok(lessonMapper.toLessonsDTO(lessonService.findAll()));
+    }
+
+    @GetMapping("/{id}/studentAttendances")
+    public ResponseEntity<List<StudentAttendanceDTO>> getStudentAttendances(@PathVariable Long id) {
+        return ResponseEntity.ok(lessonService.getStudentAttendance(id));
     }
 
     @GetMapping("/{id}")

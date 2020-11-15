@@ -26,10 +26,8 @@
     <div class="overlap">
       <span class="font-weight-bold">Nauczyciel prowadzący:</span>
       <p *ngIf="this.authService.isTeacherLoggedIn()"
-         [routerLink]="['/user', (teacher.id)]">{{teacher.firstName}} {{teacher.lastName}} (PESEL: {{teacher.pesel}}
-        ) </p>
-      <p *ngIf="!this.authService.isTeacherLoggedIn()">{{teacher.firstName}} {{teacher.lastName}}
-        (PESEL: {{teacher.pesel}}) </p>
+         [routerLink]="['/user', (teacher.id)]">{{teacher.firstName}} {{teacher.lastName}} (Identyfikator: {{teacher.id}}) </p>
+      <p *ngIf="!this.authService.isTeacherLoggedIn()">{{teacher.firstName}} {{teacher.lastName}} (Identyfikator: {{teacher.id}}) </p>
       <i *ngIf="this.authService.isAdminLoggedIn()" data-toggle="modal" data-target="#editTeacher"
          (click)="startEditing()" class="fas fa-user-edit"></i>
     </div>
@@ -141,8 +139,8 @@
             <label for="teacherId">Nauczyciel:</label>
             <select [(ngModel)]="subjectEdited.teacherId" class="form-control" id="teacherId" name="teacherId" required
                     #teacherId="ngModel">
-              <option *ngFor="let user of users" [value]="user.id">{{user.id}}. {{user.firstName}} {{user.lastName}}
-                (PESEL: {{user.pesel}})
+              <option *ngFor="let user of users" [value]="user.id">{{user.firstName}} {{user.lastName}}
+                (Identyfikator: {{user.id}})
               </option>
             </select>
           </div>

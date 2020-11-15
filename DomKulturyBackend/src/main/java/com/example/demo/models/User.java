@@ -37,9 +37,6 @@ public class User {
     private String lastName;
 
     @NotNull
-    private String pesel;
-
-    @NotNull
     @Email
     private String email;
 
@@ -59,11 +56,10 @@ public class User {
     @OneToMany(mappedBy = "teacher")
     private List<Subject> subjects;
 
-    public User(String username, String firstName, String lastName, String pesel, String email, String password, boolean isEnable) {
+    public User(String username, String firstName, String lastName, String email, String password, boolean isEnable) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.pesel = pesel;
         this.email = email;
         this.password = password;
         this.isEnable = isEnable;

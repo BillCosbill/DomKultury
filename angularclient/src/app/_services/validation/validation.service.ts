@@ -3,6 +3,8 @@ import {StudentService} from '../student.service';
 import {Student} from '../../_model/student';
 import {User} from '../../_model/user';
 import {UserService} from '../user.service';
+import {TokenStorageService} from '../token-storage.service';
+import {AuthService} from '../auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,24 +14,20 @@ export class ValidationService {
   students: Student[] = [];
   users: User[] = [];
 
-  constructor(private studentService: StudentService, private  userService: UserService) {
+  constructor(private studentService: StudentService, private  userService: UserService, private authService: AuthService) {
     this.refreshData();
   }
 
   refreshData() {
-    this.studentService.findAll().subscribe(students => {
-      this.students = students;
-    });
+    if (this.authService.isTeacherLoggedIn()) {
+      this.studentService.findAll().subscribe(students => {
+        this.students = students;
+      });
 
-    this.userService.findAll().subscribe(users => {
-      this.users = users;
-    });
-  }
-
-  studentExistsWithGivenPesel(pesel: string) {
-    const studentWithSamePesel = this.students.find(student => student.pesel === pesel);
-    const usertWithSamePesel = this.users.find(user => user.pesel === pesel);
-    return (studentWithSamePesel !== null && studentWithSamePesel !== undefined) || (usertWithSamePesel !== null && usertWithSamePesel !== undefined);
+      this.userService.findAll().subscribe(users => {
+        this.users = users;
+      });
+    }
   }
 
   studentExistsWithGivenEmail(email: string) {

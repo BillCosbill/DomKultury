@@ -85,24 +85,16 @@ public class AuthServiceImpl implements AuthService {
             throw new ConflictGlobalException("Użytkownik z adresem email " + signUpRequest.getEmail() + " już istnieje!");
         }
 
-        if (userRepository.existsByPesel(signUpRequest.getPesel())) {
-            throw new ConflictGlobalException("Użytkownik z peselem " + signUpRequest.getPesel() + " już istnieje!");
-        }
-
         if (studentRepository.existsByEmail(signUpRequest.getEmail())) {
             throw new ConflictGlobalException("Uczeń z adresem email " + signUpRequest.getEmail() + " już istnieje!");
         }
 
-        if (studentRepository.existsByPesel(signUpRequest.getPesel())) {
-            throw new ConflictGlobalException("Uczeń z peselem  " + signUpRequest.getPesel() + " już istnieje!");
-
-        }
 
         signUpRequest.setPassword(passwordGenerator.generatePassword(10));
 
         // Create new user's account
         User user = new User(signUpRequest.getUsername(), signUpRequest.getFirstName(), signUpRequest
-                .getLastName(), signUpRequest.getPesel(), signUpRequest.getEmail(), encoder
+                .getLastName(), signUpRequest.getEmail(), encoder
                 .encode(signUpRequest.getPassword()), true);
 
         Set<String> strRoles = signUpRequest.getRole();

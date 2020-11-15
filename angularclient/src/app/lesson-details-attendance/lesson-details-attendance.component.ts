@@ -30,7 +30,6 @@ export class LessonDetailsAttendanceComponent implements OnInit {
 
   subject: Subject = new Subject();
 
-  students: Student[] = [];
   attendances: Attendance[] = [];
 
   studentsAttendance: StudentAttendance[] = [];
@@ -40,13 +39,17 @@ export class LessonDetailsAttendanceComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.lessonId = +params.id;
-      this.subjectId = +params.id2;
+      this.subjectId = +params.id;
+      this.lessonId = +params.id2;
     });
 
-    this.students = [];
     this.attendances = [];
     this.studentsAttendance = [];
+
+    this.lessonService.getStudentAttendances(this.lessonId).subscribe(studentAttendance => {
+      this.studentsAttendance = studentAttendance;
+      this.studentsAttendance.sort((a, b) => (a.lastName.localeCompare(b.lastName)));
+    });
 
     this.lessonService.getLesson(this.lessonId).subscribe(result => {
       this.lesson = result;
@@ -54,26 +57,10 @@ export class LessonDetailsAttendanceComponent implements OnInit {
       this.subjectService.getSubject(this.lesson.subjectId).subscribe(subject => {
         this.subject = subject;
 
-        this.subject.studentsId.forEach(studentId => {
-          this.studentService.getStudent(studentId).subscribe(student => {
-            this.students.push(student);
-            this.studentsAttendance.push(student as StudentAttendance);
-            // TODO na pewno tu sortowanie??
-            this.studentsAttendance.sort((a, b) => (a.lastName.localeCompare(b.lastName)));
-          });
-        });
-
         this.lesson.attendancesId.forEach(attendanceId => {
           this.attendanceService.getAttendance(attendanceId).subscribe(attendance => {
             this.attendances.push(attendance);
-
-            this.studentsAttendance.forEach(studentAttendance => {
-              if (studentAttendance.id === attendance.studentId) {
-                studentAttendance.present = attendance.present;
-              }
-            });
           });
-
         });
 
       });

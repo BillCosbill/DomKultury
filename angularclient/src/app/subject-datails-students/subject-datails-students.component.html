@@ -13,7 +13,7 @@
       <tr>
         <th scope="col">Imię</th>
         <th scope="col">Nazwisko</th>
-        <th scope="col">PESEL</th>
+        <th scope="col">Indeks</th>
         <th scope="col">E-mail</th>
         <th scope="col">Data urodzenia</th>
         <th *ngIf="this.authService.isTeacherLoggedIn()" scope="col">Opcje</th>
@@ -23,7 +23,7 @@
       <tr *ngFor="let student of students">
         <td [routerLink]="['/student', (student.id)]">{{ student.firstName }}</td>
         <td [routerLink]="['/student', (student.id)]">{{ student.lastName }}</td>
-        <td [routerLink]="['/student', (student.id)]">{{ student.pesel }}</td>
+        <td [routerLink]="['/student', (student.id)]">{{ student.id }}</td>
         <td [routerLink]="['/student', (student.id)]">{{ student.email }}</td>
         <td [routerLink]="['/student', (student.id)]">{{ student.birthday }}</td>
         <td class="text-center" *ngIf="this.authService.isTeacherLoggedIn()"><i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteStudent" (click)="selectStudentIdToDelete(student.id)"></i></td>
@@ -94,16 +94,6 @@
           </div>
 
           <div class="form-group">
-            <label for="pesel">PESEL:</label>
-            <input type="text" [(ngModel)]="studentToAdd.pesel" class="form-control" id="pesel" name="pesel"
-                   placeholder="Podaj PESEL . . ." minlength="11" maxlength="11" required #pesel="ngModel">
-          </div>
-
-          <div class="alert alert-danger container" role="alert" *ngIf="validationService.studentExistsWithGivenPesel(studentToAdd.pesel)">
-            Podany pesel jest już zajęty
-          </div>
-
-          <div class="form-group">
             <label for="email">Email:</label>
             <input type="email" [(ngModel)]="studentToAdd.email" class="form-control" id="email" name="email"
                    placeholder="Podaj email . . ." required email #email="ngModel">
@@ -126,7 +116,7 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
             <button type="submit" [disabled]="!studentForm.form.valid || !validationService.validateBirthdayIfCorrect(this.studentToAdd.birthday)
-             || validationService.studentExistsWithGivenPesel(studentToAdd.pesel) || validationService.studentExistsWithGivenEmail(studentToAdd.email)" class="btn btn-info" data-dismiss="modal"
+             || validationService.studentExistsWithGivenEmail(studentToAdd.email)" class="btn btn-info" data-dismiss="modal"
                     (click)="addStudent()">Dodaj ucznia
             </button>
           </div>

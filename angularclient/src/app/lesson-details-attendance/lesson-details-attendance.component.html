@@ -14,7 +14,7 @@
       <tr>
         <th scope="col">Imię</th>
         <th scope="col">Nazwisko</th>
-        <th scope="col">PESEL</th>
+        <th scope="col">Indeks</th>
         <th scope="col">E-mail</th>
         <th scope="col">Data urodzenia</th>
         <th scope="col">Obecność</th>
@@ -24,13 +24,13 @@
       <tr *ngFor="let studentAttendance of studentsAttendance">
         <td [routerLink]="['/student', (studentAttendance.id)]">{{ studentAttendance.firstName }}</td>
         <td [routerLink]="['/student', (studentAttendance.id)]">{{ studentAttendance.lastName }}</td>
-        <td [routerLink]="['/student', (studentAttendance.id)]">{{ studentAttendance.pesel }}</td>
+        <td [routerLink]="['/student', (studentAttendance.id)]">{{ studentAttendance.id }}</td>
         <td [routerLink]="['/student', (studentAttendance.id)]">{{ studentAttendance.email }}</td>
         <td [routerLink]="['/student', (studentAttendance.id)]">{{ studentAttendance.birthday }}</td>
         <td class="text-center">
           <label>
-            <input *ngIf="enableToCheckAttendance() && userIsOwner()" class="checkbox" [checked]="studentAttendance.present " (change)="changePresentValue(studentAttendance)" type="checkbox">
-            <input *ngIf="!enableToCheckAttendance() || !userIsOwner()" class="checkbox" [checked]="studentAttendance.present" (change)="changePresentValue(studentAttendance)" disabled readonly type="checkbox">
+            <input *ngIf="userIsOwner()" class="checkbox" [checked]="studentAttendance.present " (change)="changePresentValue(studentAttendance)" type="checkbox">
+            <input *ngIf="!userIsOwner()" class="checkbox" [checked]="studentAttendance.present" (change)="changePresentValue(studentAttendance)" disabled readonly type="checkbox">
           </label>
 
         </td>
@@ -39,7 +39,7 @@
     </table>
   </div>
 
-  <div *ngIf="enableToCheckAttendance() && userIsOwner()" class="pb-5">
+  <div *ngIf="userIsOwner()" class="pb-5">
     <a type="button" (click)="save()">Zapisz</a>
   </div>
 

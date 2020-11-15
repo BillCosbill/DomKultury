@@ -37,24 +37,6 @@
       </div>
 
       <div class="form-group">
-        <label for="pesel"></label>
-        <input type="text" class="form-control" name="pesel" placeholder="Pesel" [(ngModel)]="form.pesel" required
-               minlength="11" maxlength="11" #pesel="ngModel"/>
-        <div class="alert alert-danger container" role="alert" *ngIf="validationService.studentExistsWithGivenPesel(form.pesel)">
-          Podany pesel jest już zajęty
-        </div>
-        <div class="alert alert-danger container" *ngIf="f.submitted && pesel.invalid">
-          <div *ngIf="pesel.errors.required">Pesel jest wymagany</div>
-          <div *ngIf="pesel.errors.minlength">
-            Pesel musi mieć 11 znaków
-          </div>
-          <div *ngIf="pesel.errors.maxlength">
-            Pesel musi mieć 11 znaków
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group">
         <label for="email"></label>
         <input type="email" class="form-control" name="email" placeholder="Email" [(ngModel)]="form.email" required
                email #email="ngModel"/>

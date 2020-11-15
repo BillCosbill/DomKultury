@@ -61,7 +61,6 @@ class StudentControllerTest {
         student1.setId(1L);
         student1.setFirstName("testLastName1");
         student1.setLastName("testFirstName1");
-        student1.setPesel("11111111111");
         student1.setEmail("test1@mail.pl");
         student1.setBirthday(LocalDate.of(1997,Month.SEPTEMBER,26));
 
@@ -69,7 +68,6 @@ class StudentControllerTest {
         student2.setId(2L);
         student2.setFirstName("testLastName2");
         student2.setLastName("testFirstName2");
-        student2.setPesel("22222222222");
         student2.setEmail("test2@mail.pl");
         student2.setBirthday(LocalDate.of(1997, Month.SEPTEMBER,27));
 
@@ -87,13 +85,11 @@ class StudentControllerTest {
                .andExpect(jsonPath("$[0].id", is(1)))
                .andExpect(jsonPath("$[0].firstName", is("testLastName1")))
                .andExpect(jsonPath("$[0].lastName", is("testFirstName1")))
-               .andExpect(jsonPath("$[0].pesel", is("11111111111")))
                .andExpect(jsonPath("$[0].email", is("test1@mail.pl")))
                .andExpect(jsonPath("$[0].birthday", is("1997-09-26")))
                .andExpect(jsonPath("$[1].id", is(2)))
                .andExpect(jsonPath("$[1].firstName", is("testLastName2")))
                .andExpect(jsonPath("$[1].lastName", is("testFirstName2")))
-               .andExpect(jsonPath("$[1].pesel", is("22222222222")))
                .andExpect(jsonPath("$[1].email", is("test2@mail.pl")))
                .andExpect(jsonPath("$[1].birthday", is("1997-09-27")))
                .andDo(print());
@@ -107,7 +103,6 @@ class StudentControllerTest {
                .andExpect(jsonPath("$.id", is(1)))
                .andExpect(jsonPath("$.firstName", is("testLastName1")))
                .andExpect(jsonPath("$.lastName", is("testFirstName1")))
-               .andExpect(jsonPath("$.pesel", is("11111111111")))
                .andExpect(jsonPath("$.email", is("test1@mail.pl")))
                .andExpect(jsonPath("$.birthday", is("1997-09-26")))
                .andDo(print());
@@ -120,7 +115,6 @@ class StudentControllerTest {
 
         studentDTO.setFirstName("test3");
         studentDTO.setLastName("test3");
-        studentDTO.setPesel("33333333333");
         studentDTO.setEmail("test3@mail.pl");
         studentDTO.setBirthday("1990-01-01");
 
@@ -136,7 +130,6 @@ class StudentControllerTest {
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.firstName", is("test3")))
                .andExpect(jsonPath("$.lastName", is("test3")))
-               .andExpect(jsonPath("$.pesel", is("33333333333")))
                .andExpect(jsonPath("$.email", is("test3@mail.pl")))
                .andDo(print());
     }
@@ -148,7 +141,6 @@ class StudentControllerTest {
 
         studentDTO.setFirstName(null);
         studentDTO.setLastName("");
-        studentDTO.setPesel("333333333333");
         studentDTO.setEmail("test3mail.pl");
         studentDTO.setBirthday("1990-01-01");
 
@@ -185,6 +177,46 @@ class StudentControllerTest {
     @Test
     void deleteStudentByNotLoggedIn_unauthorized() throws Exception {
         mockMvc.perform(delete("/students/{id}", 2))
+               .andExpect(status().isUnauthorized())
+               .andDo(print());
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    void updateStudent() throws Exception {
+        StudentDTO studentDTO = new StudentDTO();
+
+        studentDTO.setFirstName("testLastName1New");
+        studentDTO.setLastName("testFirstName1New");
+        studentDTO.setEmail("test1@mail.pl");
+        studentDTO.setBirthday("1997-09-26");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        mockMvc.perform(put("/students/" + "1")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(studentDTO))
+        )
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$.firstName", is("testLastName1New")))
+               .andExpect(jsonPath("$.lastName", is("testFirstName1New")))
+               .andExpect(jsonPath("$.email", is("test1@mail.pl")))
+               .andExpect(jsonPath("$.birthday", is("1997-09-26")))
+               .andDo(print());
+    }
+
+    @Test
+    @WithMockUser(roles = "TEACHER")
+    void updateStudentByTeacher_forbidden() throws Exception {
+        mockMvc.perform(put("/students/" + "1"))
+               .andExpect(status().isForbidden())
+               .andDo(print());
+    }
+
+    @Test
+    void updateStudentByNotLoggedIn_unauthorized() throws Exception {
+        mockMvc.perform(put("/students/" + "1"))
                .andExpect(status().isUnauthorized())
                .andDo(print());
     }

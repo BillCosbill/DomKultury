@@ -32,7 +32,6 @@ export class AuthService {
       username: user.username,
       firstName: user.firstName,
       lastName: user.lastName,
-      pesel: user.pesel,
       email: user.email,
       password: user.password
     }, httpOptions).pipe(

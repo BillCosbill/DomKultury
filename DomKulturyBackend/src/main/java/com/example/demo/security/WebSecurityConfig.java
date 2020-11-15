@@ -64,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/attendances", "/attendances/*").hasAnyRole("ADMIN","TEACHER")
 
             .antMatchers(HttpMethod.GET,"/lessons", "/lessons/*").permitAll()
-            .antMatchers("/lessons", "/lessons/*").hasAnyRole("ADMIN","TEACHER")
+            .antMatchers("/lessons", "/lessons/*", "/lessons/*/*").hasAnyRole("ADMIN","TEACHER")
 
             .antMatchers("/downloadFile/*").permitAll()
             .antMatchers("/uploadFile").hasRole("ADMIN")

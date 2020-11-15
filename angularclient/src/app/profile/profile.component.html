@@ -18,8 +18,8 @@
   </div>
 
   <div class="overlap">
-    <span class="font-weight-bold">PESEL:</span>
-    <p>{{user.pesel}}</p>
+    <span class="font-weight-bold">Identyfikator:</span>
+    <p>{{user.id}}</p>
   </div>
 
   <div class="overlap">
@@ -96,12 +96,6 @@
             <label for="lastName">Nazwisko:</label>
             <input type="text" [(ngModel)]="userEdited.lastName" class="form-control" id="lastName" name="lastName"
                    placeholder="Podaj nazwisko . . ." required #lastName="ngModel">
-          </div>
-
-          <div class="form-group">
-            <label for="pesel">PESEL:</label>
-            <input type="text" [(ngModel)]="userEdited.pesel" class="form-control" id="pesel" name="pesel"
-                   placeholder="Podaj PESEL . . ." minlength="11" maxlength="11" required #pesel="ngModel">
           </div>
 
           <div class="form-group">
