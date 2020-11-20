@@ -62,7 +62,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student updateStudent(StudentDTO studentDTO, Long id) {
         if(!studentDTO.getId().equals(id)) {
-            throw new ConflictGlobalException("Wystąpił błąd. Indeks ucznia nie został rozpoznany!");
+            throw new ConflictGlobalException("Wystapil blad. Indeks ucznia nie zostal rozpoznany!");
         }
 
         Student student = studentMapper.toStudent(studentDTO, id);

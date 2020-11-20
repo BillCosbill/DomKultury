@@ -1,5 +1,7 @@
 package com.example.demo.file;
 
+import com.example.demo.exceptions.ConflictGlobalException;
+import com.example.demo.exceptions.NotFoundGlobalException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -20,20 +22,20 @@ public class DBFileStorageService {
 
         try {
             if (fileName.contains("..")) {
-                throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
+                throw new ConflictGlobalException("Nazwa pliku zawiera błąd: " + fileName);
             }
 
             DBFile dbFile = new DBFile(fileName, file.getContentType(), compressBytes(file.getBytes()));
 
             return dbFileRepository.save(dbFile);
         } catch (IOException ex) {
-            throw new FileStorageException("Could not store file " + fileName + ". Please try again!", ex);
+            throw new ConflictGlobalException("Nie udało się dodać pliku " + fileName + ". Spróbuj ponownie!");
         }
     }
 
     public DBFile getFile(String fileId) {
         return dbFileRepository.findById(fileId)
-                               .orElseThrow(() -> new MyFileNotFoundException("File not found with id " + fileId));
+                               .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono pliku z id " + fileId));
     }
 
     public static byte[] compressBytes(byte[] data) {

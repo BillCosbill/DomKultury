@@ -40,7 +40,6 @@ public class StudentMapper {
     }
 
     public Student toStudent(StudentDTO studentDTO, Long id) {
-        //TODO wyjątek zmienić
         Student student = studentRepository.findById(id)
                                            .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono ucznia z id " + id));
 

@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -39,15 +40,21 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student addStudent(@Valid @RequestBody StudentDTO studentDTO) {
-        return studentService.addStudent(studentMapper.toStudentAdd(studentDTO));
+    public StudentDTO addStudent(@Valid @RequestBody StudentDTO studentDTO) {
+        Student student = new Student();
+        student.setFirstName(studentDTO.getFirstName());
+        student.setLastName(studentDTO.getLastName());
+        student.setEmail(studentDTO.getEmail());
+        student.setBirthday(LocalDate.parse(studentDTO.getBirthday()));
+
+        return studentMapper.toStudentDTO(studentService.addStudent(student));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
 
-        return ResponseEntity.ok(new MessageResponse("Student deleted successfully!"));
+        return ResponseEntity.ok(new MessageResponse("Użytkownik zostal usuniety!"));
     }
 
     @PutMapping("/{id}")

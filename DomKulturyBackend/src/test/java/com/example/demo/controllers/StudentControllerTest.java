@@ -38,8 +38,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -111,21 +110,28 @@ class StudentControllerTest {
     @Test
     @WithMockUser(roles = "TEACHER")
     void addStudent() throws Exception {
-        StudentDTO studentDTO = new StudentDTO();
+        when(studentService.addStudent(any(Student.class))).thenAnswer(invocationOnMock -> {
+            Student studentOnMock = invocationOnMock.getArgument(0);
 
-        studentDTO.setFirstName("test3");
-        studentDTO.setLastName("test3");
-        studentDTO.setEmail("test3@mail.pl");
-        studentDTO.setBirthday("1990-01-01");
+            assertNull(studentOnMock.getId());
+            assertEquals("test3", studentOnMock.getFirstName());
+            assertEquals("test3", studentOnMock.getLastName());
+            assertEquals("test3@mail.pl", studentOnMock.getEmail());
+            assertEquals("1990-01-01", studentOnMock.getBirthday().toString());
 
-        when(studentService.addStudent(any(Student.class))).thenReturn(studentMapper.toStudentAdd(studentDTO));
+            Student newStudent = new Student();
+            newStudent.setFirstName(studentOnMock.getFirstName());
+            newStudent.setLastName(studentOnMock.getLastName());
+            newStudent.setEmail(studentOnMock.getEmail());
+            newStudent.setBirthday(studentOnMock.getBirthday());
 
-        ObjectMapper objectMapper = new ObjectMapper();
+            return newStudent;
+        });
 
         mockMvc.perform(post("/students")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(studentDTO))
+                .content("{\"firstName\":\"test3\",\"lastName\":\"test3\",\"email\":\"test3@mail.pl\",\"birthday\":\"1990-01-01\"}")
         )
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.firstName", is("test3")))
@@ -137,23 +143,14 @@ class StudentControllerTest {
     @Test
     @WithMockUser(roles = "TEACHER")
     void addStudentWithInvalidArguments() throws Exception {
-        StudentDTO studentDTO = new StudentDTO();
-
-        studentDTO.setFirstName(null);
-        studentDTO.setLastName("");
-        studentDTO.setEmail("test3mail.pl");
-        studentDTO.setBirthday("1990-01-01");
-
-        when(studentService.addStudent(any(Student.class))).thenReturn(studentMapper.toStudentAdd(studentDTO));
-
-        ObjectMapper objectMapper = new ObjectMapper();
 
         mockMvc.perform(post("/students")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(studentDTO))
+                .content("{\"firstName\":null,\"lastName\":\"test3\",\"email\":\"test3@mail.pl\",\"birthday\":\"1990-01-01\"}")
         )
                .andExpect(status().isBadRequest())
+               .andExpect(content().json("{'message':'Imie nie moze byc puste. '}"))
                .andDo(print());
     }
 
@@ -162,7 +159,7 @@ class StudentControllerTest {
     void deleteStudent() throws Exception {
         mockMvc.perform(delete("/students/{id}", 2))
                .andExpect(status().isOk())
-               .andExpect(jsonPath("$.message", is("Student deleted successfully!")))
+               .andExpect(jsonPath("$.message", is("Użytkownik zostal usuniety!")))
                .andDo(print());
     }
 
