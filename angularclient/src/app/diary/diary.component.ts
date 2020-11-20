@@ -44,12 +44,6 @@ export class DiaryComponent implements OnInit {
     });
   }
 
-  delete(id: number) {
-    this.subjectService.deleteSubject(id).subscribe(() => this.ngOnInit(), error => {
-      this.createErrorModal(error.error.message);
-    });
-  }
-
   selectSubjectIdToDelete(id: number) {
     this.subjectIdToDelete = id;
   }

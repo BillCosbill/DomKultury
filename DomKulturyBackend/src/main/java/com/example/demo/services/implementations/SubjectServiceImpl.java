@@ -107,7 +107,7 @@ public class SubjectServiceImpl implements SubjectService {
         Student student = studentService.findById(studentId);
 
         if(subject.getStudents().contains(student)) {
-            throw new ConflictGlobalException("Uczeń o id " + studentId + " jest już zapisany na przedmiot o id " + subjectId);
+            throw new ConflictGlobalException("Uczeń o indeksie " + studentId + " jest już zapisany na wskazany przedmiot.");
         }
 
         subject.getLessons().forEach(lesson -> {

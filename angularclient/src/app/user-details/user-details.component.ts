@@ -115,6 +115,10 @@ export class UserDetailsComponent implements OnInit {
     return this.eventObject.dataSource.length > 0;
   }
 
+  hasAssignedSubjects() {
+    return this.subjects.length > 0;
+  }
+
   createErrorModal(message: string) {
     this.errorMessage = message;
     openErrorModal();

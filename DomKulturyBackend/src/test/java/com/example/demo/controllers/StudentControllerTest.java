@@ -186,6 +186,7 @@ class StudentControllerTest {
     void updateStudent() throws Exception {
         StudentDTO studentDTO = new StudentDTO();
 
+        studentDTO.setId(1L);
         studentDTO.setFirstName("testLastName1New");
         studentDTO.setLastName("testFirstName1New");
         studentDTO.setEmail("test1@mail.pl");

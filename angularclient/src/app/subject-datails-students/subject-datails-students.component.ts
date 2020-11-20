@@ -51,10 +51,8 @@ export class SubjectDatailsStudentsComponent implements OnInit {
       this.subject.studentsId.forEach(x => {
         this.studentService.getStudent(x).subscribe(student => {
           this.students.push(student);
+          this.students.sort((a, b) => (a.lastName.localeCompare(b.lastName)));
         });
-
-        // TODO na pewno tu sortowanie??
-        this.students.sort((a, b) => (a.lastName.localeCompare(b.lastName)));
       });
     });
 

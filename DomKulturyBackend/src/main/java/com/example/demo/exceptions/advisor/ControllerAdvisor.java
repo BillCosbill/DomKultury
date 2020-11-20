@@ -1,37 +1,23 @@
 package com.example.demo.exceptions.advisor;
 
 import com.example.demo.annotations.HttpErrorCode;
-import com.example.demo.exceptions.*;
 import lombok.var;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.management.relation.RoleNotFoundException;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
-
-//    @ExceptionHandler(BadRequestValidationException.class)
-//    public final ResponseEntity<Object> handleUserNotFoundException(BadRequestValidationException ex, WebRequest request) {
-//        List<String> details = new ArrayList<>();
-//
-//        Map<String, Object> body = new LinkedHashMap<>();
-//        body.put("timestamp", ex.getLocalizedMessage());
-//        body.put("message", ex.getMessage());
-//
-//        return new ResponseEntity(body, HttpStatus.NOT_FOUND);
-//    }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -40,7 +26,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
         StringBuilder message = new StringBuilder();
 
-        for(ObjectError error : ex.getBindingResult().getAllErrors()) {
+        for (ObjectError error : ex.getBindingResult().getAllErrors()) {
             message.append(error.getDefaultMessage() + ". ");
         }
 
@@ -64,7 +50,9 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         // default HttpStatus.INTERNAL_SERVER_ERROR = 500
         int status = 500;
 
-        status = clazz.getAnnotation(HttpErrorCode.class).value();
+        if (clazz.getAnnotation(HttpErrorCode.class) != null) {
+            status = clazz.getAnnotation(HttpErrorCode.class).value();
+        }
 
         return HttpStatus.valueOf(status);
     }

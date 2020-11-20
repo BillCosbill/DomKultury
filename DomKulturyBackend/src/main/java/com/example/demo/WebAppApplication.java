@@ -106,6 +106,11 @@ public class WebAppApplication {
         students.add(student4);
         students.add(student5);
 
+        List<Student> students2 = new ArrayList<>();
+        students2.add(student1);
+        students2.add(student3);
+        students2.add(student5);
+
         User adminUser = new User("admin", "Tomasz", "Szeligowski", "t.szeligowski@onet.pl", "$2a$10$3ZP90w4a0j7aDReadREEQutjB69O9RPeufNNxZaIszvll.aDlSeI2", true); //pass = 123456
         Set<Role> adminRole = new HashSet<>();
         adminRole.add(admin);
@@ -118,13 +123,30 @@ public class WebAppApplication {
         teacherUser.setRoles(teacherRole);
         userRepository.save(teacherUser);
 
-        Subject subject1 = new Subject("Programowanie w języku Java", "Na kursie nauczysz się języka Java do zastosowań w Internecie od podstaw. Jest to uniwersalny język, w którym tworzy się zarówno aplikacje mobilne jak i rozbudowane systemy bankowe. Poznasz Spring - jeden z najważniejszych frameworków dla Javy oraz bibliotekę Hibernate. \n" +
-                "\n" +
-                "Do kursu możesz przystąpić, nawet jeśli nie masz doświadczenia w programowaniu ani wykształcenia w podobnym kierunku - choć są to mile widziane atuty. Java jest dla Ciebie, jeśli lubisz zagadki logiczne, dokładnie analizujesz problemy i jesteś systematyczny.", adminUser, students);
+        Subject subject1 = new Subject("Programowanie w języku Java", "Na kursie nauczysz się języka Java do zastosowań w Internecie od podstaw. Jest to uniwersalny język, w którym tworzy się zarówno aplikacje mobilne jak i rozbudowane systemy bankowe. Poznasz Spring - jeden z najważniejszych frameworków dla Javy oraz bibliotekę Hibernate. \n" + "\n" + "Do kursu możesz przystąpić, nawet jeśli nie masz doświadczenia w programowaniu ani wykształcenia w podobnym kierunku - choć są to mile widziane atuty. Java jest dla Ciebie, jeśli lubisz zagadki logiczne, dokładnie analizujesz problemy i jesteś systematyczny.", adminUser, students);
+        Subject subject2 = new Subject("Karate dla dzieci", "W dzisiejszych czasach dzieci często spędzają wolny czas przed ekranem telewizora, komputera, czy smartfona. Często w związku z tym mają obniżoną sprawność fizyczną, a przebywanie w wirtualnym świecie nie uczy ich niestety, jak obcować z rówieśnikami.\n" + "\n" + "Karate nie jest być może cudownym lekiem na wszelkie problemy współczesnego świata, ale może im często zaradzić. Karate, które trenujemy w klubie stało się dyscypliną olimpijską od sierpnia 2016 roku i będzie na Olimpiadzie w Tokyo 2020.", teacherUser, students2);
 
         subjectRepository.save(subject1);
+        subjectRepository.save(subject2);
 
-        Lesson lesson1 = new Lesson("Wstęp do języka Java", "W ramach wprowadzenia już w&nbsp;pierwszych dniach kursu&nbsp;napiszesz swoje pierwsze programy. Dzięki temu sprawnie zrozumiesz działanie języka Java. Dowiesz się jak za jego pomocą tworzyć programy konsolowe. Nauczysz się też debugowania - dzięki niemu wykryjesz błędy w swojej aplikacji",
+        Lesson lesson11 = new Lesson("Historia sportów walki", "Celem pierwszej lekcji jest przybliżenie uczniom podstawowej wiedzy teoretycznej na temat sztuk walki.",
+                LocalDateTime.of(2020, Month.NOVEMBER, 17, 10, 0, 0),
+                LocalDateTime.of(2020, Month.NOVEMBER, 17, 12, 0, 0),
+                classGym, subject2);
+
+        Lesson lesson22 = new Lesson("Określenie zdolności motorycznych", "Określanie sprawności każdego z uczniów w celu stworzenia indywidualnych planów treningowych oraz opisów.",
+                LocalDateTime.of(2020, Month.NOVEMBER, 24, 10, 0, 0),
+                LocalDateTime.of(2020, Month.NOVEMBER, 24, 12, 0, 0),
+                classGym, subject2);
+
+        Lesson lesson33 = new Lesson("Podstawowe techniki karate", "Poznawanie postaw obronnych i zaczepnych. Przejścia i obroty w postawach walki.",
+                LocalDateTime.of(2020, Month.DECEMBER, 1, 10, 0, 0),
+                LocalDateTime.of(2020, Month.DECEMBER, 1, 12, 0, 0),
+                classGym, subject2);
+
+
+
+        Lesson lesson1 = new Lesson("Wstęp do języka Java", "W ramach wprowadzenia już w pierwszych dniach kursu napiszesz swoje pierwsze programy. Dzięki temu sprawnie zrozumiesz działanie języka Java. Dowiesz się jak za jego pomocą tworzyć programy konsolowe. Nauczysz się też debugowania - dzięki niemu wykryjesz błędy w swojej aplikacji",
                 LocalDateTime.of(2020, Month.NOVEMBER, 2, 15, 0, 0),
                 LocalDateTime.of(2020, Month.NOVEMBER, 2, 18, 0, 0),
                 classComputer, subject1);
@@ -161,28 +183,105 @@ public class WebAppApplication {
         lessonRepository.save(lesson5);
         lessonRepository.save(lesson6);
 
+        lessonRepository.save(lesson11);
+        lessonRepository.save(lesson22);
+        lessonRepository.save(lesson33);
+
         Attendance attendance1 = new Attendance(lesson1, student1, true);
         Attendance attendance2 = new Attendance(lesson1, student2, true);
         Attendance attendance3 = new Attendance(lesson1, student3, true);
         Attendance attendance4 = new Attendance(lesson1, student4, true);
         Attendance attendance5 = new Attendance(lesson1, student5, true);
 
-        Attendance attendance6 = new Attendance(lesson2, student1, true);
-        Attendance attendance7 = new Attendance(lesson2, student2, false);
-        Attendance attendance8 = new Attendance(lesson2, student3, true);
-        Attendance attendance9 = new Attendance(lesson2, student4, false);
-        Attendance attendance10 = new Attendance(lesson2, student5, true);
+        attendanceRepository.save(attendance1);
+        attendanceRepository.save(attendance2);
+        attendanceRepository.save(attendance3);
+        attendanceRepository.save(attendance4);
+        attendanceRepository.save(attendance5);
+
+        attendance1 = new Attendance(lesson2, student1, true);
+        attendance2 = new Attendance(lesson2, student2, false);
+        attendance3 = new Attendance(lesson2, student3, true);
+        attendance4 = new Attendance(lesson2, student4, false);
+        attendance5 = new Attendance(lesson2, student5, true);
 
         attendanceRepository.save(attendance1);
         attendanceRepository.save(attendance2);
         attendanceRepository.save(attendance3);
         attendanceRepository.save(attendance4);
         attendanceRepository.save(attendance5);
-        attendanceRepository.save(attendance6);
-        attendanceRepository.save(attendance7);
-        attendanceRepository.save(attendance8);
-        attendanceRepository.save(attendance9);
-        attendanceRepository.save(attendance10);
+
+        attendance1 = new Attendance(lesson3, student1, true);
+        attendance2 = new Attendance(lesson3, student2, true);
+        attendance3 = new Attendance(lesson3, student3, false);
+        attendance4 = new Attendance(lesson3, student4, true);
+        attendance5 = new Attendance(lesson3, student5, true);
+
+        attendanceRepository.save(attendance1);
+        attendanceRepository.save(attendance2);
+        attendanceRepository.save(attendance3);
+        attendanceRepository.save(attendance4);
+        attendanceRepository.save(attendance5);
+
+        attendance1 = new Attendance(lesson4, student1);
+        attendance2 = new Attendance(lesson4, student2);
+        attendance3 = new Attendance(lesson4, student3);
+        attendance4 = new Attendance(lesson4, student4);
+        attendance5 = new Attendance(lesson4, student5);
+
+        attendanceRepository.save(attendance1);
+        attendanceRepository.save(attendance2);
+        attendanceRepository.save(attendance3);
+        attendanceRepository.save(attendance4);
+        attendanceRepository.save(attendance5);
+
+        attendance1 = new Attendance(lesson5, student1);
+        attendance2 = new Attendance(lesson5, student2);
+        attendance3 = new Attendance(lesson5, student3);
+        attendance4 = new Attendance(lesson5, student4);
+        attendance5 = new Attendance(lesson5, student5);
+
+        attendanceRepository.save(attendance1);
+        attendanceRepository.save(attendance2);
+        attendanceRepository.save(attendance3);
+        attendanceRepository.save(attendance4);
+        attendanceRepository.save(attendance5);
+
+        attendance1 = new Attendance(lesson6, student1);
+        attendance2 = new Attendance(lesson6, student2);
+        attendance3 = new Attendance(lesson6, student3);
+        attendance4 = new Attendance(lesson6, student4);
+        attendance5 = new Attendance(lesson6, student5);
+
+        attendanceRepository.save(attendance1);
+        attendanceRepository.save(attendance2);
+        attendanceRepository.save(attendance3);
+        attendanceRepository.save(attendance4);
+        attendanceRepository.save(attendance5);
+
+        attendance1 = new Attendance(lesson11, student1, true);
+        attendance2 = new Attendance(lesson11, student3, true);
+        attendance3 = new Attendance(lesson11, student5, true);
+
+        attendanceRepository.save(attendance1);
+        attendanceRepository.save(attendance2);
+        attendanceRepository.save(attendance3);
+
+        attendance1 = new Attendance(lesson22, student1);
+        attendance2 = new Attendance(lesson22, student3);
+        attendance3 = new Attendance(lesson22, student5);
+
+        attendanceRepository.save(attendance1);
+        attendanceRepository.save(attendance2);
+        attendanceRepository.save(attendance3);
+
+        attendance1 = new Attendance(lesson33, student1);
+        attendance2 = new Attendance(lesson33, student3);
+        attendance3 = new Attendance(lesson33, student5);
+
+        attendanceRepository.save(attendance1);
+        attendanceRepository.save(attendance2);
+        attendanceRepository.save(attendance3);
     }
 
 }

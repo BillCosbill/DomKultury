@@ -86,8 +86,8 @@ public class LessonServiceImpl implements LessonService {
         Lesson lesson = lessonMapper.toLessonAdd(lessonDTO);
 
         Optional<Lesson> lessonOpt = findAll().stream().filter(anyLesson ->
-                (lesson.getStartDate().isAfter(anyLesson.getStartDate()) && lesson.getStartDate().isBefore(anyLesson.getFinishDate())) ||
-                (lesson.getFinishDate().isAfter(anyLesson.getStartDate()) && lesson.getFinishDate().isBefore(anyLesson.getFinishDate())))
+                (lesson.getRoom() == anyLesson.getRoom() && lesson.getStartDate().isAfter(anyLesson.getStartDate()) && lesson.getStartDate().isBefore(anyLesson.getFinishDate())) ||
+                (lesson.getRoom() == anyLesson.getRoom() && lesson.getFinishDate().isAfter(anyLesson.getStartDate()) && lesson.getFinishDate().isBefore(anyLesson.getFinishDate())))
                                               .findAny();
 
         if (lessonOpt.isPresent()) {

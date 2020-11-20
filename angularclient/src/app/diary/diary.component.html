@@ -16,7 +16,7 @@
         <th scope="col">Nazwa</th>
         <th scope="col">Opis</th>
         <th scope="col">Nauczyciel</th>
-        <th scope="col">Opcje</th>
+        <th *ngIf="this.authService.isAdminLoggedIn()" scope="col">Opcje</th>
       </tr>
       </thead>
       <tbody>
@@ -24,7 +24,7 @@
         <td [routerLink]="['/subject', (subject.id)]">{{ subject.name }}</td>
         <td [routerLink]="['/subject', (subject.id)]">{{ subject.description | truncate:100 }}</td>
         <td [routerLink]="['/user', (subject.teacherId)]">{{ getTeacher(subject.teacherId)}}</td>
-        <td class="text-center" *ngIf="this.authService.isAdminLoggedIn()" data-toggle="modal" data-target="#deleteSubject" (click)="selectSubjectIdToDelete(subject.id)"><i class="fas fa-trash-alt" (click)="delete(subject.id)"></i></td>
+        <td class="text-center" *ngIf="this.authService.isAdminLoggedIn()" data-toggle="modal" data-target="#deleteSubject" (click)="selectSubjectIdToDelete(subject.id)"><i class="fas fa-trash-alt"></i></td>
       </tr>
       </tbody>
     </table>
@@ -48,7 +48,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
         <button type="submit" class="btn btn-primary" data-dismiss="modal"
-                (click)="deleteSubject()">Usuń ucznia
+                (click)="deleteSubject()">Usuń przedmiot
         </button>
       </div>
     </div>

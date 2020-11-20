@@ -43,24 +43,24 @@
             <th scope="col">Data rozpoczęcia</th>
             <th scope="col">Data zakończenia</th>
             <th scope="col">Sala</th>
-            <th *ngIf="this.authService.isTeacherLoggedIn()" scope="col">Opcje</th>
+            <th *ngIf="this.authService.isTeacherLoggedIn() && userIsOwner()" scope="col">Opcje</th>
           </tr>
           </thead>
 
           <tbody *ngIf="this.authService.isTeacherLoggedIn()">
 
           <tr *ngFor="let lesson of lessons">
-            <td *ngIf="validationService.lessonTookPlace(lesson.startDate)" class="past-lesson" [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ lesson.topic }}</td>
-            <td *ngIf="validationService.lessonTookPlace(lesson.startDate)" class="past-lesson" [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ formatDateTime(lesson.startDate) }}</td>
-            <td *ngIf="validationService.lessonTookPlace(lesson.startDate)" class="past-lesson" [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ formatDateTime(lesson.finishDate) }}</td>
-            <td *ngIf="validationService.lessonTookPlace(lesson.startDate)" class="past-lesson" [routerLink]="['/room', (lesson.roomId)]">{{ getRoomData(lesson.roomId) }}</td>
-            <td *ngIf="validationService.lessonTookPlace(lesson.startDate)" class="past-lesson text-center"><i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteLesson" (click)="selectLessonIdToDelete(lesson.id)"></i></td>
+            <td *ngIf="validationService.lessonTookPlace(lesson.finishDate)" class="past-lesson" [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ lesson.topic }}</td>
+            <td *ngIf="validationService.lessonTookPlace(lesson.finishDate)" class="past-lesson" [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ formatDateTime(lesson.startDate) }}</td>
+            <td *ngIf="validationService.lessonTookPlace(lesson.finishDate)" class="past-lesson" [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ formatDateTime(lesson.finishDate) }}</td>
+            <td *ngIf="validationService.lessonTookPlace(lesson.finishDate)" class="past-lesson" [routerLink]="['/room', (lesson.roomId)]">{{ getRoomData(lesson.roomId) }}</td>
+            <td *ngIf="validationService.lessonTookPlace(lesson.finishDate)  && userIsOwner()" class="past-lesson text-center"><i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteLesson" (click)="selectLessonIdToDelete(lesson.id)"></i></td>
 
-            <td *ngIf="!validationService.lessonTookPlace(lesson.startDate)" [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ lesson.topic }}</td>
-            <td *ngIf="!validationService.lessonTookPlace(lesson.startDate)" [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ formatDateTime(lesson.startDate) }}</td>
-            <td *ngIf="!validationService.lessonTookPlace(lesson.startDate)" [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ formatDateTime(lesson.finishDate) }}</td>
-            <td *ngIf="!validationService.lessonTookPlace(lesson.startDate)" [routerLink]="['/room', (lesson.roomId)]">{{ getRoomData(lesson.roomId) }}</td>
-            <td *ngIf="!validationService.lessonTookPlace(lesson.startDate)" class="text-center"><i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteLesson" (click)="selectLessonIdToDelete(lesson.id)"></i></td>
+            <td *ngIf="!validationService.lessonTookPlace(lesson.finishDate)" [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ lesson.topic }}</td>
+            <td *ngIf="!validationService.lessonTookPlace(lesson.finishDate)" [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ formatDateTime(lesson.startDate) }}</td>
+            <td *ngIf="!validationService.lessonTookPlace(lesson.finishDate)" [routerLink]="['/subject', (subjectId), 'lesson', (lesson.id)]">{{ formatDateTime(lesson.finishDate) }}</td>
+            <td *ngIf="!validationService.lessonTookPlace(lesson.finishDate)" [routerLink]="['/room', (lesson.roomId)]">{{ getRoomData(lesson.roomId) }}</td>
+            <td *ngIf="!validationService.lessonTookPlace(lesson.finishDate)  && userIsOwner()" class="text-center"><i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteLesson" (click)="selectLessonIdToDelete(lesson.id)"></i></td>
           </tr>
           </tbody>
 

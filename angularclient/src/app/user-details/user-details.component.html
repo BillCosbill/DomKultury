@@ -32,11 +32,11 @@
     <a type="button" data-toggle="modal" data-target="#editUser" (click)="startEditing()">Edytuj</a>
   </div>
 
-  <div class="line container"></div>
+  <div *ngIf="hasAssignedSubjects()" class="line container"></div>
 
-  <h3 class="text-center pt-5">Przypisane przedmioty</h3>
+  <h3 *ngIf="hasAssignedSubjects()" class="text-center pt-5">Przypisane przedmioty</h3>
 
-  <div class="table-body pb-5">
+  <div *ngIf="hasAssignedSubjects()" class="table-body pb-5">
     <table class="table-table">
       <thead>
       <tr>

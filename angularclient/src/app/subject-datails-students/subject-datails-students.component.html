@@ -144,7 +144,7 @@
             <label for="studentIdToAdd">Uczeń:</label>
             <select [(ngModel)]="this.studentToAdd.id" class="form-control" id="studentIdToAdd" name="studentIdToAdd" required>
               <option *ngFor="let student of allStudents" [value]="student.id">{{student.id}}. {{student.firstName}} {{student.lastName}}
-                (PESEL: {{student.pesel}})
+                (Indeks: {{student.id}})
               </option>
             </select>
           </div>

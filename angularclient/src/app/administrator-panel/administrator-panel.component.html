@@ -38,8 +38,8 @@
             </ng-container>
           </td>
           <td class="text-center">
-            <button data-toggle="modal" data-target="#deleteUser" (click)="selectUserIdToDelete(user.id)" class="admin-panel-button">Usuń</button>
-            <button (click)="selectUserToChangeRole(user.id)" data-toggle="modal" data-target="#editRole" class="admin-panel-button">Zmień uprawnienia</button>
+            <i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteUser" (click)="selectUserIdToDelete(user.id)"></i>
+            <i class="fas fa-users-cog" data-toggle="modal" data-target="#editRole" (click)="selectUserToChangeRole(user.id)"></i>
           </td>
         </tr>
         </tbody>

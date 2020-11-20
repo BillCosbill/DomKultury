@@ -39,14 +39,31 @@ public class EmailService {
             mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
             mimeMessageHelper.setTo(to);
             mimeMessageHelper.setSubject(subject);
-            mimeMessageHelper.setText(text , true);
+            mimeMessageHelper.setText(text, true);
             javaMailSender.send(mimeMessage);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
     }
 
-    public void sendMail(Long fromId, String to, String subject, String text)  {
+    public void remindPassword(String to, String subject, String text) {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+
+        text = text.replaceAll("(\r\n|\n)", "<br />");
+
+        MimeMessageHelper mimeMessageHelper = null;
+        try {
+            mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+            mimeMessageHelper.setTo(to);
+            mimeMessageHelper.setSubject(subject);
+            mimeMessageHelper.setText(text, true);
+            javaMailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendMail(Long fromId, String to, String subject, String text) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
         Optional<User> userOpt = userRepository.findById(fromId);
@@ -65,7 +82,8 @@ public class EmailService {
             mimeMessageHelper.setTo(to);
             mimeMessageHelper.setSubject(subject);
 
-            String signature = "<br><br>Wysłane przez: <br>" + user.getFirstName() + " " + user.getLastName() + "<br>" + user.getEmail();
+            String signature = "<br><br>Wysłane przez: <br>" + user.getFirstName() + " " + user
+                    .getLastName() + "<br>" + user.getEmail();
 
 
             mimeMessageHelper.setText(text + signature, true);
@@ -75,7 +93,7 @@ public class EmailService {
         }
     }
 
-    public void sendMultipleMails(Long fromId, String subject, String text, List<StudentDTO> studentList)  {
+    public void sendMultipleMails(Long fromId, String subject, String text, List<StudentDTO> studentList) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
         Optional<User> userOpt = userRepository.findById(fromId);
@@ -100,7 +118,8 @@ public class EmailService {
                 mimeMessageHelper.setTo(student.getEmail());
                 mimeMessageHelper.setSubject(subject);
 
-                String signature = "<br><br>Wysłane przez: <br>" + user.getFirstName() + " " + user.getLastName() + "<br>" + user.getEmail();
+                String signature = "<br><br>Wysłane przez: <br>" + user.getFirstName() + " " + user
+                        .getLastName() + "<br>" + user.getEmail();
 
                 mimeMessageHelper.setText(finalText + signature, true);
                 javaMailSender.send(mimeMessage);

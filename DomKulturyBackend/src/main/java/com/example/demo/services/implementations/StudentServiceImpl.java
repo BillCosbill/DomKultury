@@ -17,9 +17,9 @@ import java.util.List;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    private final  StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
-    private final  SubjectRepository subjectRepository;
+    private final SubjectRepository subjectRepository;
     private final AttendanceRepository attendanceRepository;
     private final UserRepository userRepository;
 
@@ -39,7 +39,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student findById(Long id) {
-        return studentRepository.findById(id).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono ucznia o idendyfikatorze " + id));
+        return studentRepository.findById(id).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono ucznia o indeksie " + id));
     }
 
     @Override
@@ -62,7 +62,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student updateStudent(StudentDTO studentDTO, Long id) {
         if(!studentDTO.getId().equals(id)) {
-            throw new ConflictGlobalException("Wystąpił błąd. Identyfikator ucznia nie został rozpoznany!");
+            throw new ConflictGlobalException("Wystąpił błąd. Indeks ucznia nie został rozpoznany!");
         }
 
         Student student = studentMapper.toStudent(studentDTO, id);
@@ -78,11 +78,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student addStudent(Student student) {
         if(studentRepository.existsByEmail(student.getEmail())) {
-            throw new ConflictGlobalException("Uczeń z adresem email  " + student.getEmail() + " już istnieje!");
+            throw new ConflictGlobalException("Uczeń z adresem email " + student.getEmail() + " już istnieje!");
         }
 
         if(userRepository.existsByEmail(student.getEmail())) {
-            throw new ConflictGlobalException("Użytkownik z adresem email  " + student.getEmail() + " już istnieje!");
+            throw new ConflictGlobalException("Użytkownik z adresem email " + student.getEmail() + " już istnieje!");
 
         }
 
