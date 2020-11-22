@@ -38,9 +38,6 @@ class StudentServiceImplTest {
     LessonRepository lessonRepository;
 
     @MockBean
-    RoomRepository roomRepository;
-
-    @MockBean
     AttendanceRepository attendanceRepository;
 
     @MockBean
@@ -78,11 +75,11 @@ class StudentServiceImplTest {
     void getStudent_success() {
         Student getStudent = studentService.findById(1L);
 
-        assertEquals(getStudent.getId(), 1L);
-        assertEquals(getStudent.getFirstName(), "testFirstName1");
-        assertEquals(getStudent.getLastName(), "testLastName1");
-        assertEquals(getStudent.getEmail(), "test1@onet.pl");
-        assertEquals(getStudent.getBirthday(), LocalDate.of(1999, Month.JANUARY, 1));
+        assertEquals(1L, getStudent.getId());
+        assertEquals("testFirstName1", getStudent.getFirstName());
+        assertEquals("testLastName1", getStudent.getLastName());
+        assertEquals("test1@onet.pl", getStudent.getEmail());
+        assertEquals(LocalDate.of(1999, Month.JANUARY, 1), getStudent.getBirthday());
     }
 
     @Test
@@ -105,7 +102,7 @@ class StudentServiceImplTest {
         studentDTO.setId(3L);
 
         assertThatThrownBy(() -> studentService.updateStudent(studentDTO, 4L))
-                .hasMessage("Wystąpił błąd. Indeks ucznia nie został rozpoznany!")
+                .hasMessage("Wystapil blad. Indeks ucznia nie zostal rozpoznany!")
                 .isInstanceOf(ConflictGlobalException.class);
     }
 

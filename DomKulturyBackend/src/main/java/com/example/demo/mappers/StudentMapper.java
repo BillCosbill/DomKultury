@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class StudentMapper {
 
-    StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
 
     @Autowired
     public StudentMapper(StudentRepository studentRepository) {
@@ -42,25 +42,6 @@ public class StudentMapper {
     public Student toStudent(StudentDTO studentDTO, Long id) {
         Student student = studentRepository.findById(id)
                                            .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono ucznia z id " + id));
-
-        if (studentDTO.getFirstName() != null) {
-            student.setFirstName(studentDTO.getFirstName());
-        }
-        if (studentDTO.getLastName() != null) {
-            student.setLastName(studentDTO.getLastName());
-        }
-        if (studentDTO.getEmail() != null) {
-            student.setEmail(studentDTO.getEmail());
-        }
-        if (studentDTO.getBirthday() != null) {
-            student.setBirthday(LocalDate.parse(studentDTO.getBirthday()));
-        }
-
-        return student;
-    }
-
-    public Student toStudentAdd(StudentDTO studentDTO) {
-        Student student = new Student();
 
         if (studentDTO.getFirstName() != null) {
             student.setFirstName(studentDTO.getFirstName());

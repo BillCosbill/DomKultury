@@ -1,31 +1,28 @@
 package com.example.demo.models;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Entity
+@EqualsAndHashCode
 public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @NotBlank(message = "Numer nie moze byc pusty")
     private String number;
 
-    @NotNull
+    @NotBlank(message = "Przeznaczenie nie moze byc puste")
     private String destiny;
 
-    @NotNull
+    @NotBlank(message = "Opis nie moze byc pusty")
     @Column(columnDefinition="LONGTEXT")
     private String description;
 

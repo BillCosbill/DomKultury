@@ -6,7 +6,6 @@ import com.example.demo.models.Student;
 import com.example.demo.payload.response.MessageResponse;
 import com.example.demo.services.interfaces.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +19,8 @@ import java.util.List;
 @RequestMapping("/students")
 public class StudentController {
 
-    StudentService studentService;
-    StudentMapper studentMapper;
+    private final StudentService studentService;
+    private final StudentMapper studentMapper;
 
     @Autowired
     public StudentController(StudentService studentService, StudentMapper studentMapper) {
@@ -30,13 +29,13 @@ public class StudentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<StudentDTO>> getStudents() {
-        return ResponseEntity.ok(studentMapper.toStudentsDTO(studentService.findAll()));
+    public List<StudentDTO> getStudents() {
+        return studentMapper.toStudentsDTO(studentService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StudentDTO> getStudent(@PathVariable Long id) {
-        return ResponseEntity.ok(studentMapper.toStudentDTO(studentService.findById(id)));
+    public StudentDTO getStudent(@PathVariable Long id) {
+        return studentMapper.toStudentDTO(studentService.findById(id));
     }
 
     @PostMapping
@@ -47,19 +46,20 @@ public class StudentController {
         student.setEmail(studentDTO.getEmail());
         student.setBirthday(LocalDate.parse(studentDTO.getBirthday()));
 
-        return studentMapper.toStudentDTO(studentService.addStudent(student));
+        Student newStudent = studentService.addStudent(student);
+
+        return studentMapper.toStudentDTO(newStudent);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
-
-        return ResponseEntity.ok(new MessageResponse("Użytkownik zostal usuniety!"));
+        return ResponseEntity.ok(new MessageResponse("Uzytkownik o identyfikatorze " + id + " zostal usuniety!"));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<StudentDTO> updateStudent(@Valid @RequestBody StudentDTO studentDTO, @PathVariable Long id) {
+    public StudentDTO updateStudent(@Valid @RequestBody StudentDTO studentDTO, @PathVariable Long id) {
         studentService.updateStudent(studentDTO, id);
-        return ResponseEntity.status(HttpStatus.OK).body(studentDTO);
+        return getStudent(id);
     }
 }

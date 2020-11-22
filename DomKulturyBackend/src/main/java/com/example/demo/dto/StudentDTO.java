@@ -1,13 +1,13 @@
 package com.example.demo.dto;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class StudentDTO {
 

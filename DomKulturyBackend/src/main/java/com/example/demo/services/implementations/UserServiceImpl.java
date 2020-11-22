@@ -9,6 +9,7 @@ import com.example.demo.models.Role;
 import com.example.demo.models.Subject;
 import com.example.demo.models.User;
 import com.example.demo.payload.request.PasswordChangeRequest;
+import com.example.demo.repository.StudentRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.services.PasswordGenerator;
 import com.example.demo.services.interfaces.RoleService;
@@ -37,9 +38,10 @@ public class UserServiceImpl implements UserService {
     private final SubjectService subjectService;
     private final PasswordGenerator passwordGenerator;
     private final EmailService emailService;
+    private final StudentRepository studentRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, RoleService roleService, PasswordEncoder encoder, AuthenticationManager authenticationManager, SubjectService subjectService, PasswordGenerator passwordGenerator, EmailService emailService) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, RoleService roleService, PasswordEncoder encoder, AuthenticationManager authenticationManager, SubjectService subjectService, PasswordGenerator passwordGenerator, EmailService emailService, StudentRepository studentRepository) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.roleService = roleService;
@@ -48,6 +50,7 @@ public class UserServiceImpl implements UserService {
         this.subjectService = subjectService;
         this.passwordGenerator = passwordGenerator;
         this.emailService = emailService;
+        this.studentRepository = studentRepository;
     }
 
     @Override
@@ -91,6 +94,10 @@ public class UserServiceImpl implements UserService {
 
         if(!user.getUsername().equals(userDTO.getUsername()) && userRepository.existsByUsername(userDTO.getUsername())) {
             throw new ConflictGlobalException("Użytkownik z nazwą " + userDTO.getUsername() + " już istnieje!");
+        }
+
+        if(!user.getEmail().equals(userDTO.getEmail()) && studentRepository.existsByEmail(userDTO.getEmail())) {
+            throw new ConflictGlobalException("Uczeń z adresm email " + userDTO.getEmail() + " już istnieje!");
         }
 
         user = userMapper.toUser(userDTO, id);

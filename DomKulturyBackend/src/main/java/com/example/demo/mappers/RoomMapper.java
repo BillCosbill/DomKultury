@@ -45,9 +45,10 @@ public class RoomMapper {
             roomDTO.setImageId(room.getImage());
         }
         List<Long> lessonsId = new ArrayList<>();
-        room.getLessons()
-            .forEach(x -> lessonsId.add(x.getId()));
-        roomDTO.setLessonsId(lessonsId);
+        if(room.getLessons() != null) {
+            room.getLessons().forEach(x -> lessonsId.add(x.getId()));
+            roomDTO.setLessonsId(lessonsId);
+        }
 
         return roomDTO;
     }

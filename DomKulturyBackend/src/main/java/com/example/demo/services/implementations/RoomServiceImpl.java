@@ -66,7 +66,7 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public Room updateRoom(RoomDTO roomDTO, Long id, String imageId) {
         if (!roomDTO.getId().equals(id)) {
-            throw new NotFoundGlobalException("Wystąpił błąd. Identyfikator sali nie został rozpoznany!");
+            throw new NotFoundGlobalException("Wystapil blad. Id sali nie zostalo rozpoznane!");
         }
 
         Room roomOpt = findById(id);

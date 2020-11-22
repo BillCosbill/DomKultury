@@ -52,9 +52,7 @@ public class StudentServiceImpl implements StudentService {
             }
         });
 
-        subjectRepository.findAll().forEach(subject -> {
-            subject.getStudents().remove(student);
-        });
+        subjectRepository.findAll().forEach(subject -> subject.getStudents().remove(student));
 
         studentRepository.delete(student);
     }
@@ -63,6 +61,16 @@ public class StudentServiceImpl implements StudentService {
     public Student updateStudent(StudentDTO studentDTO, Long id) {
         if(!studentDTO.getId().equals(id)) {
             throw new ConflictGlobalException("Wystapil blad. Indeks ucznia nie zostal rozpoznany!");
+        }
+
+        Student toValid = findById(id);
+
+        if(!studentDTO.getEmail().equals(toValid.getEmail()) && studentRepository.existsByEmail(studentDTO.getEmail())) {
+            throw new ConflictGlobalException("Uczeń z adresem email " + studentDTO.getEmail() + " już istnieje");
+        }
+
+        if(!studentDTO.getEmail().equals(toValid.getEmail()) && userRepository.existsByEmail(studentDTO.getEmail())) {
+            throw new ConflictGlobalException("Użytkownik z adresem email " + studentDTO.getEmail() + " już istnieje");
         }
 
         Student student = studentMapper.toStudent(studentDTO, id);
@@ -83,7 +91,6 @@ public class StudentServiceImpl implements StudentService {
 
         if(userRepository.existsByEmail(student.getEmail())) {
             throw new ConflictGlobalException("Użytkownik z adresem email " + student.getEmail() + " już istnieje!");
-
         }
 
         return save(student);

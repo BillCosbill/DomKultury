@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -32,22 +33,22 @@ public class RoomController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RoomDTO>> getRooms() {
-        return ResponseEntity.ok(roomMapper.toRoomsDTO(roomService.findAll()));
+    public List<RoomDTO> getRooms() {
+        return roomMapper.toRoomsDTO(roomService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RoomDTO> getRoom(@PathVariable Long id) {
-        return ResponseEntity.ok(roomMapper.toRoomDTO(roomService.findById(id)));
+    public RoomDTO getRoom(@PathVariable Long id) {
+        return roomMapper.toRoomDTO(roomService.findById(id));
     }
 
     @GetMapping("/{id}/lessons")
-    public ResponseEntity<List<LessonDTO>> getRoomLessons(@PathVariable Long id) {
-        return ResponseEntity.ok(lessonMapper.toLessonsDTO(roomService.getRoomLessons(id)));
+    public List<LessonDTO> getRoomLessons(@PathVariable Long id) {
+        return lessonMapper.toLessonsDTO(roomService.getRoomLessons(id));
     }
 
     @PostMapping
-    public Room addRoom(@RequestBody Room room, @RequestParam String imageId) {
+    public Room addRoom(@Valid @RequestBody Room room, @RequestParam String imageId) {
         return roomService.addRoom(room, imageId);
     }
 
@@ -55,14 +56,13 @@ public class RoomController {
     public ResponseEntity<MessageResponse> deleteRoom(@PathVariable Long id) {
         roomService.deleteRoom(id);
 
-        return ResponseEntity.ok(new MessageResponse("Room deleted successfully!"));
+        return ResponseEntity.ok(new MessageResponse("Pokoj o id " + id + " zostal usuniety pomyslnie."));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RoomDTO> updateRoom(@RequestBody RoomDTO roomDTO, @PathVariable Long id, @RequestParam String imageId) {
+    public RoomDTO updateRoom(@Valid @RequestBody RoomDTO roomDTO, @PathVariable Long id, @RequestParam String imageId) {
         roomService.updateRoom(roomDTO, id, imageId);
-        return ResponseEntity.status(HttpStatus.OK)
-                             .body(roomDTO);
+        return roomDTO;
     }
 
     @PatchMapping("/{id}/deleteImage")
