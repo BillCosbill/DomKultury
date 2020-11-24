@@ -84,6 +84,13 @@ class StudentControllerTest {
     }
 
     @Test
+    void getStudentsByNotLoggedIn_unauthorized() throws Exception {
+        mockMvc.perform(get("/students"))
+               .andExpect(status().isUnauthorized())
+               .andDo(print());
+    }
+
+    @Test
     @WithMockUser(roles = "TEACHER")
     void getStudent() throws Exception {
         mockMvc.perform(get("/students/1"))
@@ -94,6 +101,13 @@ class StudentControllerTest {
                 .andExpect(jsonPath("$.email", is("test1@mail.pl")))
                 .andExpect(jsonPath("$.birthday", is("1997-09-26")))
                 .andDo(print());
+    }
+
+    @Test
+    void getStudentByNotLoggedIn_unauthorized() throws Exception {
+        mockMvc.perform(get("/students/1"))
+               .andExpect(status().isUnauthorized())
+               .andDo(print());
     }
 
     @Test
@@ -127,6 +141,13 @@ class StudentControllerTest {
                 .andExpect(jsonPath("$.lastName", is("test3")))
                 .andExpect(jsonPath("$.email", is("test3@mail.pl")))
                 .andDo(print());
+    }
+
+    @Test
+    void addStudentByNotLoggedIn_unauthorized() throws Exception {
+        mockMvc.perform(post("/students"))
+               .andExpect(status().isUnauthorized())
+               .andDo(print());
     }
 
     @Test

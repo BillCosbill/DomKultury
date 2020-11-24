@@ -14,8 +14,8 @@ import java.util.List;
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
 
-    AttendanceRepository attendanceRepository;
-    AttendanceMapper attendanceMapper;
+    private final AttendanceRepository attendanceRepository;
+    private final AttendanceMapper attendanceMapper;
 
     @Autowired
     public AttendanceServiceImpl(AttendanceRepository attendanceRepository, AttendanceMapper attendanceMapper) {

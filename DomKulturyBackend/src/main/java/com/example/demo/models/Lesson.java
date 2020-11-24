@@ -37,9 +37,10 @@ public class Lesson {
     @NotNull
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinTable(	name = "lesson_room",
-            joinColumns = @JoinColumn(name = "lesson_id"),
-            inverseJoinColumns = @JoinColumn(name = "room_id"))
+    @JoinColumn(name = "room_id")
+//    @JoinTable(	name = "lesson_room",
+//            joinColumns = @JoinColumn(name = "lesson_id"),
+//            inverseJoinColumns = @JoinColumn(name = "room_id"))
     private Room room;
 
     @OneToMany(mappedBy = "lesson")
@@ -48,9 +49,10 @@ public class Lesson {
     @NotNull
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinTable(	name = "lesson_subject",
-            joinColumns = @JoinColumn(name = "lesson_id"),
-            inverseJoinColumns = @JoinColumn(name = "subject_id"))
+    @JoinColumn(name = "subject_id")
+//    @JoinTable(	name = "lesson_subject",
+//            joinColumns = @JoinColumn(name = "lesson_id"),
+//            inverseJoinColumns = @JoinColumn(name = "subject_id"))
     private Subject subject;
 
     public Lesson(String topic, String description, LocalDateTime startDate, LocalDateTime finishDate, Room room, Subject subject) {

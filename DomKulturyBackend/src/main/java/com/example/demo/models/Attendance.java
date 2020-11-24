@@ -19,20 +19,22 @@ public class Attendance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @NotBlank
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinTable(	name = "attendance_lesson",
-            joinColumns = @JoinColumn(name = "attendance_id"),
-            inverseJoinColumns = @JoinColumn(name = "lesson_id"))
+    @JoinColumn(name = "lesson_id")
+//    @JoinTable(	name = "attendance_lesson",
+//            joinColumns = @JoinColumn(name = "attendance_id"),
+//            inverseJoinColumns = @JoinColumn(name = "lesson_id"))
     private Lesson lesson;
 
-    @NotNull
+    @NotBlank
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinTable(	name = "attendance_student",
-            joinColumns = @JoinColumn(name = "attendance_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id"))
+    @JoinColumn(name = "student_id")
+//    @JoinTable(	name = "attendance_student",
+//            joinColumns = @JoinColumn(name = "attendance_id"),
+//            inverseJoinColumns = @JoinColumn(name = "student_id"))
     private Student student;
 
     private boolean present;

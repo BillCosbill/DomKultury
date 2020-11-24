@@ -86,6 +86,7 @@ class RoomControllerTest {
                 .andDo(print());
     }
 
+
     @Test
     void getRoom() throws Exception {
         mockMvc.perform(get("/rooms/1"))
@@ -202,7 +203,7 @@ class RoomControllerTest {
 
     @Test
     @WithMockUser(roles = "ADMIN")
-    void updateStudent() throws Exception {
+    void updateRoom() throws Exception {
         when(roomService.updateRoom(any(RoomDTO.class), any(Long.class), any(String.class))).thenAnswer(invocationOnMock -> {
             RoomDTO roomOnMock = invocationOnMock.getArgument(0);
             Long roomIdOnMock = invocationOnMock.getArgument(1);

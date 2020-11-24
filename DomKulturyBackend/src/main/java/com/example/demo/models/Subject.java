@@ -27,9 +27,10 @@ public class Subject {
     private String description;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinTable(	name = "subject_teacher",
-            joinColumns = @JoinColumn(name = "subject_id"),
-            inverseJoinColumns = @JoinColumn(name = "teacher_id"))
+    @JoinColumn(name = "user_id")
+//    @JoinTable(	name = "subject_teacher",
+//            joinColumns = @JoinColumn(name = "subject_id"),
+//            inverseJoinColumns = @JoinColumn(name = "teacher_id"))
     private User teacher;
 
     @ManyToMany(fetch = FetchType.LAZY)

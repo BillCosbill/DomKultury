@@ -110,6 +110,7 @@ public class LessonServiceImpl implements LessonService {
     @Override
     public void checkAttendance(List<AttendanceDTO> attendanceDTOS, Long lessonId) {
         attendanceDTOS.forEach(x -> {
+            // TODO nie używać attendanceMappera. Stworzyć obiekt Attendance i ręcznie przypisać pola
             attendanceRepository.save(attendanceMapper.toAttendanceAdd(x));
         });
 

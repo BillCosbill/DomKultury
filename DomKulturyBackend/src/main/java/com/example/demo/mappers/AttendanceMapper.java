@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class AttendanceMapper {
-    AttendanceRepository attendanceRepository;
-    LessonRepository lessonRepository;
-    StudentRepository studentRepository;
+    private final AttendanceRepository attendanceRepository;
+    private final LessonRepository lessonRepository;
+    private final StudentRepository studentRepository;
 
     @Autowired
     public AttendanceMapper(AttendanceRepository attendanceRepository, LessonRepository lessonRepository, StudentRepository studentRepository) {
