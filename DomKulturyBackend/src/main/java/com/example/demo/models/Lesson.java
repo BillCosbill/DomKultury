@@ -21,20 +21,20 @@ public class Lesson {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @NotBlank(message = "Temat nie moze byc pusty")
     private String topic;
 
-    @NotNull
+    @NotBlank(message = "Opis nie moze byc pusty")
     @Column(columnDefinition="LONGTEXT")
     private String description;
 
-    @NotNull
+    @NotNull(message = "Data rozpoczecia nie moze byc pusta")
     private LocalDateTime startDate;
 
-    @NotNull
+    @NotNull(message = "Data zakonczenia nie moze byc pusta")
     private LocalDateTime finishDate;
 
-    @NotNull
+    @NotNull(message = "Pokoj nie moze byc pusty")
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "room_id")
@@ -46,7 +46,7 @@ public class Lesson {
     @OneToMany(mappedBy = "lesson")
     private List<Attendance> attendances;
 
-    @NotNull
+    @NotNull(message = "Przedmiot nie moze byc pusty")
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subject_id")

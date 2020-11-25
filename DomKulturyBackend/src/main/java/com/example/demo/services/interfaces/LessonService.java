@@ -18,7 +18,7 @@ public interface LessonService {
 
     Lesson save(Lesson lesson);
 
-    Lesson addLesson(LessonDTO lessonDTO);
+    Lesson addLesson(Lesson lesson);
 
     void checkAttendance(List<AttendanceDTO> attendanceDTOS, Long lessonId);
 

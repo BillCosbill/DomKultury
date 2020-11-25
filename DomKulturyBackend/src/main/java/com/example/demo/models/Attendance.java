@@ -19,7 +19,7 @@ public class Attendance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotNull
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "lesson_id")
@@ -28,7 +28,7 @@ public class Attendance {
 //            inverseJoinColumns = @JoinColumn(name = "lesson_id"))
     private Lesson lesson;
 
-    @NotBlank
+    @NotNull
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "student_id")

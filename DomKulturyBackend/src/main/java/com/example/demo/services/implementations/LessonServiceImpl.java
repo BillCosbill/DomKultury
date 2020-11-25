@@ -67,7 +67,7 @@ public class LessonServiceImpl implements LessonService {
     @Override
     public Lesson updateLesson(LessonDTO lessonDTO, Long id) {
         if (!lessonDTO.getId().equals(id)) {
-            throw new ConflictGlobalException("Lekcja z id " + id + " już istnieje");
+            throw new ConflictGlobalException("Wystapil blad. Id lekcji nie zostalo rozpoznane!");
         }
 
         Lesson lesson = lessonMapper.toLesson(lessonDTO, id);
@@ -81,9 +81,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public Lesson addLesson(LessonDTO lessonDTO) {
-
-        Lesson lesson = lessonMapper.toLessonAdd(lessonDTO);
+    public Lesson addLesson(Lesson lesson) {
 
         Optional<Lesson> lessonOpt = findAll().stream().filter(anyLesson ->
                 (lesson.getRoom() == anyLesson.getRoom() && lesson.getStartDate().isAfter(anyLesson.getStartDate()) && lesson.getStartDate().isBefore(anyLesson.getFinishDate())) ||
@@ -96,7 +94,7 @@ public class LessonServiceImpl implements LessonService {
 
         save(lesson);
 
-        Subject subject = subjectRepository.findById(lessonDTO.getSubjectId()).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono przedmiotu o id " + lessonDTO.getSubjectId()));
+        Subject subject = lesson.getSubject();
 
         List<Student> students = subject.getStudents();
 

@@ -8,6 +8,7 @@ import com.example.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,8 +41,8 @@ public class LessonMapper {
         lessonDTO.setTopic(lesson.getTopic());
         lessonDTO.setDescription(lesson.getDescription());
 
-        lessonDTO.setStartDate(lesson.getStartDate());
-        lessonDTO.setFinishDate(lesson.getFinishDate());
+        lessonDTO.setStartDate(lesson.getStartDate().toString());
+        lessonDTO.setFinishDate(lesson.getFinishDate().toString());
 
         lessonDTO.setRoomId(lesson.getRoom().getId());
 
@@ -69,45 +70,10 @@ public class LessonMapper {
             lesson.setDescription(lessonDTO.getDescription());
         }
         if (lessonDTO.getStartDate() != null) {
-            lesson.setStartDate(lessonDTO.getStartDate());
+            lesson.setStartDate(LocalDateTime.parse(lessonDTO.getStartDate()));
         }
         if (lessonDTO.getFinishDate() != null) {
-            lesson.setFinishDate(lessonDTO.getFinishDate());
-        }
-        if (lessonDTO.getRoomId() != null) {
-            lesson.setRoom(roomRepository.findById(lessonDTO.getRoomId()).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono sali o id " + lessonDTO.getRoomId())));
-        }
-        if (lessonDTO.getAttendancesId() != null) {
-            List<Attendance> attendances = new ArrayList<>();
-            lessonDTO.getAttendancesId().forEach(attendanceId -> attendances
-                    .add(attendanceRepository.findById(attendanceId).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono obiektu frekwencji o id " + attendanceId))));
-            lesson.setAttendances(attendances);
-        }
-
-        if (lessonDTO.getSubjectId() != null) {
-            lesson.setSubject(subjectRepository.findById(lessonDTO.getSubjectId()).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono przedmiotu o id " + lessonDTO.getSubjectId())));
-        }
-
-        return lesson;
-    }
-
-    public Lesson toLessonAdd(LessonDTO lessonDTO) {
-        Lesson lesson = new Lesson();
-
-        if (lessonDTO.getId() != null) {
-            lesson.setId(lessonDTO.getId());
-        }
-        if (lessonDTO.getTopic() != null) {
-            lesson.setTopic(lessonDTO.getTopic());
-        }
-        if (lessonDTO.getDescription() != null) {
-            lesson.setDescription(lessonDTO.getDescription());
-        }
-        if (lessonDTO.getStartDate() != null) {
-            lesson.setStartDate(lessonDTO.getStartDate());
-        }
-        if (lessonDTO.getFinishDate() != null) {
-            lesson.setFinishDate(lessonDTO.getFinishDate());
+            lesson.setFinishDate(LocalDateTime.parse(lessonDTO.getFinishDate()));
         }
         if (lessonDTO.getRoomId() != null) {
             lesson.setRoom(roomRepository.findById(lessonDTO.getRoomId()).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono sali o id " + lessonDTO.getRoomId())));

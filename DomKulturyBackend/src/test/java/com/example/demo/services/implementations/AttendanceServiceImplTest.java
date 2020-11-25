@@ -45,9 +45,6 @@ class AttendanceServiceImplTest {
     @MockBean
     LessonRepository lessonRepository;
 
-    @MockBean
-    UserRepository userRepository;
-
     @Autowired
     MockMvc mockMvc;
 

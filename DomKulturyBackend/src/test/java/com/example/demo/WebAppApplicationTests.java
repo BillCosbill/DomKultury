@@ -8,10 +8,6 @@ class WebAppApplicationTests {
 
     @Test
     void contextLoads() {
-        Long a = new Long(1);
-        long b = a;
-
-        assertEquals(1L, b);
     }
 
 }
