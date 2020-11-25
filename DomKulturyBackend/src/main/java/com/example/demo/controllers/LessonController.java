@@ -75,7 +75,7 @@ public class LessonController {
     }
 
     @PutMapping("/{id}")
-    public LessonDTO updateEvent(@Valid @RequestBody LessonDTO lessonDTO, @PathVariable Long id) {
+    public LessonDTO updateLesson(@RequestBody LessonDTO lessonDTO, @PathVariable Long id) {
         lessonService.updateLesson(lessonDTO, id);
         return lessonDTO;
     }

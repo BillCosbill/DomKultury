@@ -167,7 +167,7 @@ class StudentControllerTest {
     void deleteStudent() throws Exception {
         mockMvc.perform(delete("/students/{id}", 2))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message", is("Uzytkownik o identyfikatorze 2 zostal usuniety!")))
+                .andExpect(jsonPath("$.message", is("Uczen o indeksie 2 zostal usuniety!")))
                 .andDo(print());
     }
 

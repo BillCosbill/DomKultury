@@ -54,11 +54,11 @@ public class StudentController {
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
-        return ResponseEntity.ok(new MessageResponse("Uzytkownik o identyfikatorze " + id + " zostal usuniety!"));
+        return ResponseEntity.ok(new MessageResponse("Uczen o indeksie " + id + " zostal usuniety!"));
     }
 
     @PutMapping("/{id}")
-    public StudentDTO updateStudent(@Valid @RequestBody StudentDTO studentDTO, @PathVariable Long id) {
+    public StudentDTO updateStudent(@RequestBody StudentDTO studentDTO, @PathVariable Long id) {
         studentService.updateStudent(studentDTO, id);
         return getStudent(id);
     }

@@ -27,29 +27,30 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @NotBlank(message = "Nazwa uzytkownika nie moze byc pusta")
     private String username;
 
-    @NotNull
+    @NotBlank(message = "Imie nie moze byc puste")
     private String firstName;
 
-    @NotNull
+    @NotBlank(message = "Nazwisko nie moze byc puste")
     private String lastName;
 
-    @NotNull
-    @Email
+    @NotBlank(message = "Email nie moze byc pusty")
+    @Email(message = "Email musi byc poprawny")
     private String email;
 
-    @NotNull
+    @NotBlank(message = "Haslo nie moze byc puste")
     private String password;
 
+    @NotNull(message = "Rola nie moze byc pusta")
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @NotNull
+    @NotNull(message = "Aktywonosc nie moze byc pusta")
     private boolean isEnable;
 
     @JsonIgnore

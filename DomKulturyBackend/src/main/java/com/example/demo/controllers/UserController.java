@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -23,44 +24,42 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final RoleService roleService;
     private final UserMapper userMapper;
     private final SubjectMapper subjectMapper;
 
     @Autowired
-    public UserController(UserService userService, RoleService roleService, UserMapper userMapper, SubjectMapper subjectMapper) {
+    public UserController(UserService userService, UserMapper userMapper, SubjectMapper subjectMapper) {
         this.userService = userService;
-        this.roleService = roleService;
         this.userMapper = userMapper;
         this.subjectMapper = subjectMapper;
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> getUsers() {
-        return ResponseEntity.ok(userMapper.toUsersDTO(userService.findAll()));
+    public List<UserDTO> getUsers() {
+        return userMapper.toUsersDTO(userService.findAll());
     }
 
     @GetMapping("/{userId}/subjects")
-    public ResponseEntity<List<SubjectDTO>> getUserSubjects(@PathVariable Long userId) {
-        return ResponseEntity.ok(subjectMapper.toSubjectsDTO(userService.getUserSubjects(userId)));
+    public List<SubjectDTO> getUserSubjects(@PathVariable Long userId) {
+        return subjectMapper.toSubjectsDTO(userService.getUserSubjects(userId));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
-        return ResponseEntity.ok(userMapper.toUserDTO(userService.findById(id)));
+    public UserDTO getUser(@PathVariable Long id) {
+        return userMapper.toUserDTO(userService.findById(id));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
 
-        return ResponseEntity.ok(new MessageResponse("User deleted successfully!"));
+        return ResponseEntity.ok(new MessageResponse("Uzytkownik o identyfikatorze " + id + " zostal usuniety"));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO, @PathVariable Long id) {
+    public UserDTO updateUser(@RequestBody UserDTO userDTO, @PathVariable Long id) {
         userService.updateUser(userDTO, id);
-        return ResponseEntity.status(HttpStatus.OK).body(userDTO);
+        return userDTO;
     }
 
     @PatchMapping("/changeRole/{id}")

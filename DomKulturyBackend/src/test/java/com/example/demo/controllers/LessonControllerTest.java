@@ -212,24 +212,28 @@ class LessonControllerTest {
     @Test
     @WithMockUser(roles = "TEACHER")
     void updateLesson() throws Exception {
-        when(lessonService.addLesson(any(Lesson.class))).thenAnswer(invocationOnMock -> {
-            Lesson lessonOnMock = invocationOnMock.getArgument(0);
+        when(lessonService.updateLesson(any(LessonDTO.class), any(Long.class))).thenAnswer(invocationOnMock -> {
+            LessonDTO lessonOnMock = invocationOnMock.getArgument(0);
+            Long lessonIdOnMock = invocationOnMock.getArgument(1);
 
-            assertNull(lessonOnMock.getId());
+            assertEquals(1, lessonOnMock.getId());
             assertEquals("Topic1new", lessonOnMock.getTopic());
             assertEquals("Description1new", lessonOnMock.getDescription());
-            assertEquals("2020-12-10T10:00", lessonOnMock.getStartDate().toString());
-            assertEquals("2020-12-10T12:00", lessonOnMock.getFinishDate().toString());
-            assertEquals(1, lessonOnMock.getRoom().getId());
-            assertEquals(1, lessonOnMock.getSubject().getId());
+            assertEquals("2020-12-10T10:00", lessonOnMock.getStartDate());
+            assertEquals("2020-12-10T12:00", lessonOnMock.getFinishDate());
+            assertEquals(1, lessonOnMock.getRoomId());
+            assertEquals(1, lessonOnMock.getSubjectId());
+
+            assertEquals(1L, lessonIdOnMock);
 
             Lesson newLesson = new Lesson();
+            newLesson.setId(lessonOnMock.getId());
             newLesson.setTopic(lessonOnMock.getTopic());
             newLesson.setDescription(lessonOnMock.getDescription());
-            newLesson.setStartDate(lessonOnMock.getStartDate());
-            newLesson.setFinishDate(lessonOnMock.getFinishDate());
-            newLesson.setRoom(roomService.findById(lessonOnMock.getRoom().getId()));
-            newLesson.setSubject(subjectService.findById(lessonOnMock.getSubject().getId()));
+            newLesson.setStartDate(LocalDateTime.parse(lessonOnMock.getStartDate()));
+            newLesson.setFinishDate(LocalDateTime.parse(lessonOnMock.getFinishDate()));
+            newLesson.setRoom(roomService.findById(lessonOnMock.getRoomId()));
+            newLesson.setSubject(subjectService.findById(lessonOnMock.getSubjectId()));
 
             return newLesson;
         });
@@ -240,6 +244,7 @@ class LessonControllerTest {
                 .content("{\"id\":1,\"topic\":\"Topic1new\",\"description\":\"Description1new\",\"startDate\":\"2020-12-10T10:00\",\"finishDate\":\"2020-12-10T12:00\",\"roomId\":\"1\",\"subjectId\":\"1\"}")
         )
                .andExpect(status().isOk())
+               .andExpect(jsonPath("$.id", is(1)))
                .andExpect(jsonPath("$.topic", is("Topic1new")))
                .andExpect(jsonPath("$.description", is("Description1new")))
                .andExpect(jsonPath("$.startDate", is("2020-12-10T10:00")))

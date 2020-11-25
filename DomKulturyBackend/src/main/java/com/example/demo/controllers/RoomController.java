@@ -60,7 +60,7 @@ public class RoomController {
     }
 
     @PutMapping("/{id}")
-    public RoomDTO updateRoom(@Valid @RequestBody RoomDTO roomDTO, @PathVariable Long id, @RequestParam String imageId) {
+    public RoomDTO updateRoom(@RequestBody RoomDTO roomDTO, @PathVariable Long id, @RequestParam String imageId) {
         roomService.updateRoom(roomDTO, id, imageId);
         return roomDTO;
     }

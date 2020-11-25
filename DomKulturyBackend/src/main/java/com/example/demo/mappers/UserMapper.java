@@ -40,9 +40,12 @@ public class UserMapper {
         userDTO.setRoles(user.getRoles());
         userDTO.setEnable(user.isEnable());
 
-        List<Long> subjectsId = new ArrayList<>();
-        user.getSubjects().forEach(subject -> subjectsId.add(subject.getId()));
-        userDTO.setSubjectsId(subjectsId);
+        if (user.getSubjects() != null) {
+            List<Long> subjectsId = new ArrayList<>();
+            user.getSubjects().forEach(subject -> subjectsId.add(subject.getId()));
+            userDTO.setSubjectsId(subjectsId);
+        }
+
 
         return userDTO;
     }
