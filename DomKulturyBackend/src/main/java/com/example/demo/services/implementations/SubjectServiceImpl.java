@@ -56,7 +56,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public Subject updateSubject(SubjectDTO subjectDTO, Long id) {
         if (!subjectDTO.getId().equals(id)) {
-            throw new ConflictGlobalException("Wystąpił błąd. Identyfikator przedmiotu nie został rozpoznany!");
+            throw new ConflictGlobalException("Wystapil blad. Identyfikator przedmiotu nie zostal rozpoznany!");
         }
 
         Subject subject = subjectMapper.toSubject(subjectDTO, id);
@@ -70,9 +70,7 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public Subject addSubject(SubjectDTO subjectDTO) {
-        Subject subject = subjectMapper.toSubjectAdd(subjectDTO);
-
+    public Subject addSubject(Subject subject) {
         return save(subject);
     }
 

@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono użytkownika o id " + id));
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono uzytkownika o id " + id));
     }
 
     @Override
@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
         User user = findById(id);
 
         if (subjectService.findAll().stream().filter(subject -> subject.getTeacher().getId() == id).findAny().isPresent()) {
-            throw new ConflictGlobalException("Użytkownik o id " + id + " jest przypisany do co najmniej jednego przedmiotu!");
+            throw new ConflictGlobalException("Uzytkownik o id " + id + " jest przypisany do co najmniej jednego przedmiotu!");
         }
 
         userRepository.delete(user);
@@ -85,19 +85,19 @@ public class UserServiceImpl implements UserService {
         User user = findById(id);
 
         if(!userDTO.getId().equals(id)) {
-            throw new NotFoundGlobalException("Nie znaleziono użytkownika o id " + id);
+            throw new ConflictGlobalException("Wystapil blad. Id uzytkownika nie zostalo rozpoznane!");
         }
 
         if(!user.getEmail().equals(userDTO.getEmail()) && userRepository.existsByEmail(userDTO.getEmail())) {
-            throw new ConflictGlobalException("Użytkownik z adresm email " + userDTO.getEmail() + " już istnieje!");
+            throw new ConflictGlobalException("Uzytkownik z adresem email " + userDTO.getEmail() + " już istnieje!");
         }
 
         if(!user.getUsername().equals(userDTO.getUsername()) && userRepository.existsByUsername(userDTO.getUsername())) {
-            throw new ConflictGlobalException("Użytkownik z nazwą " + userDTO.getUsername() + " już istnieje!");
+            throw new ConflictGlobalException("Uzytkownik z nazwa " + userDTO.getUsername() + " już istnieje!");
         }
 
         if(!user.getEmail().equals(userDTO.getEmail()) && studentRepository.existsByEmail(userDTO.getEmail())) {
-            throw new ConflictGlobalException("Uczeń z adresm email " + userDTO.getEmail() + " już istnieje!");
+            throw new ConflictGlobalException("Uczen z adresem email " + userDTO.getEmail() + " już istnieje!");
         }
 
         user = userMapper.toUser(userDTO, id);
@@ -132,7 +132,7 @@ public class UserServiceImpl implements UserService {
             authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(user.getUsername(), passwordChangeRequest.getPassword()));
         } catch (Exception e) {
-            throw new ConflictGlobalException("Wprowadzono błędne hasło!");
+            throw new ConflictGlobalException("Wprowadzono bledne haslo!");
         }
 
 
@@ -151,8 +151,8 @@ public class UserServiceImpl implements UserService {
             user.setPassword(encoder.encode(newPassword));
 
             // TODO fromid uzupełnić
-            emailService.remindPassword(user.getEmail(), "Twoje nowe dane do logowania w narzędziu naszego Domu Kultury",
-                    "<b>Login: </b> " + user.getUsername() + " <br><b>Hasło: </b> " + newPassword);
+            emailService.remindPassword(user.getEmail(), "Twoje nowe dane do logowania w narzedziu naszego Domu Kultury",
+                    "<b>Login: </b> " + user.getUsername() + " <br><b>Haslo: </b> " + newPassword);
 
             userRepository.save(user);
         }

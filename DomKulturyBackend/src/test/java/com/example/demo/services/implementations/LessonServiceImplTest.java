@@ -1,35 +1,28 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.dto.LessonDTO;
-import com.example.demo.dto.StudentDTO;
-import com.example.demo.exceptions.BadRequestValidationException;
 import com.example.demo.exceptions.ConflictGlobalException;
 import com.example.demo.exceptions.NotFoundGlobalException;
 import com.example.demo.models.Lesson;
 import com.example.demo.models.Room;
-import com.example.demo.models.Student;
 import com.example.demo.models.Subject;
 import com.example.demo.repository.*;
 import com.example.demo.services.interfaces.LessonService;
-import com.example.demo.services.interfaces.StudentService;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest

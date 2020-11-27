@@ -1,16 +1,12 @@
 package com.example.demo.controllers;
 
 import com.example.demo.dto.LessonDTO;
-import com.example.demo.dto.StudentDTO;
 import com.example.demo.mappers.LessonMapper;
-import com.example.demo.mappers.StudentMapper;
 import com.example.demo.models.Lesson;
 import com.example.demo.models.Room;
-import com.example.demo.models.Student;
 import com.example.demo.models.Subject;
 import com.example.demo.services.interfaces.LessonService;
 import com.example.demo.services.interfaces.RoomService;
-import com.example.demo.services.interfaces.StudentService;
 import com.example.demo.services.interfaces.SubjectService;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,13 +20,13 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;

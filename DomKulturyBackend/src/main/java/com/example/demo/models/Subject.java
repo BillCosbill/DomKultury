@@ -19,13 +19,14 @@ public class Subject {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @NotBlank(message = "Imie nie moze byc puste")
     private String name;
 
-    @NotNull
+    @NotBlank(message = "Opis nie moze byc pusty")
     @Column(columnDefinition="LONGTEXT")
     private String description;
 
+    @NotNull(message = "Nauczyciel nie moze byc pusty")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
 //    @JoinTable(	name = "subject_teacher",
