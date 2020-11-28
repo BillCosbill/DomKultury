@@ -34,7 +34,6 @@ import {StudentDetailsComponent} from './student-details/student-details.compone
 import {UserDetailsComponent} from './user-details/user-details.component';
 import {DiaryTodayLessonsComponent} from './diary-today-lessons/diary-today-lessons.component';
 import {AdministratorPanelAddTeacherComponent} from './administrator-panel-add-teacher/administrator-panel-add-teacher.component';
-import {ProfileComponent} from './profile/profile.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import { TruncatePipe } from './_pipe/truncate.pipe';
@@ -60,7 +59,6 @@ import { TruncatePipe } from './_pipe/truncate.pipe';
     UserDetailsComponent,
     DiaryTodayLessonsComponent,
     AdministratorPanelAddTeacherComponent,
-    ProfileComponent,
     TruncatePipe,
   ],
   imports: [

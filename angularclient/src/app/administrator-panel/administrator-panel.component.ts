@@ -18,6 +18,7 @@ export class AdministratorPanelComponent implements OnInit {
   selectUserId: number = null;
   selectRole: string = null;
 
+  userIdToResetPassword: number = null;
   userIdToDelete: number = null;
   errorMessage: string = null;
 
@@ -80,6 +81,18 @@ export class AdministratorPanelComponent implements OnInit {
   createErrorModal(message: string) {
     this.errorMessage = message;
     openErrorModal();
+  }
+
+  selectUserToResetPassword(id: any) {
+    this.userIdToResetPassword = id;
+  }
+
+  resetPassword() {
+    this.userService.generateNewPassword(this.userIdToResetPassword).subscribe(() => {
+      this.ngOnInit();
+    }, error => {
+      this.createErrorModal(error.error.message);
+    });
   }
 }
 

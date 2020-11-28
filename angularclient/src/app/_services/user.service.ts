@@ -70,8 +70,8 @@ export class UserService {
     );
   }
 
-  public generateNewPassword(email: string) {
-    return this.http.patch(this.usersUrl + '/generateNewPassword/' + email, null, httpOptions).pipe(
+  public generateNewPassword(userId: number) {
+    return this.http.patch(this.usersUrl + '/generateNewPassword/' + userId, null, httpOptions).pipe(
       catchError(this.handleError)
     );
   }

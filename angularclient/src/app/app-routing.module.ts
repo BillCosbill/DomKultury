@@ -20,7 +20,6 @@ import {StudentDetailsComponent} from './student-details/student-details.compone
 import {UserDetailsComponent} from './user-details/user-details.component';
 import {DiaryTodayLessonsComponent} from './diary-today-lessons/diary-today-lessons.component';
 import {AdministratorPanelAddTeacherComponent} from './administrator-panel-add-teacher/administrator-panel-add-teacher.component';
-import {ProfileComponent} from './profile/profile.component';
 
 
 const routes: Routes = [
@@ -42,7 +41,6 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'admin_panel', component: AdministratorPanelComponent, canActivate: [AdminguardService]},
   {path: 'admin_panel_add_teacher', component: AdministratorPanelAddTeacherComponent, canActivate: [AdminguardService]},
-  {path: 'profile', component: ProfileComponent, canActivate: [TeacherguardService]},
   {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 

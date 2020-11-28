@@ -28,8 +28,13 @@
   </div>
 
 
-  <div *ngIf="this.authService.isAdminLoggedIn()" class="pt-3 pb-5">
-    <a type="button" data-toggle="modal" data-target="#editUser" (click)="startEditing()">Edytuj</a>
+<!--  <div *ngIf="this.authService.isAdminLoggedIn()" class="pt-3 pb-5">-->
+<!--    <a type="button" data-toggle="modal" data-target="#editUser" (click)="startEditing()">Edytuj</a>-->
+<!--  </div>-->
+
+  <div class="pt-3 pb-5">
+    <a *ngIf="this.authService.isAdminLoggedIn() || this.loggedUsersProfile()" type="button" data-toggle="modal" data-target="#editUser" (click)="startEditing()">Edytuj</a>
+    <a *ngIf="this.loggedUsersProfile()" type="button" data-toggle="modal" data-target="#changePassword">Zmień hasło</a>
   </div>
 
   <div *ngIf="hasAssignedSubjects()" class="line container"></div>
@@ -73,8 +78,43 @@
 
 </div>
 
+<!-- Modal password change -->
+<div class="modal fade bd-example-modal-lg" id="changePassword" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
 
-<!-- Modal Subject -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Zmiana hasła</h5>
+      </div>
+
+      <div class="modal-body">
+        <form (ngSubmit)="changePassword()" #passwordForm="ngForm">
+          <div class="form-group">
+            <label for="password">Aktualne hasło:</label>
+            <input type="password" [(ngModel)]="form.password" class="form-control" id="password" name="password"
+                   placeholder="Podaj aktualne hasło . . ." required #password="ngModel">
+          </div>
+
+          <div class="form-group">
+            <label for="newPassword">Nowe hasło:</label>
+            <input type="password" [(ngModel)]="form.newPassword" class="form-control" id="newPassword" name="newPassword"
+                   placeholder="Podaj nowe hasło . . ." required #newPassword="ngModel">
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            <button type="submit" [disabled]="!passwordForm.form.valid" class="btn btn-info" data-dismiss="modal"
+                    (click)="changePassword()">Zmień
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal user edit -->
 <div class="modal fade bd-example-modal-lg" id="editUser" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">

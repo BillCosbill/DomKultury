@@ -37,7 +37,9 @@ export class UserDetailsComponent implements OnInit {
 
   userEdited: User = new User();
 
-  constructor(private validationService: ValidationService, private tokenStorage: TokenStorageService, private lessonService: LessonService, private userService: UserService, public authService: AuthService, private subjectService: SubjectService, private route: ActivatedRoute) {
+  form: any = {};
+
+  constructor(private token: TokenStorageService, private validationService: ValidationService, private tokenStorage: TokenStorageService, private lessonService: LessonService, private userService: UserService, public authService: AuthService, private subjectService: SubjectService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -71,6 +73,10 @@ export class UserDetailsComponent implements OnInit {
 
     this.eventObject.dataSource = this.scheduleData;
 
+  }
+
+  loggedUsersProfile() {
+    return this.userId === this.token.getUser().id;
   }
 
   getTeacher(teacherId: number) {
@@ -117,6 +123,14 @@ export class UserDetailsComponent implements OnInit {
 
   hasAssignedSubjects() {
     return this.subjects.length > 0;
+  }
+
+  changePassword() {
+    this.userService.changePassword(this.form, this.user.id).subscribe(() => {
+      this.ngOnInit();
+    }, error => {
+      this.createErrorModal(error.error.message);
+    });
   }
 
   createErrorModal(message: string) {

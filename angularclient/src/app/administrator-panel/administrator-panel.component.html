@@ -40,6 +40,7 @@
           <td class="text-center">
             <i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteUser" (click)="selectUserIdToDelete(user.id)"></i>
             <i class="fas fa-users-cog" data-toggle="modal" data-target="#editRole" (click)="selectUserToChangeRole(user.id)"></i>
+            <i class="fas fa-key" data-toggle="modal" data-target="#resetPassword" (click)="selectUserToResetPassword(user.id)"></i>
           </td>
         </tr>
         </tbody>
@@ -75,7 +76,7 @@
 
 
 
-<!-- Modal teacher -->
+<!-- Modal change role -->
 <div class="modal fade bd-example-modal-lg" id="editRole" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -86,7 +87,6 @@
       </div>
 
       <div class="modal-body">
-<!--        <form (ngSubmit)="changeRole()" #teacherForm="ngForm">-->
         <form #teacherForm="ngForm">
 
           <div class="form-group">
@@ -128,6 +128,30 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
         <button type="submit" class="btn btn-primary" data-dismiss="modal"
                 (click)="deleteUser()">Usuń użytkownika
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal deleteStudent -->
+<div class="modal fade bd-example-modal-lg" id="resetPassword" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Uwaga</h5>
+      </div>
+
+      <div class="modal-body">
+        Czy na pewno chcesz zresetować hasło wybranego użytkownika? Nowe hasło zostanie wysłane na adres email użytkownika.
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+        <button type="submit" class="btn btn-primary" data-dismiss="modal"
+                (click)="resetPassword()">Zresetuj hasło
         </button>
       </div>
     </div>

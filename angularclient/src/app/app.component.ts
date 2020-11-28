@@ -1,15 +1,14 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from './_services/token-storage.service';
-import {AuthService} from './_services/auth.service';
 import {L10n, loadCldr} from '@syncfusion/ej2-base';
 import {
-  View,
-  EventSettingsModel,
+  AgendaService,
   DayService,
-  WeekService,
-  WorkWeekService,
+  DragAndDropService,
   MonthService,
-  AgendaService, ResizeService, DragAndDropService
+  ResizeService,
+  WeekService,
+  WorkWeekService
 } from '@syncfusion/ej2-angular-schedule';
 
 
@@ -143,8 +142,10 @@ export class AppComponent implements OnInit {
   isLoggedIn = false;
   adminLogged = false;
   username: string;
+  userId: number;
 
-  constructor(private tokenStorageService: TokenStorageService) { }
+  constructor(private tokenStorageService: TokenStorageService) {
+  }
 
   ngOnInit() {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
@@ -156,6 +157,7 @@ export class AppComponent implements OnInit {
       this.adminLogged = this.roles.includes('ROLE_ADMIN');
 
       this.username = user.username;
+      this.userId = user.id;
     }
   }
 

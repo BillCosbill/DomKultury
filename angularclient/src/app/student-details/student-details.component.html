@@ -28,7 +28,7 @@
   </div>
 
   <div class="pt-3 pb-5">
-    <a *ngIf="this.authService.isAdminLoggedIn()" type="button" data-toggle="modal" data-target="#editStudent" (click)="startEditing()">Edytuj</a>
+    <a *ngIf="this.authService.isTeacherLoggedIn()" type="button" data-toggle="modal" data-target="#editStudent" (click)="startEditing()">Edytuj</a>
     <a *ngIf="this.authService.isTeacherLoggedIn()" type="button" data-toggle="modal" data-target="#sendEmail" (click)="openEmailModal()">Wyślij wiadomość</a>
   </div>
 

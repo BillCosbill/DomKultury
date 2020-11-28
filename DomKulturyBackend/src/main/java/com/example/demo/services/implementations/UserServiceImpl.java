@@ -141,21 +141,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void generateNewPassword(String email) {
-        Optional<User> userOpt = userRepository.findByEmail(email);
+    public void generateNewPassword(Long id) {
+        User user = findById(id);
 
-        if (userOpt.isPresent()) {
-            User user = userOpt.get();
+        String newPassword = passwordGenerator.generatePassword(10);
+        user.setPassword(encoder.encode(newPassword));
 
-            String newPassword = passwordGenerator.generatePassword(10);
-            user.setPassword(encoder.encode(newPassword));
+        // TODO fromid uzupełnić
+        emailService.remindPassword(user.getEmail(), "Twoje nowe dane do logowania w narzedziu naszego Domu Kultury",
+                "<b>Login: </b> " + user.getUsername() + " <br><b>Haslo: </b> " + newPassword);
 
-            // TODO fromid uzupełnić
-            emailService.remindPassword(user.getEmail(), "Twoje nowe dane do logowania w narzedziu naszego Domu Kultury",
-                    "<b>Login: </b> " + user.getUsername() + " <br><b>Haslo: </b> " + newPassword);
+        userRepository.save(user);
 
-            userRepository.save(user);
-        }
     }
 
 

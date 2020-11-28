@@ -56,8 +56,3 @@ body{
 .forget-password {
   font-size: 15px;
 }
-
-.forget-password:hover > p {
-  cursor: pointer;
-  color: #3498db;
-}

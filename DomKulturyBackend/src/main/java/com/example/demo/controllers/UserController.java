@@ -76,9 +76,9 @@ public class UserController {
         return ResponseEntity.ok(new MessageResponse("User password has been changed"));
     }
 
-    @PatchMapping("/generateNewPassword/{email}")
-    public ResponseEntity<MessageResponse> generateNewPassword(@PathVariable String email) {
-        userService.generateNewPassword(email);
+    @PatchMapping("/generateNewPassword/{id}")
+    public ResponseEntity<MessageResponse> generateNewPassword(@PathVariable Long id) {
+        userService.generateNewPassword(id);
 
         return ResponseEntity.ok(new MessageResponse("New password was generated and sent at email."));
     }

@@ -19,8 +19,6 @@ export class LoginComponent implements OnInit {
   errorMessagee = '';
   roles: string[] = [];
 
-  emailToSendNewPassword: string = null;
-
   constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private userService: UserService) { }
 
   ngOnInit() {
@@ -50,14 +48,6 @@ export class LoginComponent implements OnInit {
 
   reloadPage() {
     window.location.reload();
-  }
-
-  sendNewPassword() {
-    this.userService.generateNewPassword(this.emailToSendNewPassword).subscribe(() => {
-      this.ngOnInit();
-    }, error => {
-      this.createErrorModal(error.error.message);
-    });
   }
 
   createErrorModal(message: string) {

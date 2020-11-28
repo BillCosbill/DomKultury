@@ -25,5 +25,5 @@ public interface UserService {
 
     void changePassword(PasswordChangeRequest passwordChangeRequest, Long id);
 
-    void generateNewPassword(String email);
+    void generateNewPassword(Long id);
 }
