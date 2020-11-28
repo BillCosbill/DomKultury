@@ -44,7 +44,9 @@ public class User {
     private String password;
 
     @NotNull(message = "Rola nie moze byc pusta")
-    @ManyToMany(fetch = FetchType.LAZY)
+    // TODO zmieniłem na EAGER bo testy nie działały
+    //    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))

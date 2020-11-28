@@ -19,13 +19,13 @@ import java.util.Set;
 @SpringBootApplication
 public class WebAppApplication {
 
-    RoleRepository roleRepository;
-    UserRepository userRepository;
-    RoomRepository roomRepository;
-    StudentRepository studentRepository;
-    SubjectRepository subjectRepository;
-    LessonRepository lessonRepository;
-    AttendanceRepository attendanceRepository;
+    private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private final RoomRepository roomRepository;
+    private final StudentRepository studentRepository;
+    private final SubjectRepository subjectRepository;
+    private final LessonRepository lessonRepository;
+    private final AttendanceRepository attendanceRepository;
 
     public WebAppApplication(RoleRepository roleRepository, UserRepository userRepository, RoomRepository roomRepository,
                              StudentRepository studentRepository, SubjectRepository subjectRepository, LessonRepository lessonRepository, AttendanceRepository attendanceRepository) {
@@ -43,7 +43,7 @@ public class WebAppApplication {
     }
 
     @EventListener(ApplicationReadyEvent.class)
-    public void fillDB() throws MessagingException {
+    public void fillDB() {
         Room classComputer = new Room("01", "Sala komputerowa", "Sala komputerowa\n" +
                 "\n" +
                 "Elegancka, nowoczesna przystosowana do profesjonalnych szkoleń, sala z dostępem do 15 stacjonarnych stanowisk komputerowych. Pomieszczenie klimatyzowane, dobrze nasłonecznione z możliwością zaciemnienia (rolety).\n" +
@@ -74,11 +74,9 @@ public class WebAppApplication {
         roomRepository.save(classGym);
         roomRepository.save(classLesson);
 
-//        Role user = new Role(ERole.ROLE_USER);
         Role teacher = new Role(ERole.ROLE_TEACHER);
         Role admin = new Role(ERole.ROLE_ADMIN);
 
-//        roleRepository.save(user);
         roleRepository.save(teacher);
         roleRepository.save(admin);
 

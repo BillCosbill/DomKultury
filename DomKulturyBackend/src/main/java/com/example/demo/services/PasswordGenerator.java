@@ -10,7 +10,7 @@ public class PasswordGenerator {
 
     public String generatePassword (int length) {
 
-        if (length < 4) {
+        if (length < 6) {
             length = 6;
         }
 
