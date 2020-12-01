@@ -49,10 +49,6 @@ export class RoomsComponent implements OnInit {
     });
   }
 
-  gotImage(room: Room){
-    return room.retrievedImage != null;
-  }
-
   onFileChanged(event) {
     this.selectedFile = event.target.files[0];
   }

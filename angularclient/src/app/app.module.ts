@@ -37,6 +37,7 @@ import {AdministratorPanelAddTeacherComponent} from './administrator-panel-add-t
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import { TruncatePipe } from './_pipe/truncate.pipe';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { TruncatePipe } from './_pipe/truncate.pipe';
     DiaryTodayLessonsComponent,
     AdministratorPanelAddTeacherComponent,
     TruncatePipe,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

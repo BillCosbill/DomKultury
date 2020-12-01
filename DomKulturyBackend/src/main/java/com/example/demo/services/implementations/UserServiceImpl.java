@@ -147,7 +147,6 @@ public class UserServiceImpl implements UserService {
         String newPassword = passwordGenerator.generatePassword(10);
         user.setPassword(encoder.encode(newPassword));
 
-        // TODO fromid uzupełnić
         emailService.remindPassword(user.getEmail(), "Twoje nowe dane do logowania w narzedziu naszego Domu Kultury",
                 "<b>Login: </b> " + user.getUsername() + " <br><b>Haslo: </b> " + newPassword);
 

@@ -1,24 +1,25 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {EventSettingsModel, View} from '@syncfusion/ej2-angular-schedule';
+import {DataSource} from '../_model/data-source';
 import {User} from '../_model/user';
+import {Subject} from '../_model/subject';
+import {TokenStorageService} from '../_services/token-storage.service';
+import {ValidationService} from '../_services/validation/validation.service';
+import {LessonService} from '../_services/lesson.service';
 import {UserService} from '../_services/user.service';
 import {AuthService} from '../_services/auth.service';
 import {SubjectService} from '../_services/subject.service';
-import {Subject} from '../_model/subject';
 import {ActivatedRoute} from '@angular/router';
-import {EventSettingsModel, View} from '@syncfusion/ej2-angular-schedule';
-import {DataSource} from '../_model/data-source';
-import {LessonService} from '../_services/lesson.service';
-import {TokenStorageService} from '../_services/token-storage.service';
-import {ValidationService} from '../_services/validation/validation.service';
 
 declare var openErrorModal;
 
 @Component({
-  selector: 'app-user-details',
-  templateUrl: './user-details.component.html',
-  styleUrls: ['./user-details.component.css']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css']
 })
-export class UserDetailsComponent implements OnInit {
+export class ProfileComponent implements OnInit {
+
   errorMessage: string = null;
 
   public setView: View = 'Month';
@@ -39,33 +40,29 @@ export class UserDetailsComponent implements OnInit {
 
   form: any = {};
 
-  constructor(private token: TokenStorageService, private validationService: ValidationService, private tokenStorage: TokenStorageService, private lessonService: LessonService, private userService: UserService, public authService: AuthService, private subjectService: SubjectService, private route: ActivatedRoute) {
+  constructor(private token: TokenStorageService, private validationService: ValidationService, private tokenStorage: TokenStorageService, private lessonService: LessonService, private userService: UserService, public authService: AuthService) {
   }
 
   ngOnInit() {
     this.subjects = [];
     this.scheduleData = [];
 
-    this.route.params.subscribe(params => {
-      this.userId = +params['id'];
-    });
-
-    this.userService.getUser(this.userId).subscribe(user => {
+    this.userService.getUser(this.token.getUser().id).subscribe(user => {
       this.user = user;
-    });
+      this.userId = user.id;
 
-    this.userService.getUserSubjects(this.userId).subscribe(subjects => {
-      this.subjects = subjects;
+      this.userService.getUserSubjects(this.userId).subscribe(subjects => {
+        this.subjects = subjects;
 
-      subjects.forEach(subject => {
-        subject.lessonsId.forEach(lessonId => {
-          this.lessonService.getLesson(lessonId).subscribe(lesson => {
-            this.scheduleData.push(new DataSource(lesson.topic, lesson.startDate, lesson.finishDate));
+        subjects.forEach(subject => {
+          subject.lessonsId.forEach(lessonId => {
+            this.lessonService.getLesson(lessonId).subscribe(lesson => {
+              this.scheduleData.push(new DataSource(lesson.topic, lesson.startDate, lesson.finishDate));
+            });
           });
         });
       });
     });
-
 
     this.userService.findAll().subscribe(users => {
       this.users = users;

@@ -258,9 +258,25 @@ class UserControllerTest {
     }
 
     @Test
-    void generateNewPasswordByNotLoggedIn_unauthorized() throws Exception {
-        mockMvc.perform(patch("/users/generateNewPassword/" + "test@onet.pl"))
+    @WithMockUser(roles = "ADMIN")
+    void generateNewPassword() throws Exception {
+        mockMvc.perform(patch("/users/generateNewPassword/" + "1"))
                .andExpect(status().isOk())
+               .andDo(print());
+    }
+
+    @Test
+    @WithMockUser(roles = "TEACHER")
+    void generateNewPasswordByTeacher_forbidden() throws Exception {
+        mockMvc.perform(patch("/users/generateNewPassword/" + "1"))
+               .andExpect(status().isForbidden())
+               .andDo(print());
+    }
+
+    @Test
+    void generateNewPasswordByNotLoggedIn_unauthorized() throws Exception {
+        mockMvc.perform(patch("/users/generateNewPassword/" + "1"))
+               .andExpect(status().isUnauthorized())
                .andDo(print());
     }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../_services/auth.service';
 import {TokenStorageService} from '../_services/token-storage.service';
 import {UserService} from '../_services/user.service';
+import {Router} from '@angular/router';
 
 declare var openErrorModal;
 
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
   errorMessagee = '';
   roles: string[] = [];
 
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private userService: UserService) { }
+  constructor(private router: Router, private authService: AuthService, private tokenStorage: TokenStorageService, private userService: UserService) { }
 
   ngOnInit() {
     if (this.tokenStorage.getToken()) {
@@ -44,6 +45,7 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = true;
       }
     );
+    this.router.navigate(['home']);
   }
 
   reloadPage() {

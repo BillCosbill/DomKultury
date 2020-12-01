@@ -20,6 +20,7 @@ import {StudentDetailsComponent} from './student-details/student-details.compone
 import {UserDetailsComponent} from './user-details/user-details.component';
 import {DiaryTodayLessonsComponent} from './diary-today-lessons/diary-today-lessons.component';
 import {AdministratorPanelAddTeacherComponent} from './administrator-panel-add-teacher/administrator-panel-add-teacher.component';
+import {ProfileComponent} from './profile/profile.component';
 
 
 const routes: Routes = [
@@ -35,6 +36,7 @@ const routes: Routes = [
   {path: 'student/:id', component: StudentDetailsComponent, pathMatch: 'full', canActivate: [TeacherguardService]},
   {path: 'diary/users', component: DiaryUsersComponent, canActivate: [TeacherguardService]},
   {path: 'user/:id', component: UserDetailsComponent, pathMatch: 'full', canActivate: [TeacherguardService]},
+  {path: 'profile', component: ProfileComponent, canActivate: [TeacherguardService]},
   {path: 'room/:id', component: RoomDetailsComponent, pathMatch: 'full'},
   {path: 'rooms', component: RoomsComponent},
   {path: 'contact', component: ContactComponent},

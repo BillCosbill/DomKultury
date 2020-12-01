@@ -44,38 +44,6 @@
   </div>
 </div>
 
-
-<!-- Modal password forget -->
-<div class="modal fade bd-example-modal-lg" id="forgetPassword" tabindex="-1" role="dialog"
-     aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nie pamiętam hasła</h5>
-      </div>
-
-      <div class="modal-body">
-        <form (ngSubmit)="sendNewPassword()" #passwordForm="ngForm">
-          <div class="form-group">
-            <label for="email">Adres email:</label>
-            <input type="email" [(ngModel)]="emailToSendNewPassword" class="form-control" id="email" name="email"
-                   placeholder="Podaj adres email . . ." required email #email="ngModel">
-          </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-            <button type="submit" [disabled]="!passwordForm.form.valid" class="btn btn-info" data-dismiss="modal"
-                    (click)="sendNewPassword()">Wyślij nowe hasło
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-
 <!-- Modal error -->
 <div class="modal fade bd-example-modal-lg" id="error" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
