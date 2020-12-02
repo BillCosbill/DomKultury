@@ -43,8 +43,7 @@ public class WebAppApplication {
 
     @EventListener(ApplicationReadyEvent.class)
     public void fillDB() {
-        Room classComputer = new Room("01", "Sala komputerowa", "Sala komputerowa\n" +
-                "\n" +
+        Room classComputer = new Room("01", "Sala komputerowa",
                 "Elegancka, nowoczesna przystosowana do profesjonalnych szkoleń, sala z dostępem do 15 stacjonarnych stanowisk komputerowych. Pomieszczenie klimatyzowane, dobrze nasłonecznione z możliwością zaciemnienia (rolety).\n" +
                 "\n" +
                 "Wyposażenie:\n" +

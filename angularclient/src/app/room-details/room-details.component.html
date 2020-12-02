@@ -1,13 +1,14 @@
 <div class="scheduler-fixer container">
 
-  <h3 class="text-center">{{ room.destiny }} - {{ room.number }}</h3>
+  <h3 class="text-center">{{ room.destiny }} (nr {{ room.number }})</h3>
 
   <div *ngIf="gotImage()" class="image mx-auto d-block pt-3">
     <img [src]="room.retrievedImage" alt="...">
   </div>
 
-  <div class="pt-5 pb-5">
-    <p>{{ room.description }}</p>
+  <div class="overlap">
+    <span class="font-weight-bold">Opis:</span>
+    <p>{{room.description}}</p>
   </div>
 
   <div class="pt-3 pb-5">

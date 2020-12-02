@@ -9,19 +9,14 @@
   border-radius: 5px;
 }
 
-.room-details-info {
-  width: 65%;
-  float: right;
+.overlap {
+  border: 2px solid grey;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border-radius: 10px;
 }
 
-.room-details-title {
-  font-size: 30px;
-  font-weight: bold;
-}
-
-.room-details-data {
-}
-
-.room-details-description {
-  text-align: left;
+.overlap:hover {
+  background-color: grey;
+  cursor: pointer;
 }
