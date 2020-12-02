@@ -1,7 +1,7 @@
-package com.example.demo.email;
+package com.example.demo.services.implementations;
 
 import com.example.demo.dto.StudentDTO;
-import com.example.demo.exceptions.NotFoundGlobalException;
+import com.example.demo.exceptions.exception.NotFoundGlobalException;
 import com.example.demo.mappers.StudentMapper;
 import com.example.demo.models.Student;
 import com.example.demo.models.User;

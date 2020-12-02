@@ -4,7 +4,7 @@ import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {Room} from '../_model/room';
 import {Lesson} from '../_model/lesson';
-import {Subject} from '../_model/subject';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class RoomService {
   private roomUrl: string;
 
   constructor(private http: HttpClient) {
-    this.roomUrl = 'http://localhost:8081/rooms';
+    this.roomUrl = environment.apiAddress + '/rooms';
   }
 
   public findAll(): Observable<Room[]> {
@@ -59,8 +59,6 @@ export class RoomService {
     );
   }
 
-  //TODO zrobić jakieś popapy z errorami i z udanymi akcjami np addUserToEvent
-  //TODO dodać obsługę błędów w innych serwisach !!!!!!!!!!!!!!!!
   handleError(error: HttpErrorResponse) {
     return throwError(error);
   }

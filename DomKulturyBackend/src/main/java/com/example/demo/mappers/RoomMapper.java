@@ -1,8 +1,8 @@
 package com.example.demo.mappers;
 
 import com.example.demo.dto.RoomDTO;
-import com.example.demo.exceptions.NotFoundGlobalException;
-import com.example.demo.file.DBFileRepository;
+import com.example.demo.exceptions.exception.NotFoundGlobalException;
+import com.example.demo.repository.FileRepository;
 import com.example.demo.models.Lesson;
 import com.example.demo.models.Room;
 import com.example.demo.repository.LessonRepository;
@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 public class RoomMapper {
 
     RoomRepository roomRepository;
-    DBFileRepository imageRepository;
+    FileRepository imageRepository;
     LessonRepository lessonRepository;
 
     @Autowired
-    public RoomMapper(RoomRepository roomRepository, DBFileRepository imageRepository, LessonRepository lessonRepository) {
+    public RoomMapper(RoomRepository roomRepository, FileRepository imageRepository, LessonRepository lessonRepository) {
         this.roomRepository = roomRepository;
         this.imageRepository = imageRepository;
         this.lessonRepository = lessonRepository;

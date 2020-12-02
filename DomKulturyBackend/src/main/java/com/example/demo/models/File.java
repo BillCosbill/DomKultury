@@ -1,4 +1,4 @@
-package com.example.demo.file;
+package com.example.demo.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "files")
-public class DBFile {
+public class File {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -25,7 +25,7 @@ public class DBFile {
     @Lob
     private byte[] data;
 
-    public DBFile(String fileName, String fileType, byte[] data) {
+    public File(String fileName, String fileType, byte[] data) {
         this.fileName = fileName;
         this.fileType = fileType;
         this.data = data;

@@ -1,16 +1,12 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.dto.RoomDTO;
-import com.example.demo.dto.StudentDTO;
-import com.example.demo.exceptions.ConflictGlobalException;
-import com.example.demo.exceptions.NotFoundGlobalException;
+import com.example.demo.exceptions.exception.ConflictGlobalException;
+import com.example.demo.exceptions.exception.NotFoundGlobalException;
 import com.example.demo.models.Lesson;
 import com.example.demo.models.Room;
-import com.example.demo.models.Student;
 import com.example.demo.repository.*;
-import com.example.demo.services.interfaces.LessonService;
 import com.example.demo.services.interfaces.RoomService;
-import com.example.demo.services.interfaces.StudentService;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,9 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

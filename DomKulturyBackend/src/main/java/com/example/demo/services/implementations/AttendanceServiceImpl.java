@@ -1,7 +1,7 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.dto.AttendanceDTO;
-import com.example.demo.exceptions.NotFoundGlobalException;
+import com.example.demo.exceptions.exception.NotFoundGlobalException;
 import com.example.demo.mappers.AttendanceMapper;
 import com.example.demo.models.Attendance;
 import com.example.demo.repository.AttendanceRepository;

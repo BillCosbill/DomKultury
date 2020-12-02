@@ -10,7 +10,6 @@ import com.example.demo.services.interfaces.LessonService;
 import com.example.demo.services.interfaces.RoomService;
 import com.example.demo.services.interfaces.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.example.demo.exceptions;
+package com.example.demo.exceptions.exception;
 
 import com.example.demo.annotations.HttpErrorCode;
 

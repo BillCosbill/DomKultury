@@ -26,7 +26,6 @@ export class DiaryUsersComponent implements OnInit {
   ngOnInit() {
     this.userService.findAll().subscribe(users => {
       this.users = users;
-      // TODO na pewno tu sortowanie??
       this.users.sort((a, b) => (a.lastName.localeCompare(b.lastName)));
     });
   }

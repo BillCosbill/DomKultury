@@ -27,7 +27,6 @@
       <span class="font-weight-bold">Data rozpoczęcia:</span>
       <p>{{startDate}} {{startTime}}</p>
       <i *ngIf="this.authService.isTeacherLoggedIn() && userIsOwner()" data-toggle="modal" data-target="#editStartDate" (click)="startEditingDatetime()" class="fas fa-edit"></i>
-<!--      <i *ngIf="this.authService.isTeacherLoggedIn() && !this.validationService.lessonTookPlace(this.lesson.startDate)" data-toggle="modal" data-target="#editStartDate" (click)="startEditingDatetime()" class="fas fa-edit"></i>-->
     </div>
 
 
@@ -35,7 +34,6 @@
       <span class="font-weight-bold">Data zakończenia:</span>
       <p >{{startDate}} {{finishTime}}</p>
       <i *ngIf="this.authService.isTeacherLoggedIn() && userIsOwner()" data-toggle="modal" data-target="#editFinishDate" (click)="startEditingDatetime()" class="fas fa-edit"></i>
-<!--      <i *ngIf="this.authService.isTeacherLoggedIn() && !this.validationService.lessonTookPlace(this.lesson.startDate)" data-toggle="modal" data-target="#editFinishDate" (click)="startEditingDatetime()" class="fas fa-edit"></i>-->
     </div>
 
     <div class="overlap">

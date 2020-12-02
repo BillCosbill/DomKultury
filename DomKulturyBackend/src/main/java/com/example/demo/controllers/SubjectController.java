@@ -1,14 +1,12 @@
 package com.example.demo.controllers;
 
 import com.example.demo.dto.SubjectDTO;
-import com.example.demo.exceptions.NotFoundGlobalException;
+import com.example.demo.exceptions.exception.NotFoundGlobalException;
 import com.example.demo.mappers.SubjectMapper;
-import com.example.demo.models.Lesson;
 import com.example.demo.models.Student;
 import com.example.demo.models.Subject;
 import com.example.demo.payload.response.MessageResponse;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.services.interfaces.StudentService;
 import com.example.demo.services.interfaces.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,14 +23,12 @@ public class SubjectController {
 
     private final SubjectService subjectService;
     private final SubjectMapper subjectMapper;
-    private final StudentService studentService;
     private final UserRepository userRepository;
 
     @Autowired
-    public SubjectController(SubjectService subjectService, SubjectMapper subjectMapper, StudentService studentService, UserRepository userRepository) {
+    public SubjectController(SubjectService subjectService, SubjectMapper subjectMapper, UserRepository userRepository) {
         this.subjectService = subjectService;
         this.subjectMapper = subjectMapper;
-        this.studentService = studentService;
         this.userRepository = userRepository;
     }
 
@@ -51,7 +47,9 @@ public class SubjectController {
         Subject subject = new Subject();
         subject.setName(subjectDTO.getName());
         subject.setDescription(subjectDTO.getDescription());
-        subject.setTeacher(userRepository.findById(subjectDTO.getTeacherId()).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono uzytkownika o id " + subjectDTO.getTeacherId())));
+        subject.setTeacher(userRepository.findById(subjectDTO.getTeacherId())
+                                         .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono uzytkownika o id " + subjectDTO
+                                                 .getTeacherId())));
 
         Subject newSubject = subjectService.addSubject(subject);
 

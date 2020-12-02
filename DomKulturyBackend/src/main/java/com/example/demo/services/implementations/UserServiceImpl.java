@@ -1,8 +1,8 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.dto.UserDTO;
-import com.example.demo.email.EmailService;
-import com.example.demo.exceptions.*;
+import com.example.demo.exceptions.exception.ConflictGlobalException;
+import com.example.demo.exceptions.exception.NotFoundGlobalException;
 import com.example.demo.mappers.UserMapper;
 import com.example.demo.models.ERole;
 import com.example.demo.models.Role;
@@ -11,7 +11,6 @@ import com.example.demo.models.User;
 import com.example.demo.payload.request.PasswordChangeRequest;
 import com.example.demo.repository.StudentRepository;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.services.PasswordGenerator;
 import com.example.demo.services.interfaces.RoleService;
 import com.example.demo.services.interfaces.SubjectService;
 import com.example.demo.services.interfaces.UserService;
@@ -24,7 +23,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service

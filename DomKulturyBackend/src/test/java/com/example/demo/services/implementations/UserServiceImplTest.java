@@ -1,8 +1,8 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.dto.UserDTO;
-import com.example.demo.exceptions.ConflictGlobalException;
-import com.example.demo.exceptions.NotFoundGlobalException;
+import com.example.demo.exceptions.exception.ConflictGlobalException;
+import com.example.demo.exceptions.exception.NotFoundGlobalException;
 import com.example.demo.models.ERole;
 import com.example.demo.models.Role;
 import com.example.demo.models.User;

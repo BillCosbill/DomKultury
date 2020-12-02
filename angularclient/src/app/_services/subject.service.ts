@@ -4,6 +4,7 @@ import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 import {Subject} from '../_model/subject';
 import {Student} from '../_model/student';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class SubjectService {
   private subjectUrl: string;
 
   constructor(private http: HttpClient) {
-    this.subjectUrl = 'http://localhost:8081/subjects';
+    this.subjectUrl = environment.apiAddress + '/subjects';
   }
 
   public findAll(): Observable<Subject[]> {
@@ -46,8 +47,6 @@ export class SubjectService {
     );
   }
 
-  //TODO zrobić jakieś popapy z errorami i z udanymi akcjami np addUserToEvent
-  //TODO dodać obsługę błędów w innych serwisach !!!!!!!!!!!!!!!!
   handleError(error: HttpErrorResponse) {
     return throwError(error);
   }

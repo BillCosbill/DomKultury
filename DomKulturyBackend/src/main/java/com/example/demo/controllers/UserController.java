@@ -7,14 +7,11 @@ import com.example.demo.mappers.UserMapper;
 import com.example.demo.models.ERole;
 import com.example.demo.payload.request.PasswordChangeRequest;
 import com.example.demo.payload.response.MessageResponse;
-import com.example.demo.services.interfaces.RoleService;
 import com.example.demo.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin(origins = "*")

@@ -1,7 +1,7 @@
 package com.example.demo.mappers;
 
 import com.example.demo.dto.AttendanceDTO;
-import com.example.demo.exceptions.NotFoundGlobalException;
+import com.example.demo.exceptions.exception.NotFoundGlobalException;
 import com.example.demo.models.Attendance;
 import com.example.demo.repository.AttendanceRepository;
 import com.example.demo.repository.LessonRepository;
@@ -41,18 +41,21 @@ public class AttendanceMapper {
     }
 
     public Attendance toAttendance(AttendanceDTO attendanceDTO, Long id) {
-        Attendance attendance = attendanceRepository.findById(id).orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono obiektu frekwencji o id " + id));
+        Attendance attendance = attendanceRepository.findById(id)
+                                                    .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono obiektu frekwencji o id " + id));
 
         if (attendanceDTO.getId() != null) {
             attendance.setId(attendanceDTO.getId());
         }
         if (attendanceDTO.getLessonId() != null) {
             attendance.setLesson(lessonRepository.findById(attendanceDTO.getLessonId())
-                                                 .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono lekcji o id " + attendanceDTO.getLessonId())));
+                                                 .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono lekcji o id " + attendanceDTO
+                                                         .getLessonId())));
         }
         if (attendanceDTO.getStudentId() != null) {
             attendance.setStudent(studentRepository.findById(attendanceDTO.getStudentId())
-                                                   .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono ucznia o id " + attendanceDTO.getStudentId())));
+                                                   .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono ucznia o id " + attendanceDTO
+                                                           .getStudentId())));
         }
 
         attendance.setPresent(attendanceDTO.isPresent());
@@ -68,11 +71,13 @@ public class AttendanceMapper {
         }
         if (attendanceDTO.getLessonId() != null) {
             attendance.setLesson(lessonRepository.findById(attendanceDTO.getLessonId())
-                                                 .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono lekcji o id " + attendanceDTO.getLessonId())));
+                                                 .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono lekcji o id " + attendanceDTO
+                                                         .getLessonId())));
         }
         if (attendanceDTO.getStudentId() != null) {
             attendance.setStudent(studentRepository.findById(attendanceDTO.getStudentId())
-                                                   .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono ucznia o id " + attendanceDTO.getStudentId())));
+                                                   .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono ucznia o id " + attendanceDTO
+                                                           .getStudentId())));
         }
 
         attendance.setPresent(attendanceDTO.isPresent());

@@ -4,7 +4,6 @@ import {LessonService} from '../_services/lesson.service';
 import {StudentAttendance} from '../_model/student-attendance';
 import {Lesson} from '../_model/lesson';
 import {Subject} from '../_model/subject';
-import {Student} from '../_model/student';
 import {Attendance} from '../_model/attendance';
 import {SubjectService} from '../_services/subject.service';
 import {StudentService} from '../_services/student.service';

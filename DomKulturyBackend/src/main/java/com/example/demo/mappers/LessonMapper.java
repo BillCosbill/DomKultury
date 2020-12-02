@@ -1,7 +1,7 @@
 package com.example.demo.mappers;
 
 import com.example.demo.dto.LessonDTO;
-import com.example.demo.exceptions.*;
+import com.example.demo.exceptions.exception.NotFoundGlobalException;
 import com.example.demo.models.Attendance;
 import com.example.demo.models.Lesson;
 import com.example.demo.repository.*;

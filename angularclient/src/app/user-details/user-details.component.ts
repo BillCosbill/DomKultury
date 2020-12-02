@@ -100,14 +100,11 @@ export class UserDetailsComponent implements OnInit {
 
   editUser() {
     this.userService.updateUser(this.userEdited, this.userId).subscribe(user => {
-
-      // if edit yourself
       if (this.userId === this.tokenStorage.getUser().id) {
         const form = this.tokenStorage.getUser();
         form.email = user.email;
         this.tokenStorage.saveUser(form);
       }
-
       this.validationService.refreshData();
       this.ngOnInit();
     }, error => {

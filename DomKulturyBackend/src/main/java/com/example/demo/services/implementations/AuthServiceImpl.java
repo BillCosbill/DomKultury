@@ -1,8 +1,7 @@
 package com.example.demo.services.implementations;
 
-import com.example.demo.email.EmailService;
-import com.example.demo.exceptions.ConflictGlobalException;
-import com.example.demo.exceptions.NotFoundGlobalException;
+import com.example.demo.exceptions.exception.ConflictGlobalException;
+import com.example.demo.exceptions.exception.NotFoundGlobalException;
 import com.example.demo.models.ERole;
 import com.example.demo.models.Role;
 import com.example.demo.models.User;
@@ -14,7 +13,6 @@ import com.example.demo.repository.StudentRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.jwt.JwtUtils;
 import com.example.demo.security.userDetails.UserDetailsImpl;
-import com.example.demo.services.PasswordGenerator;
 import com.example.demo.services.interfaces.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,6 @@
-package com.example.demo.email;
+package com.example.demo.models;
 
 import com.example.demo.dto.StudentDTO;
-import com.example.demo.models.Student;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,11 +19,4 @@ public class EmailMessage {
     private String text;
 
     private List<StudentDTO> studentList;
-
-    public EmailMessage(String to, String subject, String text, List<StudentDTO> studentList) {
-        this.to = to;
-        this.subject = subject;
-        this.text = text;
-        this.studentList = studentList;
-    }
 }

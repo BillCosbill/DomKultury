@@ -1,6 +1,6 @@
 package com.example.demo.services.implementations;
 
-import com.example.demo.exceptions.NotFoundGlobalException;
+import com.example.demo.exceptions.exception.NotFoundGlobalException;
 import com.example.demo.models.ERole;
 import com.example.demo.models.Role;
 import com.example.demo.repository.RoleRepository;
@@ -8,7 +8,6 @@ import com.example.demo.services.interfaces.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.management.relation.RoleNotFoundException;
 import java.util.List;
 
 @Service

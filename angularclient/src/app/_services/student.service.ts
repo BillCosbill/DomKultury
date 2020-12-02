@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {Subject} from '../_model/subject';
 import {catchError} from 'rxjs/operators';
 import {Student} from '../_model/student';
-import {Lesson} from '../_model/lesson';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +13,7 @@ export class StudentService {
   private studentUrl: string;
 
   constructor(private http: HttpClient) {
-    this.studentUrl = 'http://localhost:8081/students';
+    this.studentUrl = environment.apiAddress + '/students';
   }
 
   public findAll(): Observable<Student[]> {

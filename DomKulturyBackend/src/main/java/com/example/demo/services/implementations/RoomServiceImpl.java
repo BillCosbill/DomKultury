@@ -1,10 +1,10 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.dto.RoomDTO;
-import com.example.demo.exceptions.ConflictGlobalException;
-import com.example.demo.exceptions.NotFoundGlobalException;
-import com.example.demo.file.DBFile;
-import com.example.demo.file.DBFileRepository;
+import com.example.demo.exceptions.exception.ConflictGlobalException;
+import com.example.demo.exceptions.exception.NotFoundGlobalException;
+import com.example.demo.models.File;
+import com.example.demo.repository.FileRepository;
 import com.example.demo.mappers.RoomMapper;
 import com.example.demo.models.Lesson;
 import com.example.demo.models.Room;
@@ -22,11 +22,11 @@ public class RoomServiceImpl implements RoomService {
 
     private final RoomRepository roomRepository;
     private final RoomMapper roomMapper;
-    private final DBFileRepository imageRepository;
+    private final FileRepository imageRepository;
     private final LessonService lessonService;
 
     @Autowired
-    public RoomServiceImpl(RoomRepository roomRepository, RoomMapper roomMapper, DBFileRepository imageRepository, LessonService lessonService) {
+    public RoomServiceImpl(RoomRepository roomRepository, RoomMapper roomMapper, FileRepository imageRepository, LessonService lessonService) {
         this.roomRepository = roomRepository;
         this.roomMapper = roomMapper;
         this.imageRepository = imageRepository;
@@ -76,7 +76,7 @@ public class RoomServiceImpl implements RoomService {
         }
 
         if (imageId != null) {
-            Optional<DBFile> image = imageRepository.findById(imageId);
+            Optional<File> image = imageRepository.findById(imageId);
 
             if (image.isPresent()) {
                 roomDTO.setImageId(imageId);
@@ -95,7 +95,7 @@ public class RoomServiceImpl implements RoomService {
         }
 
         if (id != null) {
-            Optional<DBFile> image = imageRepository.findById(id);
+            Optional<File> image = imageRepository.findById(id);
 
             if (image.isPresent()) {
                 room.setImage(id);

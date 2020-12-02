@@ -5,6 +5,7 @@ import {catchError} from 'rxjs/operators';
 import {Lesson} from '../_model/lesson';
 import {Attendance} from '../_model/attendance';
 import {StudentAttendance} from '../_model/student-attendance';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class LessonService {
   private lessonUrl: string;
 
   constructor(private http: HttpClient) {
-    this.lessonUrl = 'http://localhost:8081/lessons';
+    this.lessonUrl = environment.apiAddress + '/lessons';
   }
 
   public findAll(): Observable<Lesson[]> {

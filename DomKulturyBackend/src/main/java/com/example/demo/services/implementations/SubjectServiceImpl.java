@@ -1,8 +1,8 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.dto.SubjectDTO;
-import com.example.demo.exceptions.ConflictGlobalException;
-import com.example.demo.exceptions.NotFoundGlobalException;
+import com.example.demo.exceptions.exception.ConflictGlobalException;
+import com.example.demo.exceptions.exception.NotFoundGlobalException;
 import com.example.demo.mappers.SubjectMapper;
 import com.example.demo.models.Attendance;
 import com.example.demo.models.Student;

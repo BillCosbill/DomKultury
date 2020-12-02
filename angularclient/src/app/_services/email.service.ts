@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {catchError} from 'rxjs/operators';
 import {EmailMessage} from '../_model/email-message';
 import {throwError} from 'rxjs';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class EmailService {
   private emailUrl: string;
 
   constructor(private http: HttpClient) {
-    this.emailUrl = 'http://localhost:8081/email';
+    this.emailUrl = environment.apiAddress + '/email';
   }
 
   public sendEmail(emailMessage: EmailMessage) {

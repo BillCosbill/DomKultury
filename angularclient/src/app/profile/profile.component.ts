@@ -8,8 +8,6 @@ import {ValidationService} from '../_services/validation/validation.service';
 import {LessonService} from '../_services/lesson.service';
 import {UserService} from '../_services/user.service';
 import {AuthService} from '../_services/auth.service';
-import {SubjectService} from '../_services/subject.service';
-import {ActivatedRoute} from '@angular/router';
 
 declare var openErrorModal;
 

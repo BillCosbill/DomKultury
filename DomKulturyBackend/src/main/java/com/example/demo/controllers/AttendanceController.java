@@ -2,12 +2,8 @@ package com.example.demo.controllers;
 
 import com.example.demo.dto.AttendanceDTO;
 import com.example.demo.mappers.AttendanceMapper;
-import com.example.demo.models.Attendance;
-import com.example.demo.payload.response.MessageResponse;
 import com.example.demo.services.interfaces.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

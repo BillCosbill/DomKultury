@@ -1,6 +1,9 @@
-package com.example.demo.file;
+package com.example.demo.controllers;
 
+import com.example.demo.models.File;
 import com.example.demo.models.Image;
+import com.example.demo.payload.response.UploadFileResponse;
+import com.example.demo.services.implementations.FileServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,12 +19,16 @@ import java.util.zip.Inflater;
 @RestController
 public class FileController {
 
+    private final FileServiceImpl fileServiceImpl;
+
     @Autowired
-    private DBFileStorageService dbFileStorageService;
+    public FileController(FileServiceImpl fileServiceImpl) {
+        this.fileServiceImpl = fileServiceImpl;
+    }
 
     @PostMapping("/uploadFile")
     public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
-        DBFile dbFile = dbFileStorageService.storeFile(file);
+        File dbFile = fileServiceImpl.storeFile(file);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                                                             .path("/downloadFile/")
@@ -34,11 +41,9 @@ public class FileController {
 
     @GetMapping("/downloadFile/{fileId}")
     public Image downloadFile(@PathVariable String fileId) {
-        DBFile dbFile = dbFileStorageService.getFile(fileId);
+        File file = fileServiceImpl.getFile(fileId);
 
-        Image img = new Image(dbFile.getFileName(), dbFile.getFileType(), decompressBytes(dbFile.getData()));
-
-        return img;
+        return new Image(file.getFileName(), file.getFileType(), decompressBytes(file.getData()));
     }
 
     public static byte[] decompressBytes(byte[] data) {
@@ -52,8 +57,8 @@ public class FileController {
                 outputStream.write(buffer, 0, count);
             }
             outputStream.close();
-        } catch (IOException ioe) {
-        } catch (DataFormatException e) {
+        } catch (IOException | DataFormatException ioe) {
+            ioe.printStackTrace();
         }
         return outputStream.toByteArray();
     }

@@ -8,7 +8,6 @@ import com.example.demo.models.Room;
 import com.example.demo.payload.response.MessageResponse;
 import com.example.demo.services.interfaces.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

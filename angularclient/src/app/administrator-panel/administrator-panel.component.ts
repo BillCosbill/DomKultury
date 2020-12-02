@@ -40,7 +40,6 @@ export class AdministratorPanelComponent implements OnInit {
           this.users.push(user);
         }
       });
-      // TODO na pewno tu sortowanie??
       this.users.sort((a, b) => (a.lastName.localeCompare(b.lastName)));
     });
   }
@@ -66,8 +65,6 @@ export class AdministratorPanelComponent implements OnInit {
   selectUserIdToDelete(id: number) {
     this.userIdToDelete = id;
   }
-
-  // TODO modal jakiś ładny z komunikatem o błędzie
 
   deleteUser() {
     this.userService.deleteUser(this.userIdToDelete).subscribe(() => {

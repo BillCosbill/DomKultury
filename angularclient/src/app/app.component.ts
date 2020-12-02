@@ -135,7 +135,6 @@ L10n.load({
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   providers: [DayService, WeekService, WorkWeekService, MonthService, AgendaService, ResizeService, DragAndDropService]
-  // encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
   private roles: string[];

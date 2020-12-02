@@ -1,7 +1,9 @@
-package com.example.demo.file;
+package com.example.demo.services.implementations;
 
-import com.example.demo.exceptions.ConflictGlobalException;
-import com.example.demo.exceptions.NotFoundGlobalException;
+import com.example.demo.exceptions.exception.ConflictGlobalException;
+import com.example.demo.exceptions.exception.NotFoundGlobalException;
+import com.example.demo.models.File;
+import com.example.demo.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -12,12 +14,12 @@ import java.io.IOException;
 import java.util.zip.Deflater;
 
 @Service
-public class DBFileStorageService {
+public class FileServiceImpl {
 
     @Autowired
-    private DBFileRepository dbFileRepository;
+    private FileRepository fileRepository;
 
-    public DBFile storeFile(MultipartFile file) {
+    public File storeFile(MultipartFile file) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
         try {
@@ -25,17 +27,17 @@ public class DBFileStorageService {
                 throw new ConflictGlobalException("Nazwa pliku zawiera błąd: " + fileName);
             }
 
-            DBFile dbFile = new DBFile(fileName, file.getContentType(), compressBytes(file.getBytes()));
+            File dbFile = new File(fileName, file.getContentType(), compressBytes(file.getBytes()));
 
-            return dbFileRepository.save(dbFile);
+            return fileRepository.save(dbFile);
         } catch (IOException ex) {
             throw new ConflictGlobalException("Nie udało się dodać pliku " + fileName + ". Spróbuj ponownie!");
         }
     }
 
-    public DBFile getFile(String fileId) {
-        return dbFileRepository.findById(fileId)
-                               .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono pliku z id " + fileId));
+    public File getFile(String fileId) {
+        return fileRepository.findById(fileId)
+                             .orElseThrow(() -> new NotFoundGlobalException("Nie znaleziono pliku z id " + fileId));
     }
 
     public static byte[] compressBytes(byte[] data) {

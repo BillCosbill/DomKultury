@@ -1,9 +1,8 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {StudentService} from '../student.service';
 import {Student} from '../../_model/student';
 import {User} from '../../_model/user';
 import {UserService} from '../user.service';
-import {TokenStorageService} from '../token-storage.service';
 import {AuthService} from '../auth.service';
 
 @Injectable({

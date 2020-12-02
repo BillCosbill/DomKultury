@@ -4,7 +4,7 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {User} from '../_model/user';
 import {Subject} from '../_model/subject';
 import {catchError} from 'rxjs/operators';
-import {ValidationService} from './validation/validation.service';
+import {environment} from '../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -20,9 +20,9 @@ export class UserService {
   private changeRoleUrl: string;
 
   constructor(private http: HttpClient) {
-    this.usersUrl = 'http://localhost:8081/users';
-    this.activeAccountUrl = 'http://localhost:8081/activeAccount';
-    this.changeRoleUrl = 'http://localhost:8081/changeRole';
+    this.usersUrl = environment.apiAddress + '/users';
+    this.activeAccountUrl = environment.apiAddress + '/activeAccount';
+    this.changeRoleUrl = environment.apiAddress + '/changeRole';
   }
 
   public findAll(): Observable<User[]> {
@@ -76,9 +76,6 @@ export class UserService {
     );
   }
 
-
-  //TODO zrobić jakieś popapy z errorami i z udanymi akcjami np addUserToEvent
-  //TODO dodać obsługę błędów w innych serwisach !!!!!!!!!!!!!!!!
   handleError(error: HttpErrorResponse) {
     return throwError(error);
   }

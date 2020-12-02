@@ -1,8 +1,8 @@
 package com.example.demo.services.implementations;
 
 import com.example.demo.dto.StudentDTO;
-import com.example.demo.exceptions.ConflictGlobalException;
-import com.example.demo.exceptions.NotFoundGlobalException;
+import com.example.demo.exceptions.exception.ConflictGlobalException;
+import com.example.demo.exceptions.exception.NotFoundGlobalException;
 import com.example.demo.models.Student;
 import com.example.demo.repository.*;
 import com.example.demo.services.interfaces.StudentService;
