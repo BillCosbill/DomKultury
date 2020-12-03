@@ -87,7 +87,6 @@ public class AuthServiceImpl implements AuthService {
             throw new ConflictGlobalException("Uczeń z adresem email " + signUpRequest.getEmail() + " już istnieje!");
         }
 
-
         signUpRequest.setPassword(passwordGenerator.generatePassword(10));
 
         // Create new user's account
