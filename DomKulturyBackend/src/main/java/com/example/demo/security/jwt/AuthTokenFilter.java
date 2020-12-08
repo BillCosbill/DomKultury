@@ -36,10 +36,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         return null;
     }
 
-    //  guaranteed to be just invoked once per request within a single request thread.
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        // sprawdza czy token w sesji jest porawny, jeśli tak to użytkownik jest zautentykowany i na tej podstawie dawany jest dostęp do danych
         try {
             String jwt = parseJwt(request);
             if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
@@ -49,8 +47,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                // SecurityContextHolder przechowuje w lokalnym magazynie wątku autentykowanego użytkownika, dlatego
-                // przy każdym żądaniu robiony jest ten fragment try
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
