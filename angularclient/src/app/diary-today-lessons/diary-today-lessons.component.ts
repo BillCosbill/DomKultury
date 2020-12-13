@@ -90,6 +90,10 @@ export class DiaryTodayLessonsComponent implements OnInit {
     return this.subjects.find(subject => subject.id === id).name;
   }
 
+  lessonListIsEmpty() {
+    return !(this.lessons.length > 0);
+  }
+
   createErrorModal(message: string) {
     this.errorMessage = message;
     openErrorModal();

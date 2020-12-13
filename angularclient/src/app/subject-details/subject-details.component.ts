@@ -90,19 +90,16 @@ export class SubjectDetailsComponent implements OnInit {
     this.subjectEdited.description = this.subject.description;
   }
 
-  startAddingLesson() {
-    this.newLesson = new Lesson();
-    this.startDate = null;
-    this.startTime = null;
-    this.finishTime = null;
-  }
-
   addLesson() {
     this.newLesson.startDate = this.startDate + 'T' + this.startTime + ':00';
     this.newLesson.finishDate = this.startDate + 'T' + this.finishTime + ':00';
     this.newLesson.subjectId = this.subjectId;
 
     this.lessonService.addLesson(this.newLesson).subscribe(() => {
+      this.newLesson = new Lesson();
+      this.startDate = null;
+      this.startTime = null;
+      this.finishTime = null;
       this.refreshData();
     }, error => {
       this.createErrorModal(error.error.message);

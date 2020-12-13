@@ -16,7 +16,7 @@
         <th scope="col">Indeks</th>
         <th scope="col">E-mail</th>
         <th scope="col">Data urodzenia</th>
-        <th *ngIf="this.authService.isTeacherLoggedIn()" scope="col">Opcje</th>
+        <th *ngIf="this.authService.isTeacherLoggedIn() && userIsOwner()" scope="col">Opcje</th>
       </tr>
       </thead>
       <tbody>
@@ -26,7 +26,7 @@
         <td [routerLink]="['/student', (student.id)]">{{ student.id }}</td>
         <td [routerLink]="['/student', (student.id)]">{{ student.email }}</td>
         <td [routerLink]="['/student', (student.id)]">{{ student.birthday }}</td>
-        <td class="text-center" *ngIf="this.authService.isTeacherLoggedIn()"><i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteStudent" (click)="selectStudentIdToDelete(student.id)"></i></td>
+        <td class="text-center" *ngIf="this.authService.isTeacherLoggedIn() && userIsOwner()"><i class="fas fa-trash-alt" data-toggle="modal" data-target="#deleteStudent" (click)="selectStudentIdToDelete(student.id)"></i></td>
       </tr>
       </tbody>
     </table>
