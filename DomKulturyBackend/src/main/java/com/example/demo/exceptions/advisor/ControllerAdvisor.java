@@ -1,7 +1,6 @@
 package com.example.demo.exceptions.advisor;
 
 import com.example.demo.annotations.HttpErrorCode;
-import lombok.var;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
